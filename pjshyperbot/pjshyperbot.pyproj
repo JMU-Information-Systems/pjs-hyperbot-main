@@ -54,6 +54,7 @@
     <Compile Include="pjshyperbot\settings.py" />
     <Compile Include="pjshyperbot\urls.py" />
     <Compile Include="pjshyperbot\wsgi.py" />
+    <Compile Include="rpa_prepare.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\" />
@@ -98,6 +99,7 @@
     <Content Include="app\templates\app\layout.html" />
     <Content Include="app\templates\app\login.html" />
     <Content Include="app\templates\app\loginpartial.html" />
+    <Content Include="rpatemplate.sqlite3" />
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.html">
