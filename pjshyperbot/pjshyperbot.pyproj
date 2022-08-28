@@ -5,7 +5,7 @@
     <Name>pjshyperbot</Name>
     <RootNamespace>pjshyperbot</RootNamespace>
     <TestFramework>Pytest</TestFramework>
-    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|envChristine|$(MSBuildProjectFullPath)</InterpreterId>
     <CommandLineArguments>
     </CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
@@ -107,6 +107,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Interpreter Include="envChristine\">
+      <Id>envChristine</Id>
+      <Version>3.9</Version>
+      <Description>envChristine (Python 3.9 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
     <Interpreter Include="env\">
       <Id>env</Id>
       <Version>3.10</Version>
