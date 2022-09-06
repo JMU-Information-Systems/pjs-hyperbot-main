@@ -5,6 +5,31 @@
 <h2>{{ title }}.</h2>
 <h3>{{ message }}</h3>
 
-<p>Use this area to provide additional information.</p>
+<p>Um den Hyperbot nutzen zu k&ouml;nnen, ben&ouml;tigen wir die folgenden Angaben von Ihnen:</p>
+
+<form action="Dateneingabe/" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label> Name der Variable: </label>
+        <input type="text" class="form-control" name="vname" />
+    </div>
+    <div class="form-group">
+        <label> Typ der Variable: </label>
+        <select class="form-control" name="vtyp">
+            <option>Flie&szlig;text</option>
+            <option>nat&uuml;rliche Zahlen</option>
+            <option>Dezimalzahlen</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label> Soll eine weitere Variable erfasst werden? </label>
+        <select class="form-control" name="vfurther">
+            <option>ja</option>
+            <option>nein</option>
+        </select>
+        <button type="submit" class="btn-btn-default">Abschicken</button>
+    </div>
+</form>
 
 {% endblock %}
