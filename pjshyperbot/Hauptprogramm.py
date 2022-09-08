@@ -1,6 +1,7 @@
 # Generate UIPath XAML from Logger DB
 import sys
 import sqlite3
+from tkinter.tix import COLUMN
 import psycopg2 #Modul um eine Verbindung zum Datenbanksystem postgres herzustellen, gewünschte Datenbank zu implementieren und SQL Befehle auszuführen
 import pandas
 import urllib
@@ -58,31 +59,28 @@ def main():
 
         column = matching(cursor)
         for row in cursor:
-            # Anpassen der URL, sodass keine Sonderzeichen mehr drin sind
-            #http = str(row[24]).replace("https:", "")
-            #modify = urllib.parse.quote(http)
-            #modify.encode('utf-8')  # special characters aus url entfernen
-            #url = "https:" + modify
-
-            #Anpassen der URL, trimmen  einfügen von * sodass Selektor für alle Seiten dieser URL gilt
-            from urllib.parse import urlparse
+            
+         #Anpassen der URL, trimmen  einfügen von * sodass Selektor für alle Seiten dieser URL gilt
+            
+         from urllib.parse import urlparse
             a= urlparse(str(row[column[a_url]]))
             website_name = a.hostname
             url = "*https://" + website_name + "*"
 
             #Abfrage auf Applikationen
 
-            #Browser: Wenn der a_applicationname "Edge" oder "Chrome" ist, handelt es sich um Browseraktivitäten, deshalb hier andere Bausteine verwenden
+            #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten, deshalb hier andere Bausteine verwenden
 
             if (row[column['a_applicationname']]) == "msedge":
 
-            #Abfrage auf Aktivitäten, Mousecklicks
+                #Abfrage auf Aktivitäten über Spalte Type:
+                if (row[column['u_type']]) == "Schaltfläche": #dann ist es eine Klickakitivität
 
-                if (row[column['u_type']]) == "Schaltfläche" or "Optionsfeld":
-
-                    if str.__contains__(str(row[column['u_name']]), (("Minimieren") or ("Maximieren"))): #Ausschluß
+                    if str.__contains__(str(row[column['u_name']]), (("Minimieren") or ("Maximieren"))): #Ausschluß, dies wird nicht automatisiert
                         pass
-                    if (row[column['u_eventtype']]) == "Left-Down":
+
+                    #Art des Klicks:Linksklick?
+                    if (row[column['u_eventtype']]) == "Left-Down": 
                         #Start Try Catch
                         lib2_bausteine.a_try_catch_try_start(xaml)
                         #try:
@@ -116,38 +114,45 @@ def main():
 
                         lib2_bausteine.a_try_catch_all_catches_end(xaml)
 
+                    #Rechtsklick?
                     if (row[column['u_eventtype']]) == "Right-down":
                         lib2_bausteine.a_click_right_browser_schaltfläche(xaml,str(row[column['a_applicationname']]),url,str(row[column['automationid']]))
+                    
+                    #Schließen des aktuellen Fensters
                     if (row[column['u_name']])=="Schließen" or "schließen" or "tab schließen": #name
                         lib2_bausteine.a_close_window(xaml)
-
-                    if str.__contains__(str(row[column['u_name']]), (("Kalender") or ("Calendar") or ("Calend"))):
-                        lib_bausteine.a_comment_calendar_picker(xaml)
-
-                #Notwendige Texteingaben werden aus dem UI genommen, nicht direkt aus der Aufzeichnung
-
-                if (row[column['u_type']])=="Text":
-                    pass
-
+                
+                
+                #Abfrage auf andere Eventtypen im Browser
+                        
                 if (row[column['u_type']]) == "checkbox":
                     lib2_bausteine.a_click_left_browser_checkbox(xaml, str(row[column['a_applicationname']]),url,str(row[column['automationid']]))
 
+                if (row[column['u_type']]) == "Kombinationsfeld":
+                    lib2_bausteine.a_click_kombinationsfeld(xaml, str(row[column['a_applicationname']), url, str(row[column['u_name'])) 
+                                                                      
                 if (row[column['u_type']])== "Option":
                     lib2_bausteine.a_click_single_browser_optionsfeld(xaml,str(row[column['a_applicationname']]), str(row[column['u_name']]), str(row[column['name']]))
                     lib_bausteine.a_comment_optionsfeld(xaml)
-
-                # if row xy =="Option" dann select item  #oft nicht möglich... was tun?
-                 # lib_bausteine.a_select_item(xaml, str(name aus uilog))
-
-                if (row[column['u_type']]) == "Kombinationsfeld":
-                    lib2_bausteine.a_click_kombinationsfeld(xaml, str(row[22]),url,str(row[5]))
-
+               
+                #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
+                if str.__contains__(str(row[column['u_name']]), (("Kalender") or ("Calendar") or ("Calend"))):
+                    lib_bausteine.a_comment_calendar_picker(xaml)
+                    
+                #Notwendige Texteingaben werden aus dem UI genommen, nicht direkt aus der Aufzeichnung, daher Text ausschließen
+                if (row[column['u_type']])=="Text":
+                    pass
+                
+                #Wen Type ein Link ist, dann wird zu diesem Link navigiert
                 if (row[column['u_type']]) == "Link":
-                    lib_bausteine.a_navigate_to(xaml, str(row[column[url]]))  # row 19= value, hier steht Link zu dem navigiert wird
+                    lib_bausteine.a_navigate_to(xaml, url)  # row 19= value, hier steht Link zu dem navigiert wird
 
-            # Keystroke Aktivitäten, immer wenn Type = Bearbeiten ist
+
+
+                # Abfrage der Keystroke Aktivitäten im Browser
 
                 if (row[column['u_type']]) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
+                    
                     if (row[column['u_eventtype']]) == "Left-Down":
                         lib2_bausteine.a_try_catch_try_start(xaml)
                         #try:
@@ -165,9 +170,11 @@ def main():
                         lib2_bausteine.a_try_catch_catch_end(xaml)
                         lib2_bausteine.a_try_catch_all_catches_end(xaml)
 
+                    #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
                     if (row[column['u_eventtype']]) == "CTRL + C":
                         lib2_bausteine.a_send_hotkey_strg_c_browser(xaml, str(row[column['a_applicationname']]),url, str(row[column['automationid']]))
 
+                    #es wird etas eingefügt, Send Hotkey Strg+V
                     if (row[column['u_eventtype']]) == "CTRL + V":
                         lib2_bausteine.a_send_hotkey_strg_v_browser(xaml, str(row[column['a_applicationname']]),url, str(row[column['automationid']]))
 
@@ -178,14 +185,17 @@ def main():
             else: #dann keine Browseraktivität, sondern innerhalb Applikation -> gesonderte Bausteine, dann muss mit uia Tags gearbeitet werden
 
                 #Explorer, wiederum gesonderte Bausteine da keine automationid, sondern name
-                if (row[column['a_applicationname']])=="explorer":
+                if (row[column['a_applicationname']])=="explorer": #dann ist es eine Aktivität im Explorer
+
                     if (row[column['u_type']]) == "Bearbeiten": #dann Keystroke
                         lib2_bausteine.a_type_into_explorer(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['role']]))  # xaml, application_name, title, id, name
-                    else: #dann Klick
+                    
+                    else: #dann immer Klick
                         if (row[column['u_eventtype']])=="Left-Down":
                             lib2_bausteine.a_click_left_in_explorer (xaml, str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['type']])) #xaml, windowtitle, Name des Feldes, role
                         else:
                             lib2_bausteine.a_click_right_in_explorer(xaml, str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['type']]))
+                    
                     if (row[column['u_eventtype']]) == "ENTER":
                         lib2_bausteine.a_press_enter(xaml)
 
