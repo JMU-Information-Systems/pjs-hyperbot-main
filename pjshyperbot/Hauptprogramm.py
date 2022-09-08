@@ -92,13 +92,18 @@ def main():
                         #Baustein mit Tag=Button, Type=Submit in Kombination mit Abfrage nach Name des Feldes
                         lib2_bausteine.a_click_left_browser_schaltfl‰che_var_3(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
                         
-                        # Baustein der keine Tags enth‰lt, sondern nur Name des Feldes
+                        # Variante 4,  Abfrage auf name und Tag A
                         lib2_bausteine.a_click_left_browser_schaltfl‰che_var_4(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
                         
+                        #Baustein der nur name enth‰lt
                         lib2_bausteine.a_click_left_browser_schaltfl‰che_var_5(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
+                        
+                        #Baustein mit Name & Tag=SPAN
                         lib2_bausteine.a_click_left_browser_schaltfl‰che_var_6(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
 
-                        lib2_bausteine.a_sequence_browser_click_end(xaml)
+                        lib2_bausteine.a_sequence_end(xaml)
+
+                        
 
                     #Rechtsklick?
                     if (row[column['u_eventtype']]) == "Right-down":
@@ -116,7 +121,7 @@ def main():
 
                 if (row[column['u_type']]) == "Kombinationsfeld":
                     lib2_bausteine.a_click_kombinationsfeld(xaml, str(row[column['a_applicationname']), url, str(row[column['u_name'])) 
-                                                                      
+                                                                          
                 if (row[column['u_type']])== "Option":
                     lib2_bausteine.a_click_single_browser_optionsfeld(xaml,str(row[column['a_applicationname']]), str(row[column['u_name']]), str(row[column['name']]))
                     lib_bausteine.a_comment_optionsfeld(xaml)
@@ -124,6 +129,7 @@ def main():
                 #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
                 if str.__contains__(str(row[column['u_name']]), (("Kalender") or ("Calendar") or ("Calend"))):
                     lib_bausteine.a_comment_calendar_picker(xaml)
+                    
                     
                 #Notwendige Texteingaben werden aus dem UI genommen, nicht direkt aus der Aufzeichnung, daher Text ausschlieﬂen
                 if (row[column['u_type']])=="Text":
@@ -140,7 +146,11 @@ def main():
                 if (row[column['u_type']]) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivit‰t, bzw. Texteingabe
                     
                     if (row[column['u_eventtype']]) == "Left-Down":
-                        lib2_bausteine.a_try_catch_try_start(xaml)
+                        
+                    
+                       
+                        
+
                         #try:
                         lib2_bausteine.a_type_into_browser (xaml, str(row[column['a_applicationname']]),url,str(row[column['automationid']])) #xaml, application_name, url, id
                         lib2_bausteine.a_try_catch_try_end(xaml)

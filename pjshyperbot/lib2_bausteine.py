@@ -24,7 +24,7 @@ def a_sequence_browser_click_start(xaml, name):
     xaml.write("                </scg:Dictionary>")
     xaml.write("              </sap:WorkflowViewStateService.ViewState>")
 
-def a_sequence_browser_click_end (xaml):
+def a_sequence_end (xaml):
     xaml.write("            </Sequence>")
     xaml.write("          </Sequence>")
 
@@ -490,7 +490,7 @@ def a_click_right_in_application_var2 (xaml,application_name, title, name, role)
 
 #Explorer
 
-def a_click_left_in_explorer (xaml,application_name, title, name, role): #für alle Anwendungen außer Browser
+def a_click_left_in_explorer (xaml,application_name, title, name, role): 
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click+" +name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">")
     xaml.write("              <ui:Click.CursorPosition>")
     xaml.write("                <ui:CursorPosition Position=\"Center\">")
@@ -514,7 +514,7 @@ def a_click_left_in_explorer (xaml,application_name, title, name, role): #für al
     xaml.write("              </ui:Click.Target>")
     xaml.write("            </ui:Click>")
 
-def a_click_left_in_explorer_var_2 (xaml,application_name, title, name): #für alle Anwendungen außer Browser
+def a_click_left_in_explorer_var_2 (xaml,application_name, title, name): 
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click+" +name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">")
     xaml.write("              <ui:Click.CursorPosition>")
     xaml.write("                <ui:CursorPosition Position=\"Center\">")
@@ -539,7 +539,7 @@ def a_click_left_in_explorer_var_2 (xaml,application_name, title, name): #für al
     xaml.write("            </ui:Click>")
 
 
-def a_click_right_in_explorer (xaml,application_name, title, name, role): #für alle Anwendungen außer Browser
+def a_click_right_in_explorer (xaml,application_name, title, name, role): 
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click+" +name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">")
     xaml.write("              <ui:Click.CursorPosition>")
     xaml.write("                <ui:CursorPosition Position=\"Center\">")
@@ -690,6 +690,17 @@ def a_send_hotkey_strg_v_browser_var4 (xaml, application_name, url, name):
 
 #Keystroke Logs
 #Browser:
+
+
+def a_sequence_browser_typeinto_start(xaml, name):
+    xaml.write("          <Sequence DisplayName=\"Type Into "+name+"\" sap:VirtualizedContainerService.HintSize="418,728" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">")
+    xaml.write("              <sap:WorkflowViewStateService.ViewState>")
+    xaml.write("                <scg:Dictionary x:TypeArguments="x:String, x:Object">")
+    xaml.write("                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>")
+    xaml.write("                  <x:Boolean x:Key="IsPinned">False</x:Boolean>")
+    xaml.write("                </scg:Dictionary>")
+    xaml.write("              </sap:WorkflowViewStateService.ViewState>")
+
 
 #über automationid 
 def a_type_into_browser (xaml,application_name, url, name, id):
