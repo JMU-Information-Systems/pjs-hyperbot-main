@@ -80,39 +80,25 @@ def main():
                         pass
 
                     #Art des Klicks:Linksklick?
-                    if (row[column['u_eventtype']]) == "Left-Down": 
-                        #Start Try Catch
-                        lib2_bausteine.a_try_catch_try_start(xaml)
-                        #try:
-                        lib2_bausteine.a_click_left_browser_schaltfl‰che(xaml,str(row[column['a_applicationname']]),url,str(row[column['automationid']])) #url von oben, modifiziert
-                        #Try Bausteine schlieﬂen
-                        lib2_bausteine.a_try_catch_try_end(xaml)
-
-                        #catch:
-                        lib2_bausteine.a_try_catch_all_catches_start(xaml)
-                        lib2_bausteine.a_try_catch_catch_start(xaml)
-
-                        # im Catch wieder Try-Catch
-                        lib2_bausteine.a_try_catch_try_start(xaml)
+                    if (row[column['u_eventtype']]) == "Left-Down":
+                        
+                        lib2_bausteine.a_sequence_browser_click_start(xaml, str(row[column['u_name']]))
+                        
+                        lib2_bausteine.a_click_left_browser_schaltfl‰che(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
+                        
                         # Baustein mit Tag+Type=Button in Kombination mit Abfrage nach Name des Feldes
                         lib2_bausteine.a_click_left_browser_schaltfl‰che_var_2(xaml, str(row[column['a_applicationname']]), url, str(row[column['u_name']]))
-                        lib2_bausteine.a_try_catch_try_end(xaml)
-
-                        lib2_bausteine.a_try_catch_all_catches_start(xaml)
-                        lib2_bausteine.a_try_catch_try_start(xaml)
-
-                        lib2_bausteine.a_try_catch_catch_start(xaml)
+                        
                         #Baustein mit Tag=Button, Type=Submit in Kombination mit Abfrage nach Name des Feldes
-
                         lib2_bausteine.a_click_left_browser_schaltfl‰che_var_3(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
-                        lib2_bausteine.a_try_catch_catch_end(xaml)
-
+                        
                         # Baustein der keine Tags enth‰lt, sondern nur Name des Feldes
-                        lib2_bausteine.a_click_left_browser_schaltfl‰che_var_4(xaml,str(row[column['a_applicationname']]), url, str(row[column['u_name']]))
-                        lib2_bausteine.a_click_left_browser_schaltfl‰che_var_5(xaml,str(row[column['a_applicationname']]), url, str(row[column['u_name']]))
-                        lib2_bausteine.a_click_left_browser_schaltfl‰che_var_6(xaml,str(row[column['a_applicationname']]), url, str(row[column['u_name']]))
+                        lib2_bausteine.a_click_left_browser_schaltfl‰che_var_4(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
+                        
+                        lib2_bausteine.a_click_left_browser_schaltfl‰che_var_5(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
+                        lib2_bausteine.a_click_left_browser_schaltfl‰che_var_6(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
 
-                        lib2_bausteine.a_try_catch_all_catches_end(xaml)
+                        lib2_bausteine.a_sequence_browser_click_end(xaml)
 
                     #Rechtsklick?
                     if (row[column['u_eventtype']]) == "Right-down":
