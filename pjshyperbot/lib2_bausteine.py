@@ -16,11 +16,11 @@ def a_edge_browser_end (xaml):
 #Im Browser:
 
 def a_sequence_browser_click_start(xaml, name):
-    xaml.write("          <Sequence DisplayName=\"Click on "+name+"\" sap:VirtualizedContainerService.HintSize="418,728" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">")
+    xaml.write("          <Sequence DisplayName=\"Click on "+name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\" >")
     xaml.write("              <sap:WorkflowViewStateService.ViewState>")
-    xaml.write("                <scg:Dictionary x:TypeArguments="x:String, x:Object">")
-    xaml.write("                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>")
-    xaml.write("                  <x:Boolean x:Key="IsPinned">False</x:Boolean>")
+    xaml.write("                <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">")
+    xaml.write("                  <x:Boolean x:Key=\"IsExpanded\">False</x:Boolean>")
+    xaml.write("                  <x:Boolean x:Key=\"IsPinned\">False</x:Boolean>")
     xaml.write("                </scg:Dictionary>")
     xaml.write("              </sap:WorkflowViewStateService.ViewState>")
 
@@ -229,7 +229,7 @@ def a_click_left_browser_checkbox (xaml,application_name,url, aaname, id):
     xaml.write("            </ui:Click>")
 
 def a_click_left_browser_checkbox_var2 (xaml,application_name,url, aaname):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox+" +aanamename+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">")
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox" +aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">")
     xaml.write("              <ui:Click.CursorPosition>")
     xaml.write("                <ui:CursorPosition Position=\"Center\">")
     xaml.write("                  <ui:CursorPosition.OffsetX>")
@@ -281,7 +281,7 @@ def a_click_single_browser_optionsfeld (xaml,application_name,url, aaname):
 
 
 
-def a_click_option (xaml, application_name, name, id):
+def a_click_option (xaml, application_name,url, name, id):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click\" KeyModifiers=\"None\" MouseButton=\"BTN_Left\">")
     xaml.write("              <ui:Click.CursorPosition>")
     xaml.write("                <ui:CursorPosition Position=\"Center\">")
@@ -366,7 +366,7 @@ def a_click_single_in_application_element (xaml,application_name, title, aaname,
     xaml.write("              </ui:Click.Target>")
     xaml.write("            </ui:Click>")
 
-def a_click_right_in_application_element (xaml,application_name, title, id): #für alle Anwendungen außer Browser
+def a_click_right_in_application_element (xaml,application_name, title, id, aaname): #für alle Anwendungen außer Browser
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click+" +aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">")
     xaml.write("              <ui:Click.CursorPosition>")
     xaml.write("                <ui:CursorPosition Position=\"Center\">")
@@ -415,7 +415,7 @@ def a_click_single_in_application (xaml,application_name, title, automationid, n
     xaml.write("              </ui:Click.Target>")
     xaml.write("            </ui:Click>")
 
-def a_click_single_in_application_var2 (xaml,application_name, title, name): #für alle Anwendungen außer Browser
+def a_click_single_in_application_var2 (xaml,application_name, title, aaname, role): #für alle Anwendungen außer Browser
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click+" +aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">")
     xaml.write("              <ui:Click.CursorPosition>")
     xaml.write("                <ui:CursorPosition Position=\"Center\">")
@@ -428,7 +428,7 @@ def a_click_single_in_application_var2 (xaml,application_name, title, name): #fü
     xaml.write("                </ui:CursorPosition>")
     xaml.write("              </ui:Click.CursorPosition>")
     xaml.write("              <ui:Click.Target>")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">")
+    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia name=\'"+aaname+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">")
     xaml.write("                  <ui:Target.TimeoutMS>")
     xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />")
     xaml.write("                  </ui:Target.TimeoutMS>")
@@ -564,12 +564,22 @@ def a_click_right_in_explorer (xaml,application_name, title, name, role):
     xaml.write("            </ui:Click>")
 
 
-    #wenn keytroke strg + c ist, einfügen
+#wenn keytroke strg + c ist, einfügen
+
+def a_sequence_browser_send_hotkey_start (xaml, name):
+    xaml.write("          <Sequence DisplayName=\"Send Hotkey Strg + C in "+name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">")
+    xaml.write("              <sap:WorkflowViewStateService.ViewState>")
+    xaml.write("                <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">")
+    xaml.write("                  <x:Boolean x:Key=\"IsExpanded\">False</x:Boolean>")
+    xaml.write("                  <x:Boolean x:Key=\"IsPinned\">False</x:Boolean>")
+    xaml.write("                </scg:Dictionary>")
+    xaml.write("              </sap:WorkflowViewStateService.ViewState>")
+
 
 
     #über ID
 def a_send_hotkey_strg_c_browser (xaml, application_name, url,name, id): 
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+C in: "+name"\"  EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+C in: "+name+"\" EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">")
     xaml.write("        <ui:SendHotkey.Target>")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl id=\'"+id+"\' tag=\'INPUT\' type=\'text\' /&gt;\" TimeoutMS=\"1000\">")
     xaml.write("            <ui:Target.TimeoutMS>")
@@ -583,8 +593,10 @@ def a_send_hotkey_strg_c_browser (xaml, application_name, url,name, id):
     xaml.write("      </ui:SendHotkey>")
 
    #wenn keine ID über name
+
+
 def a_send_hotkey_strg_c_browser_var2 (xaml, application_name, url, name): 
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+C in: "+name"\"  EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+C in: "+name+"\"  EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">")
     xaml.write("        <ui:SendHotkey.Target>")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+name+"\' tag=\'INPUT\' type=\'text\' /&gt;\" TimeoutMS=\"1000\">")
     xaml.write("            <ui:Target.TimeoutMS>")
@@ -599,7 +611,7 @@ def a_send_hotkey_strg_c_browser_var2 (xaml, application_name, url, name):
 
 #wenn weder ID noch name, über tyg input, type text
 def a_send_hotkey_strg_c_browser_var3 (xaml, application_name, url, name): 
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+C in: "+name"\"  EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+C in: "+name+"\"  EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">")
     xaml.write("        <ui:SendHotkey.Target>")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag=\'INPUT\' type='text' /&gt;\" TimeoutMS=\"1000\">")
     xaml.write("            <ui:Target.TimeoutMS>")
@@ -615,7 +627,7 @@ def a_send_hotkey_strg_c_browser_var3 (xaml, application_name, url, name):
 #wenn weder ID noch name, über tag input
 
 def a_send_hotkey_strg_c_browser_var4 (xaml, application_name, url, name): 
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+C in: "+name"\" ContinueOnError=\"True\" EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+C in: "+name+"\" ContinueOnError=\"True\" EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">")
     xaml.write("        <ui:SendHotkey.Target>")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag=\'INPUT\' /&gt;\" TimeoutMS=\"1000\">")
     xaml.write("            <ui:Target.TimeoutMS>")
@@ -631,7 +643,7 @@ def a_send_hotkey_strg_c_browser_var4 (xaml, application_name, url, name):
 
 
 def a_send_hotkey_strg_v_browser (xaml, application_name, url, name, id):
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name"\" ContinueOnError=\"True\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name+"\" ContinueOnError=\"True\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">")
     xaml.write("        <ui:SendHotkey.Target>")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag='INPUT' type=\'text\' id=\'"+id+"\' /&gt;\" TimeoutMS=\"1000\">")
     xaml.write("            <ui:Target.TimeoutMS>")
@@ -646,7 +658,7 @@ def a_send_hotkey_strg_v_browser (xaml, application_name, url, name, id):
 
 
 def a_send_hotkey_strg_v_browser_var2 (xaml, application_name, url, name):
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name"\" ContinueOnError=\"True\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name+"\" ContinueOnError=\"True\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">")
     xaml.write("        <ui:SendHotkey.Target>")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag='INPUT' type=\'text\' aaname=\'"+name+"\' /&gt;\" TimeoutMS=\"1000\">")
     xaml.write("            <ui:Target.TimeoutMS>")
@@ -660,7 +672,7 @@ def a_send_hotkey_strg_v_browser_var2 (xaml, application_name, url, name):
     xaml.write("      </ui:SendHotkey>")
 
 def a_send_hotkey_strg_v_browser_var3 (xaml, application_name, url, name):
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name"\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name+"\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">")
     xaml.write("        <ui:SendHotkey.Target>")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag='INPUT' type='text' /&gt;\" TimeoutMS=\"1000\">")
     xaml.write("            <ui:Target.TimeoutMS>")
@@ -675,7 +687,7 @@ def a_send_hotkey_strg_v_browser_var3 (xaml, application_name, url, name):
 
 
 def a_send_hotkey_strg_v_browser_var4 (xaml, application_name, url, name):
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name"\"  EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name+"\"  EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">")
     xaml.write("        <ui:SendHotkey.Target>")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag='INPUT' /&gt;\" TimeoutMS=\"1000\">")
     xaml.write("            <ui:Target.TimeoutMS>")
@@ -693,11 +705,11 @@ def a_send_hotkey_strg_v_browser_var4 (xaml, application_name, url, name):
 
 
 def a_sequence_browser_typeinto_start(xaml, name):
-    xaml.write("          <Sequence DisplayName=\"Type Into "+name+"\" sap:VirtualizedContainerService.HintSize="418,728" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">")
+    xaml.write("          <Sequence DisplayName=\"Type Into "+name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">")
     xaml.write("              <sap:WorkflowViewStateService.ViewState>")
-    xaml.write("                <scg:Dictionary x:TypeArguments="x:String, x:Object">")
-    xaml.write("                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>")
-    xaml.write("                  <x:Boolean x:Key="IsPinned">False</x:Boolean>")
+    xaml.write("                <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">")
+    xaml.write("                  <x:Boolean x:Key=\"IsExpanded\">False</x:Boolean>")
+    xaml.write("                  <x:Boolean x:Key=\"IsPinned\">False</x:Boolean>")
     xaml.write("                </scg:Dictionary>")
     xaml.write("              </sap:WorkflowViewStateService.ViewState>")
 
@@ -790,7 +802,7 @@ def a_send_hotkey_strg_c_in_application (xaml,application_name, title, name, id)
     xaml.write("        </ui:SendHotkey.Target>")
     xaml.write("      </ui:SendHotkey>")
 
-def a_send_hotkey_strg_v_in_application (xaml,application_name, title, id):
+def a_send_hotkey_strg_v_in_application (xaml,application_name, title, id, name):
     xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey STRG+V in "+name+"\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">")
     xaml.write("        <ui:SendHotkey.Target>")
     xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' role=\'Element\' /&gt;\" TimeoutMS=\"1000\">")
