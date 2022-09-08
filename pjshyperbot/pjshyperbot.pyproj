@@ -47,6 +47,15 @@
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
     <Compile Include="manage.py" />
+    <Compile Include="lib_bausteine.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib2_bausteine.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Hauptprogramm.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="rpa_backend.py">
       <SubType>Code</SubType>
     </Compile>
