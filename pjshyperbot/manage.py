@@ -9,16 +9,16 @@ Command-line utility for administrative tasks.
 import os
 import sys
 
-from rpa_backend import *
-from rpa_prepare import databaseContact
+#from rpa_backend import *
+#from rpa_prepare import databaseContact
 
     
 if __name__ == '__main__':
     #xaml = open("test","w", encoding="utf-8")
     #writehead(xaml)
 
-    db = databaseContact()
-    type = db.getType()
+    #db = databaseContact()
+    #type = db.getType()
     
     #todo: Werte von type in array umschreiben
 
