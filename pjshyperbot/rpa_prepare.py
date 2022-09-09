@@ -15,6 +15,7 @@ import json
     #Lesen der Information zu einer Aufzeichnung (userid) aus postgres in einen cursor
     database()"""
 
+
 class databaseContact():
     print("Test")
     sqlread='''WITH al AS (
@@ -66,7 +67,7 @@ class databaseContact():
         ###########################
     try:
         #connect to sqlite3
-        cons=sqlite3.connect(dfile)
+        cons=sqlite3.connect(dfile,check_same_thread=False)
         curs=cons.cursor()
     except sqlite3.Error as e:
         print(e)
@@ -102,7 +103,11 @@ class databaseContact():
         sqltype='''SELECT DISTINCT u_type FROM logger''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
         u_type = databaseContact.curs.execute(sqltype).fetchall()
         return(u_type)
-        
+
+    def getDataFrontend(self):
+        sqltype='''SELECT DISTINCT u_type, u_name, a_url FROM logger''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
+        data = databaseContact.curs.execute(sqltype).fetchall()
+        return(data)
 """
 if __name__ == '__main__':
     main()"""
