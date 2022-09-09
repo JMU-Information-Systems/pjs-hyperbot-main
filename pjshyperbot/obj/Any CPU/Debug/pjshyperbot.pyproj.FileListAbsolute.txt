@@ -1,2 +1,0 @@
-C:\Users\trist\Documents\GitHub\pjs-hyperbot-main\pjshyperbot\obj\Any CPU\Debug\pjshyperbot.pyproj.SuggestedBindingRedirects.cache
-C:\Users\trist\Documents\GitHub\pjs-hyperbot-main\pjshyperbot\obj\Any CPU\Debug\pjshyperbot.pyproj.CoreCompileInputs.cache
