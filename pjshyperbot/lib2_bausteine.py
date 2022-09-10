@@ -10,7 +10,6 @@ def a_sequence_click_start(xaml, name):
 
 
 
-
 def a_sequence_send_hotkey_Strg_C_start (xaml, name):
     xaml.write("          <Sequence DisplayName=\"Send Hotkey STRG*C in "+ name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">\n")
     xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
@@ -1137,6 +1136,28 @@ def a_excel_application_scope (xaml, workbook_path): #Excel öffnen
     xaml.write("        </ActivityAction>\n")
     xaml.write("      </ui:ExcelApplicationScope.Body>\n")
     xaml.write("    </ui:ExcelApplicationScope>\n")
+
+def a_word_application_scope (xaml,workbook_path):
+    xaml.write("    <p:WordApplicationScope FilePath=\"{x:Null}\" DisplayName=\"Word öffnen\" sap:VirtualizedContainerService.HintSize=\"434,193.333333333333\" sap2010:WorkflowViewState.IdRef=\"WordApplicationScope_1\">\n")
+    xaml.write("      <p:WordApplicationScope.Body>\n")
+    xaml.write("        <ActivityAction x:TypeArguments=\"ui:WordDocument\">\n")
+    xaml.write("          <ActivityAction.Argument>\n"")
+    xaml.write("            <DelegateInArgument x:TypeArguments=\"ui:WordDocument\" Name=\"WordDocumentScope\" />\n")
+    xaml.write("          </ActivityAction.Argument>\n"")
+    xaml.write("          <Sequence DisplayName=\"Do\" sap:VirtualizedContainerService.HintSize=\"200,84.6666666666667\" sap2010:WorkflowViewState.IdRef=\"Sequence_20\">\n")
+    xaml.write("            <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("              <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
+    xaml.write("              </scg:Dictionary>\n")
+    xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("         </Sequence>\n")
+    xaml.write("        </ActivityAction>\n")
+    xaml.write("      </p:WordApplicationScope.Body>\n")
+    xaml.write("    </p:WordApplicationScope>\n")
+
+                                                                                                                                                                            title=\'"+title+"\'
+def a_open_application (xaml, application_name, windowtitle, root):
+    xaml.write("    <ui:OpenApplication ApplicationWindow="{x:Null}" Arguments="{x:Null}" TimeoutMS="{x:Null}" WorkingDirectory="{x:Null}" DisplayName=\"Open " +application_name+"\" FileName=\'"+root+"\' Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;">")
 
 
 def a_write_cell(xaml, cell, sheet_name,text, workbook_path ):

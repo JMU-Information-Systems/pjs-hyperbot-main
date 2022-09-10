@@ -115,7 +115,7 @@ def main():
                         lib2_bausteine.a_click_left_browser_schaltfläche_var_9(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
 
                         #Variante 10, über name
-                        lib2_bausteine.a_click_left_browser_schaltfläche_var_9(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
+                        lib2_bausteine.a_click_left_browser_schaltfläche_var_10(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
                         
                         #Ende der Sequenz, alles zwischendrin wird ausprobiert
                         lib2_bausteine.a_sequence_end(xaml)
@@ -146,6 +146,7 @@ def main():
                     lib2_bausteine.a_click_left_browser_checkbox_var3((xaml, str(row[column['a_applicationname']]),url,str(row[column['u_name']])))
                     
                     lib2_bausteine.a_sequence_end(xaml)
+                    
 
 
                                                                           
@@ -184,7 +185,7 @@ def main():
                         lib2_bausteine.a_type_into_browser_var3 (xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
 
                         #Variante 4, keine ID, kein Name, nur Tag=Input
-                        lib2_bausteine.a_type_into_browser_var4 ((xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']])))
+                        lib2_bausteine.a_type_into_browser_var4 (xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
 
                         #Ende der Sequenz, alles zwischendrin wird ausprobiert
                         lib2_bausteine.a_sequence_end (xaml)
@@ -193,7 +194,7 @@ def main():
                     #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
                     if (row[column['u_eventtype']]) == "CTRL + C":
                         #Starten der Sequenz
-                        lib2_bausteine.a_sequence_send_hotkey_start(xaml, str(row[column['u_name']]))
+                        lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml, str(row[column['u_name']]))
 
                         #Variante 1, Suche über ID, tag=Input, type=Text
                         lib2_bausteine.a_send_hotkey_strg_c_browser(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
@@ -212,7 +213,7 @@ def main():
                     #es wird etas eingefügt, Send Hotkey Strg+V
                     if (row[column['u_eventtype']]) == "CTRL + V":
                         
-                        lib2_bausteine.a_sequence_send_hotkey_start(xaml, str(row[column['u_name']]))
+                        lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml,str(row[column['u_name']]))
 
                         #Variante 1, Suche über ID, tag=Input, type=Text
                         lib2_bausteine.a_send_hotkey_strg_v_browser(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
@@ -267,7 +268,8 @@ def main():
                             lib2_bausteine.a_sequence_end(xaml)
 
                         if (row[column['u_eventtype']]) == "CTRL + C":
-                            lib2_bausteine.a_sequence_send_hotkey_start(xaml, str(row[column['u_name']]))
+                            
+                            lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml, str(row[column['u_name']]))
 
                             #über ID, name und role, uia Selektor
                             lib2_bausteine.a_send_hotkey_strg_c_in_explorer(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['u_name']]), str(row[column['automationid']]), str(row[column['u_type']]))
@@ -286,7 +288,7 @@ def main():
 
                         if (row[column['u_eventtype']]) == "CTRL + V":
                             
-                            lib2_bausteine.a_sequence_send_hotkey_start(xaml, str(row[column['u_name']]))
+                            lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml,str(row[column['u_name']]))
 
                             #über ID, name und role, uia Selektor
                             lib2_bausteine.a_send_hotkey_strg_v_in_explorer(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]), str(row[column['automationid']]), str(row[column['u_type']]))
@@ -335,6 +337,15 @@ def main():
 
                 #  gesonderte Bausteine für Klicks in Applikation
                     
+                    #if (row[column[a_applicationname]])=="excel":
+                    #    lib2_bausteine.a_excel_application_scope(xaml, hier muss Pfad rein)
+
+                    #if (row[column[a_applicationname]])=="msword":
+                    #    lib2_bausteine.a_word_application_scope(xaml, hier muss Pfad rein)
+
+                    #für andere Applikationen zum öffnen
+                    #lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]), root):)
+
                 
                     if (row[column['u_type']])=="Element":
                         if (row[column['u_eventtype']])=="Left-Down" or "Right-Down":
@@ -360,7 +371,7 @@ def main():
                             
                         if (row[column['u_eventtype']])=="CTRL + V":
                              #Start Sequenz
-                            lib2_bausteine.a_sequence_send_hotkey_start(xaml,str(row[column['u_name']]))
+                            lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml,str(row[column['u_name']]))
 
                             #Abfrage über automationid und role
                             lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]),str(row[column['u_type']]))
@@ -391,7 +402,7 @@ def main():
                         if (row[column['u_eventtype']]) == "CTRL + C":
                             
                             #Start Sequenz
-                            lib2_bausteine.a_sequence_send_hotkey_start(xaml,str(row[column['u_name']]))
+                            lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml, str(row[column['u_name']]))
 
                             #Abfrage über automationid und role
                             lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]),str(row[column['u_type']]))
@@ -407,7 +418,7 @@ def main():
 
                         if (row[column['u_eventtype']]) == "CTRL + V":
                              #Start Sequenz
-                            lib2_bausteine.a_sequence_send_hotkey_start(xaml,str(row[column['u_name']]))
+                            lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml,str(row[column['u_name']]))
 
                             #Abfrage über automationid und role
                             lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]),str(row[column['u_type']]))
