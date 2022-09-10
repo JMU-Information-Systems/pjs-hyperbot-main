@@ -4,7 +4,7 @@ import sys
 import sqlite3
 from tkinter.tix import COLUMN
 import psycopg2 #Modul um eine Verbindung zum Datenbanksystem postgres herzustellen, gewünschte Datenbank zu implementieren und SQL Befehle auszuführen
-import pandas
+import pandas as pd
 import urllib
 import xaml as xaml
 import lib_bausteine
@@ -66,9 +66,10 @@ def main():
             
         from urllib.parse import urlparse
         a= urlparse(str(row[column['a_url']]))
-        website_name = a.hostname
+        website_name = str(a.hostname)
         url = "*https://" + website_name + "*"
 
+        
             #Abfrage auf Applikationen
 
             #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten, deshalb hier andere Bausteine verwenden
@@ -76,39 +77,53 @@ def main():
         if (row[column['a_applicationname']]) == "msedge":
 
                 #Abfrage auf Aktivitäten über Spalte Type:
-                if (row[column['u_type']]) == "Schaltfläche": #dann ist es eine Klickakitivität
+                if (row[column['u_type']]) == "Schaltfläche" or "Kombinationsfeld": #dann ist es eine Klickakitivität
 
                     if str.__contains__(str(row[column['u_name']]), (("Minimieren") or ("Maximieren"))): #Ausschluß, dies wird nicht automatisiert
                         pass
 
                     #Art des Klicks:Linksklick?
                     if (row[column['u_eventtype']]) == "Left-Down":
+                        #Starten der Sequenz
+                        lib2_bausteine.a_sequence_click_start(xaml, str(row[column['u_name']]))
                         
-                        lib2_bausteine.a_sequence_browser_click_start(xaml, str(row[column['u_name']]))
-                        
+                        #Baustein Variante 1, über automationid, tag=Input, type=text
                         lib2_bausteine.a_click_left_browser_schaltfläche(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
                         
-                        # Baustein mit Tag+Type=Button in Kombination mit Abfrage nach Name des Feldes
-                        lib2_bausteine.a_click_left_browser_schaltfläche_var_2(xaml, str(row[column['a_applicationname']]), url, str(row[column['u_name']]))
+                        # Baustein Variante 2, nur automationid 
+                        lib2_bausteine.a_click_left_browser_schaltfläche_var_2(xaml, str(row[column['a_applicationname']]), url, str(row[column['u_name']]), str(row[column['automationid']])))
                         
-                        #Baustein mit Tag=Button, Type=Submit in Kombination mit Abfrage nach Name des Feldes
+                        #Baustein Variante 3, mit  mit Tag+Type=Button in Kombination mit Abfrage nach Name (aaname) des Feldes 
                         lib2_bausteine.a_click_left_browser_schaltfläche_var_3(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
                         
-                        # Variante 4,  Abfrage auf name und Tag A
+                        # Baustein Variante 4, Tag=Button, Type=Submit in Kombination mit Abfrage nach Name des Feldes (aaname)
                         lib2_bausteine.a_click_left_browser_schaltfläche_var_4(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
                         
-                        #Baustein der nur name enthält
+                        #Baustein Variante 5, aaname und Tag=A 
                         lib2_bausteine.a_click_left_browser_schaltfläche_var_5(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
                         
-                        #Baustein mit Name & Tag=SPAN
+                        #Baustein Variante 6, nur aaname
                         lib2_bausteine.a_click_left_browser_schaltfläche_var_6(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
 
+                        #Variante 7, Baustein mit Name & Tag=SPAN
+                        lib2_bausteine.a_click_left_browser_schaltfläche_var_7(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
+
+                        #Variante 8, über aaname und tag=Input
+                        lib2_bausteine.a_click_left_browser_schaltfläche_var_8(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
+                        
+                        #Variante 9, über aaname und tag= Select
+                        lib2_bausteine.a_click_left_browser_schaltfläche_var_9(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
+
+                        #Variante 10, über name
+                        lib2_bausteine.a_click_left_browser_schaltfläche_var_9(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
+                        
+                        #Ende der Sequenz, alles zwischendrin wird ausprobiert
                         lib2_bausteine.a_sequence_end(xaml)
 
 
                     #Rechtsklick?
                     if (row[column['u_eventtype']]) == "Right-down":
-                        lib2_bausteine.a_click_right_browser_schaltfläche(xaml,str(row[column['a_applicationname']]),url,str(row[column['automationid']]))
+                        lib2_bausteine.a_click_right_browser_schaltfläche(xaml,str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
                     
                     #Schließen des aktuellen Fensters
                     if (row[column['u_name']])=="Schließen" or "schließen" or "tab schließen": #name
@@ -118,14 +133,24 @@ def main():
                 #Abfrage auf andere Eventtypen im Browser
                         
                 if (row[column['u_type']]) == "checkbox":
-                    lib2_bausteine.a_click_left_browser_checkbox(xaml, str(row[column['a_applicationname']]),url,str(row[column['automationid']]))
+                    #Starten der Sequenz
+                    lib2_bausteine.a_sequence_click_checkbox_start(xaml,str(row[column['u_name']]))
 
-                if (row[column['u_type']]) == "Kombinationsfeld":
-                    lib2_bausteine.a_click_kombinationsfeld (xaml, str(row[column['a_applicationname']]), url, str(row[column['u_name']]))
-                                     
+                    #Variante 1, über ID
+                    lib2_bausteine.a_click_left_browser_checkbox(xaml, str(row[column['a_applicationname']]),url,str(row[column['u_name']]), str(row[column['automationid']]))
+
+                    #Variante 2, über name
+                    lib2_bausteine.a_click_left_browser_checkbox_var2((xaml, str(row[column['a_applicationname']]),url,str(row[column['u_name']])))
+
+                    #Variante 3, über aaname
+                    lib2_bausteine.a_click_left_browser_checkbox_var3((xaml, str(row[column['a_applicationname']]),url,str(row[column['u_name']])))
+                    
+                    lib2_bausteine.a_sequence_end(xaml)
+
+
                                                                           
                 if (row[column['u_type']])== "Option":
-                    lib2_bausteine.a_click_single_browser_optionsfeld(xaml,str(row[column['a_applicationname']]), str(row[column['u_name']]), str(row[column['name']]))
+                    lib2_bausteine.a_click_single_browser_optionsfeld(xaml,str(row[column['a_applicationname']]), url, str(row[column['u_name']]), str(row[column['automationid']]))
                     lib_bausteine.a_comment_optionsfeld(xaml)
                
                 #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
@@ -145,19 +170,20 @@ def main():
                 if (row[column['u_type']]) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
                     
                     if (row[column['u_eventtype']]) == "Left-Down":
-                        #Start der Sequenz
-                        lib2_bausteine.a_sequence_browser_typeinto_start(xaml)
                         
-                        #nur mit ID
+                        #Start der Sequenz
+                        lib2_bausteine.a_sequence_typeinto_start(xaml, str(row[column['u_name']]))
+                        
+                        #Variante 1, Suche über ID, tag=Input, type=Text
                         lib2_bausteine.a_type_into_browser(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
                         
-                        #keine ID, über Name und Tag=Input, Type=Text
+                        #Variante 2,wenn keine ID, Suche über Name und Tag=Input, Type=Text
                         lib2_bausteine.a_type_into_browser_var2 (xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
                         
-                        #keine ID, kein Name, nur Tag=Input, type =text
+                        #Variante 3, keine ID, kein Name, nur Tag=Input, type =text
                         lib2_bausteine.a_type_into_browser_var3 (xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
 
-                        #keine ID, kein Name, nur Tag=Input
+                        #Variante 4, keine ID, kein Name, nur Tag=Input
                         lib2_bausteine.a_type_into_browser_var4 ((xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']])))
 
                         #Ende der Sequenz, alles zwischendrin wird ausprobiert
@@ -166,18 +192,19 @@ def main():
 
                     #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
                     if (row[column['u_eventtype']]) == "CTRL + C":
-                        lib2_bausteine.a_sequence_browser_send_hotkey_start(xaml, str(row[column['u_name']]))
+                        #Starten der Sequenz
+                        lib2_bausteine.a_sequence_send_hotkey_start(xaml, str(row[column['u_name']]))
 
-                        #nur ID
+                        #Variante 1, Suche über ID, tag=Input, type=Text
                         lib2_bausteine.a_send_hotkey_strg_c_browser(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
 
-                        #keine ID, über Name und Tag=Input, Type=Text
+                        #Variante 2,wenn keine ID, Suche über Name und Tag=Input, Type=Text
                         lib2_bausteine.a_send_hotkey_strg_c_browser_var2(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
 
-                        #keine ID, kein Name, nur Tag=Input, type =text
+                        #Variante 3, keine ID, kein Name, nur Tag=Input, type =text
                         lib2_bausteine.a_send_hotkey_strg_c_browser_var3(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
 
-                        #keine ID, kein Name, nur Tag=Input
+                        #Variante 4, keine ID, kein Name, nur Tag=Input
                         lib2_bausteine.a_send_hotkey_strg_c_browser_var4 (xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
 
                         lib2_bausteine.a_sequence_end(xaml)
@@ -185,18 +212,18 @@ def main():
                     #es wird etas eingefügt, Send Hotkey Strg+V
                     if (row[column['u_eventtype']]) == "CTRL + V":
                         
-                        lib2_bausteine.a_sequence_browser_send_hotkey_start(xaml, str(row[column['u_name']]))
+                        lib2_bausteine.a_sequence_send_hotkey_start(xaml, str(row[column['u_name']]))
 
-                        #nur ID
+                        #Variante 1, Suche über ID, tag=Input, type=Text
                         lib2_bausteine.a_send_hotkey_strg_v_browser(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
 
-                        #keine ID, über Name und Tag=Input, Type=Text
+                        #Variante 2,wenn keine ID, Suche über Name und Tag=Input, Type=Text
                         lib2_bausteine.a_send_hotkey_strg_v_browser_var2(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
 
-                        #keine ID, kein Name, nur Tag=Input, type =text
+                        #Variante 3, keine ID, kein Name, nur Tag=Input, type =text
                         lib2_bausteine.a_send_hotkey_strg_v_browser_var3(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
 
-                        #keine ID, kein Name, nur Tag=Input
+                        #Variante 4, keine ID, kein Name, nur Tag=Input
                         lib2_bausteine.a_send_hotkey_strg_v_browser_var4 (xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]))
 
                         lib2_bausteine.a_sequence_end(xaml) 
@@ -204,22 +231,100 @@ def main():
                        
 
                     if (row[column['u_eventtype']]) == "ENTER":
+                        #Baustein für Enter
                         lib2_bausteine.a_press_enter(xaml)
 
 
+        
+                        
+                        
+                        
+                        
         else: #dann keine Browseraktivität, sondern innerhalb Applikation -> gesonderte Bausteine, dann muss mit uia Tags gearbeitet werden
 
-                #Explorer, wiederum gesonderte Bausteine da keine automationid, sondern name
+                #Explorer, wiederum gesonderte Bausteine
                 if (row[column['a_applicationname']])=="explorer": #dann ist es eine Aktivität im Explorer
 
                     if (row[column['u_type']]) == "Bearbeiten": #dann Keystroke
-                        lib2_bausteine.a_type_into_explorer(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['role']]))  # xaml, application_name, title, id, name
-                    
+                        
+                        if (row[column['u_eventtype']]) == "Left-Down":
+                            #Starten der Sequenz
+                            lib2_bausteine.a_sequence_typeinto_start(xaml, str(row[column['u_name']]))
+                        
+                            #Variante 1, Abfrage auf automationid, name und role
+                            lib2_bausteine.a_type_into_explorer(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['u_type']]))  # xaml, application_name, title, id, name
+                        
+                            #Variante 2, Abfrage auf automationid und name
+                            lib2_bausteine.a_type_into_explorer_var2(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]), str(row[column['automationid']])) 
+
+                            #Variante 3, Abfrage auf name und role
+                            lib2_bausteine.a_type_into_explorer_var3(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]),  str(row[column['role']])) 
+
+                            #Variante 4, Abfrage nur auf name
+                            lib2_bausteine.a_type_into_explorer_var4(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']])) 
+
+                            #Ende der Sequenz
+                            lib2_bausteine.a_sequence_end(xaml)
+
+                        if (row[column['u_eventtype']]) == "CTRL + C":
+                            lib2_bausteine.a_sequence_send_hotkey_start(xaml, str(row[column['u_name']]))
+
+                            #über ID, name und role, uia Selektor
+                            lib2_bausteine.a_send_hotkey_strg_c_in_explorer(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['u_name']]), str(row[column['automationid']]), str(row[column['u_type']]))
+                            
+                            #Variante 2, Abfrage auf automationid und name
+                            lib2_bausteine.a_send_hotkey_strg_c_in_explorer_var2(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]), str(row[column['u_type']]))
+                            
+                            #Variante 3, Abfrage auf name und role
+                            lib2_bausteine.a_send_hotkey_strg_c_in_explorer_var3(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]),  str(row[column['u_type']]))
+                            
+                            #Variante 4, Abfrage nur auf name
+                            lib2_bausteine.a_send_hotkey_strg_c_in_explorer_var4(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']])) 
+                           
+                            #Ende der Sequenz
+                            lib2_bausteine.a_sequence_end(xaml)
+
+                        if (row[column['u_eventtype']]) == "CTRL + V":
+                            
+                            lib2_bausteine.a_sequence_send_hotkey_start(xaml, str(row[column['u_name']]))
+
+                            #über ID, name und role, uia Selektor
+                            lib2_bausteine.a_send_hotkey_strg_v_in_explorer(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]), str(row[column['automationid']]), str(row[column['u_type']]))
+                            
+                            #Variante 2, Abfrage auf automationid und name
+                            lib2_bausteine.a_send_hotkey_strg_v_in_explorer_var2(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]), str(row[column['u_type']]))
+                            
+                            #Variante 3, Abfrage auf name und role
+                            lib2_bausteine.a_send_hotkey_strg_v_in_explorer_var3(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]),  str(row[column['u_type']]))
+                            
+                             #Variante 4, Abfrage nur auf name
+                            lib2_bausteine.a_send_hotkey_strg_v_in_explorer_var4(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']])) 
+                           
+                            #Ende der Sequenz
+                            lib2_bausteine.a_sequence_end(xaml)
+
                     else: #dann immer Klick
+                        
                         if (row[column['u_eventtype']])=="Left-Down":
-                            lib2_bausteine.a_click_left_in_explorer (xaml, str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['type']])) #xaml, windowtitle, Name des Feldes, role
+                            
+                            #Start der Sequenz
+                            lib2_bausteine.a_sequence_click_start(xaml,str(row[column['u_name']]))
+                            
+                            #Variante 1, Abfrage auf name und role
+                            lib2_bausteine.a_click_left_in_explorer (xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]), str(row[column['u_type']])) #xaml, windowtitle, Name des Feldes, role
+
+                            #Variante 2, Abfrage nur auf name
+                            lib2_bausteine.a_click_left_in_explorer_var_2 (xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['u_name']]))
+                            
+                            #Variante 3, Abfrage auf id und name
+                            lib2_bausteine.a_click_left_in_explorer_var_3(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['automationid']]), str(row[column['u_name']]))
+
+                            #Ende der Sequenz
+                            lib2_bausteine.a_sequence_end(xaml)
+
+
                         else:
-                            lib2_bausteine.a_click_right_in_explorer(xaml, str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['type']]))
+                            lib2_bausteine.a_click_right_in_explorer(xaml, str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['u_type']]))
                     
                     if (row[column['u_eventtype']]) == "ENTER":
                         lib2_bausteine.a_press_enter(xaml)
@@ -229,31 +334,123 @@ def main():
                 else: #dann ist es eine Applikation
 
                 #  gesonderte Bausteine für Klicks in Applikation
+                    
+                
                     if (row[column['u_type']])=="Element":
-                        if (row[column['u_eventtype']])=="Left-Down":
-                            lib2_bausteine.a_click_single_in_application_element(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
-                        if (row[column['u_eventtype']]) == "Right-Down":
-                            lib2_bausteine.a_click_right_in_application_element(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
+                        if (row[column['u_eventtype']])=="Left-Down" or "Right-Down":
+                            pass #dann wird zB nur eine Excel Zeile angeklickt, bekommen wir schon über die nachfolgende Aktion
+                                
                         if (row[column['u_eventtype']])=="CTRL + C":
-                            lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
-                        if (row[column['u_eventtype']])=="CTRL + V":
-                            lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
+                            #Start Sequenz
+                            lib2_bausteine.a_sequence_send_hotkey_start(xaml,str(row[column['u_name']]))
 
-                    if (row[column['u_type']])=="Schaltfläche":
-                        if (row[column['u_eventtype']]) == "Left-Down":
-                            lib2_bausteine.a_click_single_in_application_schaltfläche(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
-                        else:
-                            lib2_bausteine.a_click_right_in_application_schaltfläche(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
+                            #Abfrage über automationid und role
+                            lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]),str(row[column['u_type']]))
+                        
+                            #Variante 2, über name und role
+                            lib2_bausteine.a_send_hotkey_strg_c_in_application_var_2(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]), str(row[column['u_type']]))
+                          
+                            #Variante 3, über aaname und ctrl Tag
+                            lib2_bausteine.a_send_hotkey_strg_c_in_application_var_3(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]))
+
+                            #End Sequenz
+                            lib2_bausteine.a_sequence_end(xaml)
+
+
+                            
+                        if (row[column['u_eventtype']])=="CTRL + V":
+                             #Start Sequenz
+                            lib2_bausteine.a_sequence_send_hotkey_start(xaml,str(row[column['u_name']]))
+
+                            #Abfrage über automationid und role
+                            lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]),str(row[column['u_type']]))
+                        
+                            #Variante 2, über name und role
+                            lib2_bausteine.a_send_hotkey_strg_v_in_application_var_2(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]), str(row[column['u_type']]))
+                          
+                            #Variante 3, über aaname und ctrl Tag
+                            lib2_bausteine.a_send_hotkey_strg_v_in_application_var_3(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]))
+
+                            #End Sequenz
+                            lib2_bausteine.a_sequence_end(xaml)
 
                     if (row[column['u_type']]) == "Bearbeiten":
                         if (row[column['u_eventtype']]) == "Left-Down":
-                            lib2_bausteine.a_type_into_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
+                            #Start Sequenz
+                            lib2_bausteine.a_sequence_typeinto_start(xaml,str(row[column['u_name']]))
+
+                            #Variante 1, über automationid und role
+                            lib2_bausteine.a_type_into_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]), str(row[column['automationid']]),str(row[column['u_type']]))
+
+                            #Variante 2, über name und role
+                            lib2_bausteine.a_type_into_application_var_2(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]), str(row[column['u_type']]))
+
+                            #Variante 3, über aaname und ctrl Tag
+                            lib2_bausteine.a_type_into_application_var3(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]))
 
                         if (row[column['u_eventtype']]) == "CTRL + C":
-                            lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
+                            
+                            #Start Sequenz
+                            lib2_bausteine.a_sequence_send_hotkey_start(xaml,str(row[column['u_name']]))
+
+                            #Abfrage über automationid und role
+                            lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]),str(row[column['u_type']]))
+                        
+                            #Variante 2, über name und role
+                            lib2_bausteine.a_send_hotkey_strg_c_in_application_var_2(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]), str(row[column['u_type']]))
+                          
+                            #Variante 3, über aaname und ctrl Tag
+                            lib2_bausteine.a_send_hotkey_strg_c_in_application_var_3(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]))
+
+                            #End Sequenz
+                            lib2_bausteine.a_sequence_end(xaml)
 
                         if (row[column['u_eventtype']]) == "CTRL + V":
-                            lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
+                             #Start Sequenz
+                            lib2_bausteine.a_sequence_send_hotkey_start(xaml,str(row[column['u_name']]))
+
+                            #Abfrage über automationid und role
+                            lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]),str(row[column['u_type']]))
+                        
+                            #Variante 2, über name und role
+                            lib2_bausteine.a_send_hotkey_strg_v_in_application_var_2(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]), str(row[column['u_type']]))
+                          
+                            #Variante 3, über aaname und ctrl Tag
+                            lib2_bausteine.a_send_hotkey_strg_v_in_application_var_3(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]))
+
+                            #End Sequenz
+                            lib2_bausteine.a_sequence_end(xaml)
+                            
+                           
+                            
+                            
+                    else: #um alle Klickaktivitäten abzudecken
+                        
+                        if (row[column['u_eventtype']]) == "Left-Down":
+                            #Start Sequenz
+                            lib2_bausteine.a_sequence_click_start(xaml,str(row[column['u_name']]))
+                            
+                            #Variante 1, über name und role
+                            lib2_bausteine.a_click_single_in_application_var2(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]), str(row[column['u_name']]), str(row[column['u_type']]))
+                           
+                        
+                            #Variante 2, über automationid, name und role
+                            lib2_bausteine.a_click_single_in_application(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]), str(row[column['u_name']]),str(row[column['u_type']]))
+                           
+
+                            #Variante 3, über name und Tag ctrl
+                            lib2_bausteine.a_click_single_in_application_var3(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]), str(row[column['u_name']]))
+                            
+                            #Variante 4, über aaname und tag ctrl
+                            lib2_bausteine.a_click_single_in_application_var4(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]), str(row[column['u_name']]))
+                          
+                            #Ende Sequenz
+                            lib2_bausteine.a_sequence_end(xaml)
+
+                        else:
+                            lib2_bausteine.a_click_right_in_application_schaltfläche(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]))
+
+                    
 
                 if str.__contains__(str(row[column['u_name']]), (("Kalender") or ("Calendar") or ("Calend"))):
                     lib_bausteine.a_comment_calendar_picker(xaml)
