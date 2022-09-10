@@ -11,7 +11,7 @@ import sys
 
 #from rpa_backend import *
 #from rpa_prepare import databaseContact
-
+from HTML_Extraktion import HTMLExtraction
     
 if __name__ == '__main__':
     #xaml = open("test","w", encoding="utf-8")
@@ -19,7 +19,9 @@ if __name__ == '__main__':
 
     #db = databaseContact()
     #type = db.getType()
-    
+    extractor = HTMLExtraction()
+    variables = extractor.getVariables()
+
     #todo: Werte von type in array umschreiben
 
     os.environ.setdefault(
