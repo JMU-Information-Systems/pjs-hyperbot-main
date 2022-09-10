@@ -11,8 +11,17 @@ def a_sequence_click_start(xaml, name):
 
 
 
-def a_sequence_send_hotkey_start (xaml, name):
-    xaml.write("          <Sequence DisplayName=\"Send Hotkey Strg + C in "+ name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">\n")
+def a_sequence_send_hotkey_Strg_C_start (xaml, name):
+    xaml.write("          <Sequence DisplayName=\"Send Hotkey STRG*C in "+ name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">\n")
+    xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("                <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsExpanded\">False</x:Boolean>\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsPinned\">False</x:Boolean>\n")
+    xaml.write("                </scg:Dictionary>\n")
+    xaml.write("              </sap:WorkflowViewStateService.ViewState>\n")
+
+def a_sequence_send_hotkey_Strg_V_start (xaml, name):
+    xaml.write("          <Sequence DisplayName=\"Send Hotkey STRG*V in "+ name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">\n")
     xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
     xaml.write("                <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
     xaml.write("                  <x:Boolean x:Key=\"IsExpanded\">False</x:Boolean>\n")
@@ -508,7 +517,7 @@ def a_send_hotkey_strg_c_browser_var4 (xaml, application_name, url, name):
 
 
 def a_send_hotkey_strg_v_browser (xaml, application_name, url, name, id):
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name+"\" ContinueOnError=\"True\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">\n")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: "+name+"\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">\n")
     xaml.write("        <ui:SendHotkey.Target>\n")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag='INPUT' type=\'text\' id=\'"+id+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
@@ -520,7 +529,7 @@ def a_send_hotkey_strg_v_browser (xaml, application_name, url, name, id):
 
 
 def a_send_hotkey_strg_v_browser_var2 (xaml, application_name, url, name):
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: " +name+"\" ContinueOnError=\"True\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">\n")
+    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+V in: " +name+"\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">\n")
     xaml.write("        <ui:SendHotkey.Target>\n")
     xaml.write("          <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag='INPUT' type=\'text\' aaname=\'"+name+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
@@ -552,10 +561,6 @@ def a_send_hotkey_strg_v_browser_var4 (xaml, application_name, url, name):
     xaml.write("          </ui:Target>\n")
     xaml.write("        </ui:SendHotkey.Target>\n")
     xaml.write("      </ui:SendHotkey>\n")
-
-
-Keystroke Logs
-
 
 
 def a_sequence_typeinto_start(xaml, name):
