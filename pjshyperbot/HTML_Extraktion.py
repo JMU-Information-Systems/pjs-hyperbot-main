@@ -71,8 +71,3 @@ class HTMLExtraction():
         return (combined)
 
 
-
-
-
-
-
