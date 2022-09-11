@@ -10,7 +10,6 @@ from tarfile import ENCODING
 import psycopg2 #Modul um eine Verbindung zum Datenbanksystem postgres herzustellen, gew?nschte Datenbank zu implementieren und SQL Befehle auszuf?hren
 import json
 
-#TestVersion
 
 """def main():
     #Lesen der Information zu einer Aufzeichnung (userid) aus postgres in einen cursor
