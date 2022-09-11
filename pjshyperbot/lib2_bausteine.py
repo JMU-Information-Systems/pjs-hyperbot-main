@@ -9,7 +9,6 @@ def a_sequence_click_start(xaml, name):
     xaml.write("              </sap:WorkflowViewStateService.ViewState>\n")
 
 
-
 def a_sequence_send_hotkey_Strg_C_start (xaml, name):
     xaml.write("          <Sequence DisplayName=\"Send Hotkey STRG*C in "+ name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">\n")
     xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
@@ -77,7 +76,7 @@ def a_edge_browser_end (xaml):
 
 #Standard Baustein mit Test auf AutomationID, type=text, tag=Input
 def a_click_left_browser_schaltfläche (xaml,application_name,url, aaname, id):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf " +aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf " + aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -99,7 +98,7 @@ def a_click_left_browser_schaltfläche (xaml,application_name,url, aaname, id):
 
 #Test nur auf AutomationID
 def a_click_left_browser_schaltfläche_var_2 (xaml,application_name,url, aaname, id):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf " +aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf " + aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -341,8 +340,8 @@ def a_click_left_browser_checkbox (xaml,application_name,url, aaname, id):
     xaml.write("            </ui:Click>\n")
 
 #über name
- def a_click_left_browser_checkbox_var2 (xaml,application_name,url, name):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox+" +aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
+def a_click_left_browser_checkbox_var2 (xaml,application_name,url, name):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox+" +name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -657,8 +656,8 @@ def a_click_single_in_application_var2 (xaml,application_name, title, automation
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
     xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetX\n>")
-    xaml.write("                  <ui:CursorPosition.OffsetY\n>")
+    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
+    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
     xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
     xaml.write("                  </ui:CursorPosition.OffsetY>\n")
     xaml.write("                </ui:CursorPosition>\n")
@@ -679,8 +678,8 @@ def a_click_single_in_application_var3 (xaml,application_name, title, name):
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
     xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetX\n>")
-    xaml.write("                  <ui:CursorPosition.OffsetY\n>")
+    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
+    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
     xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
     xaml.write("                  </ui:CursorPosition.OffsetY>\n")
     xaml.write("                </ui:CursorPosition>\n")
@@ -1141,9 +1140,9 @@ def a_word_application_scope (xaml,workbook_path):
     xaml.write("    <p:WordApplicationScope FilePath=\"{x:Null}\" DisplayName=\"Word öffnen\" sap:VirtualizedContainerService.HintSize=\"434,193.333333333333\" sap2010:WorkflowViewState.IdRef=\"WordApplicationScope_1\">\n")
     xaml.write("      <p:WordApplicationScope.Body>\n")
     xaml.write("        <ActivityAction x:TypeArguments=\"ui:WordDocument\">\n")
-    xaml.write("          <ActivityAction.Argument>\n"")
+    xaml.write("          <ActivityAction.Argument>\n")
     xaml.write("            <DelegateInArgument x:TypeArguments=\"ui:WordDocument\" Name=\"WordDocumentScope\" />\n")
-    xaml.write("          </ActivityAction.Argument>\n"")
+    xaml.write("          </ActivityAction.Argument>\n")
     xaml.write("          <Sequence DisplayName=\"Do\" sap:VirtualizedContainerService.HintSize=\"200,84.6666666666667\" sap2010:WorkflowViewState.IdRef=\"Sequence_20\">\n")
     xaml.write("            <sap:WorkflowViewStateService.ViewState>\n")
     xaml.write("              <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
@@ -1155,10 +1154,24 @@ def a_word_application_scope (xaml,workbook_path):
     xaml.write("      </p:WordApplicationScope.Body>\n")
     xaml.write("    </p:WordApplicationScope>\n")
 
-                                                                                                                                                                            title=\'"+title+"\'
+                                                                                                                                                                          
 def a_open_application (xaml, application_name, windowtitle, root):
-    xaml.write("    <ui:OpenApplication ApplicationWindow="{x:Null}" Arguments="{x:Null}" TimeoutMS="{x:Null}" WorkingDirectory="{x:Null}" DisplayName=\"Open " +application_name+"\" FileName=\'"+root+"\' Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;">")
-
+    xaml.write("    <ui:OpenApplication ApplicationWindow=\"{x:Null}\" Arguments=\"{x:Null}\" TimeoutMS=\"{x:Null}\" WorkingDirectory=\"{x:Null}\" DisplayName=\"Open " +application_name+"\" FileName=\'"+root+"\' Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;\" >\n")
+    xaml.write("      <ui:OpenApplication.Body>\n")
+    xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
+    xaml.write("          <ActivityAction.Argument>\n")
+    xaml.write("            <DelegateInArgument x:TypeArguments=\"x:Object\" Name=\"ContextTarget\" />\n")
+    xaml.write("          </ActivityAction.Argument>\n")
+    xaml.write("          <Sequence DisplayName=\"Do\" sap:VirtualizedContainerService.HintSize=\"200,84.6666666666667\" sap2010:WorkflowViewState.IdRef=\"Sequence_21\">\n")
+    xaml.write("            <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("              <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
+    xaml.write("              </scg:Dictionary>\n")
+    xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("          </Sequence>\n")
+    xaml.write("        </ActivityAction>\n")
+    xaml.write("      </ui:OpenApplication.Body>\n")
+    xaml.write("    </ui:OpenApplication>\n")
 
 def a_write_cell(xaml, cell, sheet_name,text, workbook_path ):
     xaml.write("    <ui:WriteCell Cell=\""+cell+"\" DisplayName=\"Write Cell\" SheetName=\""+sheet_name+"\" Text=\""+text+"\" WorkbookPath=\""+workbook_path+"\" />\n")
@@ -1166,8 +1179,39 @@ def a_write_cell(xaml, cell, sheet_name,text, workbook_path ):
 
 #Excel Aktivitäten, müssen im Body der Excel Application Scope sein
 
+#um Bereich der Excel Datei auszulesen
+def a_sequence_read_range_start (xaml):
+    xaml.write("          <Sequence DisplayName=\"Read Range\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\" >\n")
+    xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("                <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsExpanded\">False</x:Boolean>\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsPinned\">False</x:Boolean>\n")
+    xaml.write("                </scg:Dictionary>\n")
+    xaml.write("              </sap:WorkflowViewStateService.ViewState>\n")
+
+
+
 def a_read_range(xaml, outputtable_name, range, sheet_name, workbook_path): #Bereich aus Excel Datei auslesen und in Outputtabelle_name speichern
     xaml.write("    <ui:ReadRange AddHeaders=\"True\" DataTable=\""+outputtable_name+"\" DisplayName=\"Read Range\" Range=\""+range+"\" SheetName=\""+sheet_name+"\" WorkbookPath=\""+workbook_path+"\" />\n")
+
+#Kommentar dazu
+def a_comment_read_range (xaml):
+    xaml.write("            <ui:Comment Text=\"Read Range: Im Prozessablauf wurde öfters per STRG+C etwas aus einer ExcelDatei kopiert. In diesem automatisch generierten XAML wird dies über die Aktivität 'Send Hotkey Strg+C' gelöst, sinnvoll wäre zur Optimierung auch eine 'read range' Aktivität, die den gewünschten Bereich einer Excel Tabelle ausliest und in einer neuen Datentabelle speichert, auf die in folgenden Aktivitäten zugegriffen werden kann  \" />\n")
+
+def a_sequence_data_scraping_start (xaml):
+    xaml.write("          <Sequence DisplayName=\"Data Scraping\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\" >\n")
+    xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("                <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsExpanded\">False</x:Boolean>\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsPinned\">False</x:Boolean>\n")
+    xaml.write("                </scg:Dictionary>\n")
+    xaml.write("              </sap:WorkflowViewStateService.ViewState>\n")
+
+
+def a_comment_data_scraping (xaml): #Abfrage über Frontend
+    xaml.write("            <ui:Comment Text=\"Data Scraping: Im Prozessablauf sollen Daten aus dem Browser gescrapet und in eine andere Applikation (z.B. Excel) übertragen werden. Hierzu bietet UiPath die Option 'Tabellenextraktion' die in der oberen Menüleiste ausgewählt werden kann. In einer Schritt für Schritt Anleitung werden die zu scrapteten Elemente direkt mit UiPath ausgewählt und die Ergebnisse in einer separaten Datentabelle abgespeichert. Diese können anschließend mittels der Aktivität 'Write Range' in Excel übertragen werden. Diese Aktivität wurde ebenfalls automatisiert hinzugefügt'\" />\n")
+
+
 
 def a_read_cell (xaml, output_var, cell, sheet_name): #Excel Zelle auslesen
     #Zelle steht in automationId
@@ -1185,6 +1229,10 @@ def a_for_each_row (xaml, outputtable_name): #For Schleife, für jede Zeile besti
     xaml.write("                </ActivityAction>\n")
     xaml.write("              </ui:ForEachRow.Body>\n")
     xaml.write("            </ui:ForEachRow>\n")
+   # \""+[outputtable_name]+"\"
+def a_write_range_excel (xaml, datatable, sheetname, workbookpath):
+    xaml.write("    <ui:WriteRange StartingCell=\"{x:Null}\" AddHeaders=\"False\" DataTable=\""[+datatable]+"\" DisplayName=\"Write Range\" sap:VirtualizedContainerService.HintSize=\"334,114.666666666667\" sap2010:WorkflowViewState.IdRef=\"WriteRange_1\" SheetName=\""+sheetname+"\" WorkbookPath=\""+workbookpath+"\" />\n")
+
 
 def a_excel_auto_save (xaml): #speichert excel automatisch, einfach immer einfügen
     xaml.write("            <ui:ExcelSaveWorkbook DisplayName=\"Save Workbook\"/>\n")

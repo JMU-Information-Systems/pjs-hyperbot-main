@@ -39,15 +39,45 @@ def main():
 
     try:
        #Connect to postgres
-       con=psycopg2.connect(
-       host="132.187.102.173", #Host-IP
-       database="processanalyzer", #Name der DB
-       user="postgres", #user
-       password="postgres") #password
-       cursor=con.cursor()
+       #con=psycopg2.connect(
+       #host="132.187.102.173", #Host-IP
+       #database="processanalyzer", #Name der DB
+       #user="postgres", #user
+       #password="postgres") #password
+       #cursor=con.cursor()
     
         #Ausführung des SQl Statements, userid wird aus json ausgelesen, automtationid und a_applicationname darf nicht leer sein, Order by timestamp
         #cursor.execute("Select * from public.th_alles where uilog_userid=%s and automationid != '' and automationid is not Null and a_applicationname !='' and a_applicationname is not null order by timestamp;",[userid]) #sql statement
+       
+        #Connect to SQLLite
+        #db_pfad = ("C:\\Program Files\\DB Browser for SQLite\\test2.db")
+
+        #l_database = sqlite3.connect(db_pfad)
+        #cursor = l_database.cursor()
+        #cursor.execute("Select * from testdaten3")  # importiere Datenbank
+        #strg_c_excel= cursor.execute("SELECT COUNT (*) FROM testdatensatz2 where a_applicationname='excel' and u_eventtype='CTRL + C'")
+        #
+        #number_of_strg_c_excel= strg_c_excel.fetchone()[0]
+        
+
+
+        #if number_of_strg_c_excel>=3:
+            #Start der Sequenz:
+            #lib2_bausteine.a_sequence_read_range_start (xaml):
+            #lib2_bausteine.a_read_range(outputtable_name, range, sheet_name, workbook_path)) Variablen müssen vom Frontend kommen
+            #lib2_bausteine.a_comment_read_range (xaml)
+            #Ende der Sequenz
+            #lib2_bausteine.a_sequence_end(xaml)
+
+
+        #wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte
+        #Start der Sequenz
+        #lib2_bausteine.a_sequence_data_scraping_start
+        #lib2_bausteine.a_comment_data_scraping (xaml):
+        #lib2_bausteine.a_write_range_excel (xaml, datatable, sheetname, workbookpath): #aus Frontend die Variablen
+        #Ende der Sequenz
+        #lib2_bausteine.a_sequence_end(xaml)
+
 
     #Sodass nicht auf einzelne Spaltennummern zugegriffen werden muss, sondern der Zugriff über den Spaltennamen erfolgt
        def matching(cursor):
@@ -75,6 +105,9 @@ def main():
             #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten, deshalb hier andere Bausteine verwenden
 
         if (row[column['a_applicationname']]) == "msedge":
+                
+                if str.__contains__(str(row[column['u_name']]), (("Kalender") or ("Calendar") or ("Calend"))):
+                    lib_bausteine.a_comment_calendar_picker(xaml)
 
                 #Abfrage auf Aktivitäten über Spalte Type:
                 if (row[column['u_type']]) == "Schaltfläche" or "Kombinationsfeld": #dann ist es eine Klickakitivität
@@ -91,7 +124,7 @@ def main():
                         lib2_bausteine.a_click_left_browser_schaltfläche(xaml, str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
                         
                         # Baustein Variante 2, nur automationid 
-                        lib2_bausteine.a_click_left_browser_schaltfläche_var_2(xaml, str(row[column['a_applicationname']]), url, str(row[column['u_name']]), str(row[column['automationid']])))
+                        lib2_bausteine.a_click_left_browser_schaltfläche_var_2(xaml, str(row[column['a_applicationname']]), url, str(row[column['u_name']]), str(row[column['automationid']]))
                         
                         #Baustein Variante 3, mit  mit Tag+Type=Button in Kombination mit Abfrage nach Name (aaname) des Feldes 
                         lib2_bausteine.a_click_left_browser_schaltfläche_var_3(xaml,str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
@@ -126,8 +159,8 @@ def main():
                         lib2_bausteine.a_click_right_browser_schaltfläche(xaml,str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
                     
                     #Schließen des aktuellen Fensters
-                    if (row[column['u_name']])=="Schließen" or "schließen" or "tab schließen": #name
-                        lib2_bausteine.a_close_window(xaml)
+                   # if (row[column['u_name']])=="Schließen" or "schließen" or "tab schließen": #name
+                     #k   lib2_bausteine.a_close_window(xaml)
                 
                 
                 #Abfrage auf andere Eventtypen im Browser
@@ -140,10 +173,10 @@ def main():
                     lib2_bausteine.a_click_left_browser_checkbox(xaml, str(row[column['a_applicationname']]),url,str(row[column['u_name']]), str(row[column['automationid']]))
 
                     #Variante 2, über name
-                    lib2_bausteine.a_click_left_browser_checkbox_var2((xaml, str(row[column['a_applicationname']]),url,str(row[column['u_name']])))
+                    lib2_bausteine.a_click_left_browser_checkbox_var2(xaml, str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
 
                     #Variante 3, über aaname
-                    lib2_bausteine.a_click_left_browser_checkbox_var3((xaml, str(row[column['a_applicationname']]),url,str(row[column['u_name']])))
+                    lib2_bausteine.a_click_left_browser_checkbox_var3(xaml, str(row[column['a_applicationname']]),url,str(row[column['u_name']]))
                     
                     lib2_bausteine.a_sequence_end(xaml)
                     
@@ -245,6 +278,9 @@ def main():
 
                 #Explorer, wiederum gesonderte Bausteine
                 if (row[column['a_applicationname']])=="explorer": #dann ist es eine Aktivität im Explorer
+                    
+                    if str.__contains__(str(row[column['u_name']]), (("Kalender") or ("Calendar") or ("Calend"))):
+                        lib_bausteine.a_comment_calendar_picker(xaml)
 
                     if (row[column['u_type']]) == "Bearbeiten": #dann Keystroke
                         
@@ -305,6 +341,11 @@ def main():
                             #Ende der Sequenz
                             lib2_bausteine.a_sequence_end(xaml)
 
+                    
+                    if (row[column['u_eventtype']]) == "ENTER":
+                        lib2_bausteine.a_press_enter(xaml)
+                            
+                            
                     else: #dann immer Klick
                         
                         if (row[column['u_eventtype']])=="Left-Down":
@@ -328,8 +369,6 @@ def main():
                         else:
                             lib2_bausteine.a_click_right_in_explorer(xaml, str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['u_type']]))
                     
-                    if (row[column['u_eventtype']]) == "ENTER":
-                        lib2_bausteine.a_press_enter(xaml)
 
 
 
@@ -339,6 +378,8 @@ def main():
                     
                     #if (row[column[a_applicationname]])=="excel":
                     #    lib2_bausteine.a_excel_application_scope(xaml, hier muss Pfad rein)
+                    #nach den Excel Bausteinen, speichert Excel
+                    #    lib2_bausteine.a_excel_auto_save (xaml)
 
                     #if (row[column[a_applicationname]])=="msword":
                     #    lib2_bausteine.a_word_application_scope(xaml, hier muss Pfad rein)
@@ -346,14 +387,16 @@ def main():
                     #für andere Applikationen zum öffnen
                     #lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]), root):)
 
-                
+                    if str.__contains__(str(row[column['u_name']]), (("Kalender") or ("Calendar") or ("Calend"))):
+                    lib_bausteine.a_comment_calendar_picker(xaml)
+
                     if (row[column['u_type']])=="Element":
                         if (row[column['u_eventtype']])=="Left-Down" or "Right-Down":
                             pass #dann wird zB nur eine Excel Zeile angeklickt, bekommen wir schon über die nachfolgende Aktion
                                 
                         if (row[column['u_eventtype']])=="CTRL + C":
                             #Start Sequenz
-                            lib2_bausteine.a_sequence_send_hotkey_start(xaml,str(row[column['u_name']]))
+                            lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml,str(row[column['u_name']]))
 
                             #Abfrage über automationid und role
                             lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]),str(row[column['u_type']]))
@@ -442,11 +485,11 @@ def main():
                             lib2_bausteine.a_sequence_click_start(xaml,str(row[column['u_name']]))
                             
                             #Variante 1, über name und role
-                            lib2_bausteine.a_click_single_in_application_var2(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]), str(row[column['u_name']]), str(row[column['u_type']]))
+                            lib2_bausteine.a_click_single_in_application_var(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]), str(row[column['u_name']]), str(row[column['u_type']]))
                            
                         
                             #Variante 2, über automationid, name und role
-                            lib2_bausteine.a_click_single_in_application(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]), str(row[column['u_name']]),str(row[column['u_type']]))
+                            lib2_bausteine.a_click_single_in_application_var2(xaml,str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]), str(row[column['u_name']]),str(row[column['u_type']]))
                            
 
                             #Variante 3, über name und Tag ctrl
@@ -463,9 +506,7 @@ def main():
 
                     
 
-                if str.__contains__(str(row[column['u_name']]), (("Kalender") or ("Calendar") or ("Calend"))):
-                    lib_bausteine.a_comment_calendar_picker(xaml)
-
+                
 
         lib_bausteine.writefoot(xaml) #schreibe Footer
     
