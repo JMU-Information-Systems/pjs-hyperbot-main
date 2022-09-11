@@ -17,6 +17,7 @@ from tarfile import ENCODING
 import json
 import psycopg2
 from rpa_prepare import databaseContact
+from bs4 import BeautifulSoup
 
 #def getUType():
  #   db = databaseContact()
@@ -63,16 +64,21 @@ def about(request):
     #print(relevantData)
 
     
+
+
+    
     assert isinstance(request, HttpRequest)
+
     return render(
         request,
         'app/about.html',
         {
             'title':'Hyperbot',
-            'message': str(DataFrontend), #'Guten Tag!',
+            'message': DataFrontend, #'Guten Tag!',
             'year':datetime.now().year,
         }
     )
+
 def Dateneingabe(request):
   
     #content = request.POST.get("vname")
