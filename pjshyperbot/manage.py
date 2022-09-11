@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """
 Command-line utility for administrative tasks.
-
 # For more information about this file, visit
 # https://docs.djangoproject.com/en/2.1/ref/django-admin/
 """
@@ -19,10 +18,13 @@ if __name__ == '__main__':
 
     #db = databaseContact()
     #type = db.getType()
+
+
+
     extractor = HTMLExtraction()
     variables = extractor.getVariables()
 
-    #todo: Werte von type in array umschreiben
+   
 
     os.environ.setdefault(
         'DJANGO_SETTINGS_MODULE',
