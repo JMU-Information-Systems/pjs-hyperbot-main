@@ -1,6 +1,6 @@
 import xaml as xaml
 
-def writehead(xaml):   #write header of UIPath XAML file
+def activity_head(xaml):   #write header of UIPath XAML file
     xaml.write("<Activity mc:Ignorable=\"sap sap2010\" x:Class=\"Main\" mva:VisualBasic.Settings=\"{x:Null}\" sap:VirtualizedContainerService.HintSize=\"968,2533\" sap2010:WorkflowViewState.IdRef=\"ActivityBuilder_1\" ")
     xaml.write("xmlns=\"http://schemas.microsoft.com/netfx/2009/xaml/activities\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" ")
     xaml.write("xmlns:mva=\"clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities\" xmlns:sap=\"http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation\" ")
@@ -30,11 +30,12 @@ def writehead(xaml):   #write header of UIPath XAML file
     xaml.write("      <AssemblyReference>System.ServiceModel</AssemblyReference>\n      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>\n      <AssemblyReference>System.ValueTuple</AssemblyReference>\n")
     xaml.write("      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>\n      <AssemblyReference>System.Memory</AssemblyReference>\n      <AssemblyReference>NPOI</AssemblyReference>\n")
     xaml.write("      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>\n    </sco:Collection>\n  </TextExpression.ReferencesForImplementation>\n")
+    return ("</Activity>"")
+
+def sequence_head(xaml): #write sequence header of UiPath XAML file
     xaml.write("  <Sequence sap2010:WorkflowViewState.IdRef=\"Sequence_16\">\n    <sap:WorkflowViewStateService.ViewState>\n")
     xaml.write("      <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n        <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n      </scg:Dictionary>\n    </sap:WorkflowViewStateService.ViewState>\n")
-
-def writefoot(xaml):   # write footer of UIPath XAML file
-    xaml.write("  </Sequence>\n</Activity>")
+    return("  </Sequence>\n")
 
 def a_comment(xaml,id,txt): #kommentar
     xaml.write("    <ui:Comment sap2010:WorkflowViewState.IdRef=\"Comment_" + id + "\" Text=\"" + txt + "\" />\n")
