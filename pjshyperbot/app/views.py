@@ -18,7 +18,8 @@ import json
 import psycopg2
 from rpa_prepare import databaseContact
 from bs4 import BeautifulSoup
-
+from urllib.parse import urlparse
+import numpy as np
 #def getUType():
  #   db = databaseContact()
   #  type = db.getType()
@@ -56,6 +57,19 @@ def about(request):
     DataFrontend = db.getDataFrontend()
     #print("Type" + str(type))
     assert isinstance(request, HttpRequest)
+    DataFrontend = np.array(DataFrontend)
+    i = 0
+    for row in DataFrontend:
+
+        DataFrontend[i][3] = str(urlparse(str(row[3])).hostname)
+        i=i+1
+    
+
+    #DataFrontend[0][3] = "test"
+
+    print(type(DataFrontend))
+    
+         #urlparse(str(col)
    
     #data = db.getDataFrontend()
     #db.getData(dfile)
@@ -80,7 +94,20 @@ def about(request):
     )
 
 def Dateneingabe(request):
-  
+
+    db = databaseContact()
+    
+    input = request.POST.items()
+    print("Typ" + str(type(input)))
+    db.insertInput(input)
+
+
+    for key, value in input:
+        
+        print('Key: %s' % (key) ) 
+    
+        print('Value %s' % (value) )
+
     #content = request.POST.get("vname")
     #print(content)
     if request.POST.get("vfurther")=="ja":
