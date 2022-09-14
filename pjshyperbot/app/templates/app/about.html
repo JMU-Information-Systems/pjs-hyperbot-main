@@ -17,6 +17,7 @@
 
         <table>
             <tr>
+                <th></th>
                 <th>Variablentyp</th>
                 <th>Variablenname (laut Logger)</th>
                 <th>URL</th>
@@ -27,7 +28,7 @@
                 {% for col in row %}
                 <td>{{col}}</td>
                 {% endfor %}
-                <td><input type="text" class="form-control" name="vname" /></td>
+                <td><input type="text" class="form-control" name={{row}} /></td>
 
             </tr>
             {% endfor %}
