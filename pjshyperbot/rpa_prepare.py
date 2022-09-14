@@ -105,9 +105,32 @@ class databaseContact():
         return(u_type)
 
     def getDataFrontend(self):
-        sqltype='''SELECT DISTINCT u_type, u_name, a_url FROM logger''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
+        sqltype='''SELECT DISTINCT u_id, u_type, u_name, a_url FROM logger''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
         data = databaseContact.curs.execute(sqltype).fetchall()
         return(data)
+
+    def insertInput(self, input):
+        
+        sqlalter = '''ALTER TABLE logger ADD user_name TEXT'''
+        databaseContact.curs.execute(sqlalter)
+
+        for key, value in input:
+            
+
+            key = key.replace("[","")
+            key = key.replace("'", "")
+            if key.isnumeric():
+
+
+                sqlupdate = '''UPDATE logger SET user_name = "''' + value + '''" WHERE u_id = ''' + key 
+                databaseContact.curs.execute(sqlupdate)
+                databaseContact.cons.commit()
+
+
+
+  
+
+
 """
 if __name__ == '__main__':
     main()"""
