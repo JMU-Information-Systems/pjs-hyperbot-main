@@ -21,8 +21,8 @@ if __name__ == '__main__':
 
 
 
-    extractor = HTMLExtraction()
-    variables = extractor.getVariables()
+    #extractor = HTMLExtraction()
+    #variables = extractor.getVariables()
 
    
 
