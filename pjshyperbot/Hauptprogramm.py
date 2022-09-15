@@ -8,7 +8,7 @@ import psycopg2 #Modul um eine Verbindung zum Datenbanksystem postgres herzustel
 import pandas as pd
 import urllib
 from collections import deque
-#import xaml as xaml
+import xaml as xaml
 from urllib.parse import urlparse
 import lib_bausteine
 import lib2_bausteine #Bausteine werden aus seperatem Skript importiert, bessere Übersichtlichkeit
@@ -24,12 +24,8 @@ def main(dbname):
     v_zaehler=0
     v_a_applicationname="x" #Initialer Wert, nicht verändern, wird unten abgefragt
 
-    ret = lib_bausteine.activity_head #schreibe Activity Header und nimm den return Wert (Endknoten) in den Stapel auf
-    if ret != NONE:
-        endknoten.append(ret)
-    ret = lib_bausteine.sequence_head #schreibe Sequence Header und nimm den return Wert (Endknoten) in den Stapel auf
-    if ret != NONE:
-        endknoten.append(ret)
+    endknoten.append(lib_bausteine.activity) #schreibe Activity Header und nimm den return Wert (Endknoten) in den Stapel auf
+    endknoten.append(lib_bausteine.sequence) #schreibe Sequence Header und nimm den return Wert (Endknoten) in den Stapel auf
     
     
     lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, ggf. sind Modifikationen notwendig")
