@@ -11,7 +11,7 @@ from collections import deque
 import xaml as xaml
 from urllib.parse import urlparse
 import lib_bausteine
-import lib2_bausteine #Bausteine werden aus seperatem Skript importiert, bessere Übersichtlichkeit
+import lib2_bausteine #Bausteine werden aus seperatem Skript importiert
 
 # argument is the name of the database as produced by the prepare plus additional table for input/output links
 def main(dbname):
