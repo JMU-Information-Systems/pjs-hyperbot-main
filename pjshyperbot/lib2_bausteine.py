@@ -1215,7 +1215,7 @@ def a_read_range(xaml, outputtable_name, range, sheet_name, workbook_path):  # B
     xaml.write("    <ui:ReadRange AddHeaders=\"True\" DataTable=\""+outputtable_name+"\" DisplayName=\"Read Range\" Range=\""+range+"\" SheetName=\""+sheet_name+"\" WorkbookPath=\""+workbook_path+"\" />\n")
 
 def a_comment_read_range (xaml):
-    xaml.write("            <ui:Comment Text=\"Read Range: Im Prozessablauf wurde öfters per STRG+C etwas aus einer ExcelDatei kopiert. In diesem automatisch generierten XAML wird dies über die Aktivität 'Send Hotkey Strg+C' gelöst, sinnvoll wäre zur Optimierung auch eine 'read range' Aktivität, die den gewünschten Bereich einer Excel Tabelle ausliest und in einer neuen Datentabelle speichert, auf die in folgenden Aktivitäten zugegriffen werden kann  \" />\n")
+    xaml.write("            <ui:Comment Text=\"Read Range: Im Prozessablauf wurde öfters per STRG+C etwas aus einer ExcelDatei kopiert. In diesem automatisch generierten XAML wird dies über die Aktivität 'Send Hotkey Strg+C' gelöst, sinnvoll wäre zur Optimierung auch eine 'read range' Aktivität, die den gewünschten Bereich einer Excel Tabelle ausliest und in einer neuen Datentabelle speichert, auf die in folgenden Aktivitäten zugegriffen werden kann. Die Aktivität wurde bereits eingefügt, hier muss noch die Variable manuell eingeben werden, in der die Datentabelle abgespeichert werden muss  \" />\n")
 
 def a_sequence_data_scraping_start (xaml):
     xaml.write("          <Sequence DisplayName=\"Data Scraping\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\" >\n")
@@ -1346,7 +1346,27 @@ def a_try_catch_catch_end(xaml):
     xaml.write("        </Catch>\n")
 
 
+def a_sequence_auskommentiert_start (xaml):
+    xaml.write("    <ui:CommentOut DisplayName=\"Auskommentiert\" sap:VirtualizedContainerService.HintSize=\"454.666666666667,444.666666666667\" sap2010:WorkflowViewState.IdRef=\"CommentOut_1\">\n")
+    xaml.write("      <ui:CommentOut.Body>\n")
+    xaml.write("        <Sequence DisplayName=\"Auskommentierte Aktivitäten\" sap:VirtualizedContainerService.HintSize=\"418,366\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">\n")
+    xaml.write("          <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("            <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("              <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
+    xaml.write("            </scg:Dictionary>\n")
+    xaml.write("          </sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("          <Sequence sap:VirtualizedContainerService.HintSize=\"376,274\" sap2010:WorkflowViewState.IdRef=\"Sequence_2\">\n")
+    xaml.write("            <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("              <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
+    xaml.write("              </scg:Dictionary>\n")
+    xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
 
+
+def a_sequence_auskommentiert_end (xaml):
+    xaml.write("        </Sequence>\n")
+    xaml.write("      </ui:CommentOut.Body>\n")
+    xaml.write("    </ui:CommentOut>\n")
 
 
 
