@@ -4,10 +4,10 @@ from pickle import NONE
 import sys
 import sqlite3
 from tkinter.tix import COLUMN
-import psycopg2 #Modul um eine Verbindung zum Datenbanksystem postgres herzustellen, gew�nschte Datenbank zu implementieren und SQL Befehle auszuf�hren
+import psycopg2 #Modul um eine Verbindung zum Datenbanksystem postgres herzustellen, gewünschte Datenbank zu implementieren und SQL Befehle auszuführen
 import pandas as pd
 import urllib
-from urllib import urllib.parse
+from urllib.parse import urlparse
 from collections import deque
 import xaml as xaml
 import lib_bausteine
@@ -69,7 +69,7 @@ def main(dbname):
                 lib_bausteine.a_comment_calendar_picker(xaml)
 
             #Abfrage auf Aktivitäten über Spalte Type:
-            if (row[column['u_type']]) == "Schaltfl�che": #dann ist es eine Klickakitivität
+            if (row[column['u_type']]) == "Schaltfläche": #dann ist es eine Klickakitivität
 
                 if str.__contains__(str(row[column['u_name']]), (("Minimieren") or ("Maximieren"))): #Ausschluß, dies wird nicht automatisiert
                     pass
@@ -118,7 +118,7 @@ def main(dbname):
                     lib2_bausteine.a_click_right_browser_schaltfläche(xaml,str(row[column['a_applicationname']]),url, str(row[column['u_name']]), str(row[column['automationid']]))
                     
                 #Schließen des aktuellen Fensters
-                # if (row[column['u_name']])=="Schlie�en" or "schließen" or "tab schließen": #name
+                # if (row[column['u_name']])=="Schließen" or "schließen" or "tab schließen": #name
                     #k   lib2_bausteine.a_close_window(xaml)
                 
                 
@@ -426,13 +426,13 @@ def main(dbname):
                             #Start Sequenz
                         lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml,str(row[column['u_name']]))
 
-                        #Abfrage �ber automationid und role
+                        #Abfrage über automationid und role
                         lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['automationid']]),str(row[column['u_type']]))
                         
-                        #Variante 2, �ber name und role
+                        #Variante 2, über name und role
                         lib2_bausteine.a_send_hotkey_strg_v_in_application_var_2(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]), str(row[column['u_type']]))
                           
-                        #Variante 3, �ber aaname und ctrl Tag
+                        #Variante 3, über aaname und ctrl Tag
                         lib2_bausteine.a_send_hotkey_strg_v_in_application_var_3(xaml, str(row[column['a_applicationname']]),str(row[column['a_windowtitle']]),str(row[column['u_name']]))
 
                         #End Sequenz
