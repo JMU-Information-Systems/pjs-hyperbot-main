@@ -30,6 +30,10 @@ class HTMLExtraction():
         time.sleep(2)
         driver.get(loginurl)
         time.sleep(4)
+
+        #Nimmt erste Aufgabe die angezeigt wird, neue Aufgaben werden oben angeordnet
+        driver.find_element("id", "pageForm:taskListTable:0:j_id372").click()
+
         soup = BeautifulSoup(driver.page_source, features="html.parser")
 
         #hh=soup.find_all("div", {"id": "pageForm:taskDescriptionXRow"})
