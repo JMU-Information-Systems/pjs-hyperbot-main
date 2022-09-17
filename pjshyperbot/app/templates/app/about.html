@@ -30,11 +30,33 @@
                 {% for col in row %}
                 <td>{{col}}</td>
                 {% endfor %}
-                <td><input type="text" class="form-control" name={{row}} required/></td>
+                <td><input type="text" class="form-control" name={{row}} required /></td>
 
             </tr>
             {% endfor %}
         </table>
+        <!-- Wenn Excel oder Word verwendet wurde, dann nach dem Pfad fragen -->
+        {% if a > 0%}
+        <input type="text" class="form-control" name=path required placeholder="Pfad der verwendeten Datei" />
+
+        {% endif %}
+
+        <fieldset>
+            <legend>Wurde Data Scraping angewendet?</legend>
+
+            <div>
+                <input type="radio" id="ja" name="drone" value="ja"
+                       checked>
+                <label for="ja">ja</label>
+            </div>
+
+            <div>
+                <input type="radio" id="nein" name="drone" value="nein">
+                <label for="nein">nein</label>
+            </div>
+
+        </fieldset>
+
 
         <button type="submit" class="btn-btn-default">Abschicken</button>
     </div>
