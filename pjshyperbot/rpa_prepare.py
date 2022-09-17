@@ -105,8 +105,10 @@ class databaseContact():
         return(u_type)
 
     def getDataFrontend(self):
-        sqltype='''SELECT DISTINCT u_id, u_type, u_name, a_url FROM logger''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
+        sqltype='''SELECT DISTINCT u_id, u_type, u_name, a_url, a_applicationname, a_windowtitle FROM logger WHERE u_type="Bearbeiten"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
         data = databaseContact.curs.execute(sqltype).fetchall()
+        
+
         return(data)
 
     def insertInput(self, input):
