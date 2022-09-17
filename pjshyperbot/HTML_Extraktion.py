@@ -18,7 +18,7 @@ class HTMLExtraction():
         driver=webdriver.Chrome(PATH)
 
         driver.get("http://132.187.226.138:8080/webapp/view/common/login.page")
-        loginurl="http://132.187.226.138:8080/webapp/view/groupware/task/taskDetail.page?entityId=9407"
+        loginurl="http://132.187.226.138:8080/webapp/view/groupware/task/taskOverview.page?mid=22"
 
         username="rpa.team22@gmail.com"
         password="RPA2022#"
