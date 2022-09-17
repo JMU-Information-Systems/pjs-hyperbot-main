@@ -29,15 +29,17 @@ class HTMLExtraction():
         driver.find_element("id", "loginForm:loginButton").click()
         time.sleep(2)
         driver.get(loginurl)
-        time.sleep(4)
+        time.sleep(1)
 
         #Nimmt erste Aufgabe die angezeigt wird, neue Aufgaben werden oben angeordnet
         driver.find_element("id", "pageForm:taskListTable:0:j_id372").click()
+        time.sleep(3)
 
         soup = BeautifulSoup(driver.page_source, features="html.parser")
 
         #hh=soup.find_all("div", {"id": "pageForm:taskDescriptionXRow"})
         hh=soup.find("textarea", {"id": "pageForm:taskDescriptionX_TA"})
+        
         #for e in hh.findAll('br'):
             #e.extract()
 
