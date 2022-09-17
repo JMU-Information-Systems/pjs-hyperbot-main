@@ -108,8 +108,15 @@ class databaseContact():
         sqltype='''SELECT DISTINCT u_id, u_type, u_name, a_url, a_applicationname, a_windowtitle FROM logger WHERE u_type="Bearbeiten"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
         data = databaseContact.curs.execute(sqltype).fetchall()
         
+        #Hier wird geschaut, ob ein Pfad abgefragt werden muss (wenn mit Excel oder Word gearbeitet wurde)
+        sqlneedpath = '''SELECT a_applicationname FROM logger WHERE a_applicationname="excel" OR a_applicationname="ms.word"'''
+        needpath = databaseContact.curs.execute(sqltype).rowcount
+        if needpath > 0:
+            a = 1
+        else:
+            a = 0
 
-        return(data)
+        return(data, a)
 
     def insertInput(self, input):
         
