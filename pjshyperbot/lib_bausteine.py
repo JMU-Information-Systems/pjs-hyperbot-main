@@ -1,4 +1,5 @@
-import xaml as xaml
+#import xaml as xaml
+# coding=utf-8
 
 def activity(xaml):   #write header of UIPath XAML file
     xaml.write("<Activity mc:Ignorable=\"sap sap2010\" x:Class=\"Main\" mva:VisualBasic.Settings=\"{x:Null}\" sap:VirtualizedContainerService.HintSize=\"968,2533\" sap2010:WorkflowViewState.IdRef=\"ActivityBuilder_1\" ")
@@ -40,11 +41,12 @@ def sequence(xaml): #write sequence header of UiPath XAML file
 def a_comment(xaml,id,txt): #kommentar
     xaml.write("    <ui:Comment sap2010:WorkflowViewState.IdRef=\"Comment_" + id + "\" Text=\"" + txt + "\" />\n")
 
-def a_comment_calendar_picker (xaml):
-    xaml.write("            <ui:Comment Text=\"Kalender Picker: Prüfen, ob Datum manuell eingegeben werden kann. Dann ganz normal mit Type Into. Ansonsten bitte Klickaktivität manuell einbauen mit dynamischem Selektor, der entsprechend das gewünschte Datum auswählen kann. &#xD;&#xA;&#xD;&#xA;Wichtig: Es kann sein, dass der Monat mit dem gewünschten Datum nicht direkt angezeigt wird, wenn der Kalender geöffnet ist. &#xD;&#xA;&#xD;&#xA;Dann so vorgehen:&#xD;&#xA;&#xD;&#xA;Try Catch Aktivität einbauen, innerhalb einer while Schleife:&#xD;&#xA;&#xD;&#xA;while Schleife: Bedingung&#xD;&#xA;&#xD;&#xA;im Try: &#xD;&#xA;Klickaktivität mit gewünschtem Datum, versucht Feld zu finden&#xD;&#xA;dann: while schleifen Bedingung auf True setzen&#xD;&#xA;&#xD;&#xA;im except: Klickaktivität auf &quot;Weiter&quot;, bis gewünschter Monat angezeigt wird&#xD;&#xA;&#xD;&#xA;While Schleife: Läuft solange bis Try Aktivität erfolgreich durchgeführt wurde\" />")
+#def a_comment_calendar_picker (xaml):
+    #xaml.write("            <ui:Comment Text=\"Kalender Picker: Prüfen, ob Datum manuell eingegeben werden kann. Dann ganz normal mit Type Into. Ansonsten bitte Klickaktivität manuell einbauen mit dynamischem Selektor, der entsprechend das gewünschte Datum auswählen kann. &#xD;&#xA;&#xD;&#xA;Wichtig: Es kann sein, dass der Monat mit dem gewünschten Datum nicht direkt angezeigt wird, wenn der Kalender geöffnet ist. &#xD;&#xA;&#xD;&#xA;Dann so vorgehen:&#xD;&#xA;&#xD;&#xA;Try Catch Aktivität einbauen, innerhalb einer while Schleife:&#xD;&#xA;&#xD;&#xA;while Schleife: Bedingung&#xD;&#xA;&#xD;&#xA;im Try: &#xD;&#xA;Klickaktivität mit gewünschtem Datum, versucht Feld zu finden&#xD;&#xA;dann: while schleifen Bedingung auf True setzen&#xD;&#xA;&#xD;&#xA;im except: Klickaktivität auf &quot;Weiter&quot;, bis gewünschter Monat angezeigt wird&#xD;&#xA;&#xD;&#xA;While Schleife: Läuft solange bis Try Aktivität erfolgreich durchgeführt wurde\" />")
 
-def a_comment_optionsfeld (xaml):
-    xaml.write("            <ui:Comment Text=\"Optionsfeld: Hier könnte evtl. auch eine Select Item Aktivität sinnvoll sein\" />")
+#def a_comment_optionsfeld (xaml):
+    #xaml.write("            <ui:Comment Text=\"Optionsfeld: Hier könnte evtl. auch eine Select Item Aktivität sinnvoll sein\" />")
+
 #Open Browser Aktivitäten
 
 def a_attach_browser(xaml, url): #auf bereits geöffnetes Fenster zurückspringen, wenn User bspw. von Browser zu Excel und dann wieder zum browser wechselt
@@ -62,7 +64,3 @@ def a_attach_browser(xaml, url): #auf bereits geöffnetes Fenster zurückspringen,
 
 def a_navigate_to (xaml, url): #muss im selben browser sein
     xaml.write("            <ui:NavigateTo Browser=\"{x:Null}\" DisplayName=\"Navigate To\" Url=\""+url+"\" />\n")
-
-
-
-
