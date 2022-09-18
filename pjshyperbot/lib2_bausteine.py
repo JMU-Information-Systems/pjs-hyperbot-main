@@ -1,3 +1,5 @@
+# coding=utf-8
+
 def a_sequence_click_start(xaml, name):
     xaml.write("          <Sequence DisplayName=\"Click auf "+name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\" >\n")
     xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
@@ -68,13 +70,7 @@ def a_edge_browser_start(xaml, url):
     xaml.write("      <ui:OpenBrowser.Body>\n")
     xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
     xaml.write("          <Sequence DisplayName=\"Do\">\n")
-
-
-def a_edge_browser_end(xaml):
-    xaml.write("          </Sequence>\n")
-    xaml.write("        </ActivityAction>\n")
-    xaml.write("      </ui:OpenBrowser.Body>\n")
-    xaml.write("    </ui:OpenBrowser>\n")
+    return("          </Sequence>\n        </ActivityAction>\n      </ui:OpenBrowser.Body>\n    </ui:OpenBrowser>\n")
 
 
 # Standard Baustein mit Test auf AutomationID, type=text, tag=Input
@@ -700,7 +696,7 @@ def a_click_single_in_application_var3(xaml, application_name, title, name):
     xaml.write("                </ui:CursorPosition>\n")
     xaml.write("              </ui:Click.CursorPosition>\n")
     xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+"\' title=\'"+title+"\' /&gt;&lt;ctrl name=\'"+name+"\' /&gt; TimeoutMS=\"1000\">\n")
+    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+"\' title=\'"+title+"\' /&gt;&lt;ctrl name=\'"+name+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("                  <ui:Target.WaitForReady>\n")
     xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
     xaml.write("                  </ui:Target.WaitForReady>\n")
@@ -722,7 +718,7 @@ def a_click_single_in_application_var4(xaml, application_name, title, name):
     xaml.write("                </ui:CursorPosition>\n")
     xaml.write("              </ui:Click.CursorPosition>\n")
     xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+"\' title=\'"+title+"\' /&gt;&lt;ctrl aaname=\'"+name+"\' /&gt; TimeoutMS=\"1000\">\n")
+    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+"\' title=\'"+title+"\' /&gt;&lt;ctrl aaname=\'"+name+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("                  <ui:Target.WaitForReady>\n")
     xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
     xaml.write("                  </ui:Target.WaitForReady>\n")
@@ -1162,10 +1158,8 @@ def a_excel_application_scope(xaml, workbook_path):  # Excel öffnen
     xaml.write("            <DelegateInArgument x:TypeArguments=\"ui:WorkbookApplication\" Name=\"ExcelWorkbookScope\" />\n")
     xaml.write("          </ActivityAction.Argument>\n")
     xaml.write("          <Sequence DisplayName=\"Do\">\n")
-    xaml.write("          </Sequence>\n")
-    xaml.write("        </ActivityAction>\n")
-    xaml.write("      </ui:ExcelApplicationScope.Body>\n")
-    xaml.write("    </ui:ExcelApplicationScope>\n")
+    return("          </Sequence>\n        </ActivityAction>\n      </ui:ExcelApplicationScope.Body>\n    </ui:ExcelApplicationScope>\n")
+
 
 def a_word_application_scope (xaml,workbook_path):
     xaml.write("    <p:WordApplicationScope FilePath=\"{x:Null}\" DisplayName=\"Word öffnen\" sap:VirtualizedContainerService.HintSize=\"434,193.333333333333\" sap2010:WorkflowViewState.IdRef=\"WordApplicationScope_1\">\n")
@@ -1180,11 +1174,8 @@ def a_word_application_scope (xaml,workbook_path):
     xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
     xaml.write("              </scg:Dictionary>\n")
     xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
-    xaml.write("         </Sequence>\n")
-    xaml.write("        </ActivityAction>\n")
-    xaml.write("      </p:WordApplicationScope.Body>\n")
-    xaml.write("    </p:WordApplicationScope>\n")
-
+    return("          </Sequence>\n        </ActivityAction>\n      </p:WordApplicationScope.Body>\n    </p:WordApplicationScope>\n")
+    
 def a_open_application (xaml, application_name, windowtitle, root):
     xaml.write("    <ui:OpenApplication ApplicationWindow=\"{x:Null}\" Arguments=\"{x:Null}\" TimeoutMS=\"{x:Null}\" WorkingDirectory=\"{x:Null}\" DisplayName=\"Open "+application_name+"\" FileName=\'"+root+"\' Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;\" >\n")
     xaml.write("      <ui:OpenApplication.Body>\n")
@@ -1198,11 +1189,7 @@ def a_open_application (xaml, application_name, windowtitle, root):
     xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
     xaml.write("              </scg:Dictionary>\n")
     xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
-    xaml.write("          </Sequence>\n")
-    xaml.write("        </ActivityAction>\n")
-    xaml.write("      </ui:OpenApplication.Body>\n")
-    xaml.write("    </ui:OpenApplication>\n")
-
+    return("          </Sequence>\n        </ActivityAction>\n      </ui:OpenApplication.Body>\n    </ui:OpenApplication>\n") 
 
 
 def a_write_cell(xaml, cell, sheet_name, text, workbook_path):
