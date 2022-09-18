@@ -71,7 +71,7 @@ TEMPLATES = [
         },
     },
 ]
-
+STATIC_URL = '/static/'
 WSGI_APPLICATION = 'pjshyperbot.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
