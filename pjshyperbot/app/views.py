@@ -54,7 +54,7 @@ def contact(request):
 
 def about(request):
     db = databaseContact()
-    DataFrontend = db.getDataFrontend()
+    DataFrontend, a = db.getDataFrontend()
     #print("Type" + str(type))
     assert isinstance(request, HttpRequest)
     DataFrontend = np.array(DataFrontend)
@@ -67,7 +67,7 @@ def about(request):
 
     #DataFrontend[0][3] = "test"
 
-    print(type(DataFrontend))
+    #print(type(DataFrontend))
     
          #urlparse(str(col)
    
@@ -89,6 +89,7 @@ def about(request):
         {
             'title':'Hyperbot',
             'message': DataFrontend, #'Guten Tag!',
+            'a':a,
             'year':datetime.now().year,
         }
     )
