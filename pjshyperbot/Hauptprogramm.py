@@ -119,7 +119,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
             #Ist ein Wert in der Spalte automationid vorhanden?
             #größer 0, d.h. es wurde eine ID mit aufgezeichnet
             
-            if len((row[column['automationid']]))>0: 
+            if len(automationid)>0: 
             
                 if u_type == "Schaltfläche" or "Link": #dann ist es eine Klickakitivität
 
@@ -203,7 +203,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         #Baustein Variante 2, mit Tag+Type=Button in Kombination mit Abfrage nach Name (aaname) des Feldes 
                         lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name)
                         
-                        # Baustein Variante 3, Tag=Button, Type=Submit in Kombination mit Abfrage nach Name des Feldes (aaname)
+                        #Baustein Variante 3, Tag=Button, Type=Submit in Kombination mit Abfrage nach Name des Feldes (aaname)
                         lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var3(xaml,a_applicationname,url,u_name)
                         
                         #Baustein Variante 4, aaname und Tag=A 
@@ -322,7 +322,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                 lib_bausteine.a_comment_calendar_picker(xaml)
 
             #wird ID mit aufgezeichnet?
-            if len((row[column['automationid']]))>0:
+            if len(automationid)>0:
 
                 if (u_type) == "Bearbeiten": #dann Keystroke
                     
@@ -474,7 +474,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                 lib_bausteine.a_comment_calendar_picker(xaml)
 
             #wird ID mit aufgezeichnet?
-            if len((row[column['automationid']]))>0:
+            if len(automationid)>0:
 
                 if (u_type)=="Element":
                     
@@ -509,8 +509,9 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                        
                     elif (u_eventtype) == "ENTER":
                         lib2_bausteine.a_press_enter(xaml)                   
-                            
-                else: #um alle Klickaktivitäten abzudecken
+                
+                #um alle Klickaktivitäten abzudecken
+                else:
                         
                     if (u_eventtype) == "Left-Down":
            
