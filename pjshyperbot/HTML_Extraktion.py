@@ -31,6 +31,14 @@ class HTMLExtraction():
         driver.get(loginurl)
         time.sleep(1)
 
+        #Klickt auf Filter Button
+        driver.find_element("id", "pageForm:taskListselectedFilter").click()
+        time.sleep(2)
+        
+        #Wählt Filter Dienstreise aus
+        driver.find_element("id", "pageForm:j_id354:0:j_id356").click()
+        time.sleep(2)
+
         #Nimmt erste Aufgabe die angezeigt wird, neue Aufgaben werden oben angeordnet
         driver.find_element("id", "pageForm:taskListTable:0:j_id372").click()
         time.sleep(3)
