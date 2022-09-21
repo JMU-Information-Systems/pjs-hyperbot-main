@@ -105,9 +105,6 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
             if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend"))):
                 lib_bausteine.a_comment_calendar_picker(xaml)
             
-            #Notwendige Texteingaben werden aus dem Frontend genommen, nicht direkt aus der Aufzeichnung, daher Text ausschließen
-            if (u_type)=="Text":
-                pass
 
             #Schließen des aktuellen Fensters
                 # if (row[column['u_name']])=="Schließen" or "schließen" or "tab schließen": #name
@@ -160,6 +157,10 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                 if (u_type)== "Optionsfeld":
                     #Variante 1, nur über ID
                     lib2_bausteine.a_click_left_browser_optionsfeld(xaml,a_applicationname, url, u_name,automationid)
+
+                #Typ Text ist auch ein Klick, meist radio Buttons
+                if (u_type)=="Text":
+                    lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
                     
                 # Abfrage der Keystroke Aktivitäten im Browser
 
@@ -206,8 +207,8 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         #Baustein Variante 3, Tag=Button, Type=Submit in Kombination mit Abfrage nach Name des Feldes (aaname)
                         lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var3(xaml,a_applicationname,url,u_name)
                         
-                        #Baustein Variante 4, aaname und Tag=A 
-                        lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var4(xaml,a_applicationname,url,u_name)
+                        #Baustein Variante 4, aaname und Klasse
+                       # lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var4(xaml,a_applicationname,url,u_name,u_class)
                         
                         #Baustein Variante 5, mit aaname und Tag=Span 
                         lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var5 (xaml,a_applicationname,url, u_name)
@@ -251,6 +252,9 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                     #Ende der Sequenz
                     lib2_bausteine.a_sequence_end(xaml)
                     #lib_bausteine.a_comment_optionsfeld(xaml)
+
+                 if (u_type)=="Text":
+                    lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
                 
                  if (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
                     
