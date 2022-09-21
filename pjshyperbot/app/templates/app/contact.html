@@ -1,38 +1,63 @@
 {% extends "app/layout.html" %}
 
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/contact.css' %}" />
+</head>
 
-<h2>{{ title }}.</h2>
-<h3>{{ message }}</h3>
+<body>
 
-<address>
-    Stefan Dao<br />
-    Julius-Maximilians-Universit&auml;t W&uuml;rzburg<br />
-    <strong>Email:</strong>   <a href="mailto:stefan.dao@stud-mail.uni-wuerzburg.de">stefan.dao@stud-mail.uni-wuerzburg.de</a><br />
-</address>
 
-<address>
-    Leonie Gerkens<br />
-    Julius-Maximilians-Universit&auml;t W&uuml;rzburg<br />
-    <strong>Email:</strong>   <a href="mailto:leonie.gerkens@stud-mail.uni-wuerzburg.de">leonie.gerkens@stud-mail.uni-wuerzburg.de</a><br />
-</address>
+    {% block content %}
 
-<address>
-    Tristan Hermann<br />
-    Julius-Maximilians-Universit&auml;t W&uuml;rzburg<br />
-    <strong>Email:</strong>   <a href="mailto:tristan.hermann@stud-mail.uni-wuerzburg.de">tristan.hermann@stud-mail.uni-wuerzburg.de</a><br />
-</address>
 
-<address>
-    Konstanze Lang<br />
-    Julius-Maximilians-Universit&auml;t W&uuml;rzburg<br />
-    <strong>Email:</strong>   <a href="mailto:konstanze.lang@stud-mail.uni-wuerzburg.de">konstanze.lang@stud-mail.uni-wuerzburg.de</a><br />
-</address>
+    <h2>{{ title }}.</h2>
+    <h3>{{ message }}</h3>
 
-<address>
-    Christine Nausch<br />
-    Julius-Maximilians-Universit&auml;t W&uuml;rzburg<br />
-    <strong>Email:</strong>   <a href="mailto:christine.nausch@stud-mail.uni-wuerzburg.de">christine.nausch@stud-mail.uni-wuerzburg.de</a><br />
-</address>
+    <div class="row" id="row">
+        <div class="column" id="column" style="float: left; width: 33.3%; margin-bottom: 16px; padding: 0 8px;">
+            <div class="card" id="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                <img src="img1.jpg" alt="Leonie" style="width:100%">
+                <div class="container" id="container" style="padding: 0 16px;">
+                    <h2>Leonie Gerkens</h2>
+                    <p class="title" id="title" style="color: grey;">Positionsbezeichung</p>
+                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                    <p><strong>Email:</strong>   <a href="mailto:leonie.gerkens@stud-mail.uni-wuerzburg.de">leonie.gerkens@stud-mail.uni-wuerzburg.de</a></p>
+                    <p><button class="btn btn-primary btn-large" id="button" style="border: none; outline: 0; display: inline-block; padding: 8px; color: white; background-color: #000; text-align: center; cursor: pointer; width: 100%;">Contact &raquo;</button></p>
+                </div>
+            </div>
+        </div>
 
-{% endblock %}
+        <div class="column" id="column" style="float: left; width: 33.3%; margin-bottom: 16px; padding: 0 8px;">
+            <div class="card" id="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                <img src="img2.jpg" alt="Tristan" style="width:100%">
+                <div class="container" id="container" style="padding: 0 16px;">
+                    <h2>Tristan Hermann</h2>
+                    <p class="title" id="title" style="color: grey;">Positionsbezeichung</p>
+                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                    <p><strong>Email:</strong>   <a href="mailto:tristan.hermann@stud-mail.uni-wuerzburg.de">tristan.hermann@stud-mail.uni-wuerzburg.de</a></p>
+                    <p><button class="btn btn-primary btn-large" id="button" style="border: none; outline: 0; display: inline-block; padding: 8px; color: white; background-color: #000; text-align: center; cursor: pointer; width: 100%;">Contact &raquo;</button></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="column" id="column" style="float: left; width: 33.3%; margin-bottom: 16px; padding: 0 8px;">
+            <div class="card" id="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                <img src="img3.jpg" alt="Christine" style="width:100%">
+                <div class="container" id="container" style="padding: 0 16px;">
+                    <h2>Christine Nausch</h2>
+                    <p class="title" id="title" style="color: grey;">Positionsbezeichung</p>
+                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                    <p><strong>Email:</strong>   <a href="mailto:christine.nausch@stud-mail.uni-wuerzburg.de">christine.nausch@stud-mail.uni-wuerzburg.de</a></p>
+                    <p><button class="btn btn-primary btn-large" id="button" style="border: none; outline: 0; display: inline-block; padding: 8px; color: white; background-color: #000; text-align: center; cursor: pointer; width: 100%;">Contact &raquo;</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endblock %}
+</body>
+</html>
