@@ -54,10 +54,12 @@ def main(dbname):
         
         
         #Anpassen der URL, trimmen  einfügen von * sodass Selektor für alle Seiten dieser URL gilt        
+        #bei der URL von WeClapp, funktioniert das Trimmen mit dem Modul urllib.parse nicht, deshalbt gesonderte Anpassung
         
         if (str(row[column['a_url']])).__contains__("132.187.226.138:8080/"):
             url="*132.187.226.138:8080/*"
         else:
+            #Trimmen der URLS
             from urllib.parse import urlparse 
             a = urlparse(str(row[column['a_url']]))
             website_name = str(a.hostname)
@@ -140,31 +142,31 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         #Ende der Sequenz, alles zwischendrin wird ausprobiert
                         lib2_bausteine.a_sequence_end(xaml)
 
-                    #Rechtsklick?
-                    if (u_eventtype) == "Right-down":
+                    #Rechtsklick
+                    else:
                         lib2_bausteine.a_click_right_browser_schaltfläche(xaml,a_applicationname,url, u_name, automationid)
             
             
                 #Abfrage auf andere Eventtypen im Browser                        
 
-                if (u_type)=="Kombinationsfeld":
+                elif (u_type)=="Kombinationsfeld":
                     lib2_bausteine.a_click_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid)        
             
-                if (u_type) == "checkbox" or "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
+                elif (u_type) == "checkbox" or "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
                     #Variante über ID
                     lib2_bausteine.a_click_left_browser_checkbox(xaml, a_applicationname,url,u_name, automationid)
       
-                if (u_type)== "Optionsfeld":
+                elif (u_type)== "Optionsfeld":
                     #Variante 1, nur über ID
                     lib2_bausteine.a_click_left_browser_optionsfeld(xaml,a_applicationname, url, u_name,automationid)
 
                 #Typ Text ist auch ein Klick, meist radio Buttons
-                if (u_type)=="Text":
+                elif (u_type)=="Text":
                     lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
                     
                 # Abfrage der Keystroke Aktivitäten im Browser
 
-                if (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität
+                elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität
                     
                     #Bedingung für Texteingabe
                     if (u_eventtype) == "Left-Down":       
@@ -219,14 +221,14 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                       
                         lib2_bausteine.a_sequence_end(xaml)
 
-                     if (u_eventtype) == "Right-down":
+                     elif (u_eventtype) == "Right-down":
                         lib2_bausteine.a_click_right_browser_schaltfläche(xaml,a_applicationname,url, u_name, automationid)
 
 
-                 if (u_type)=="Kombinationsfeld":
+                 elif (u_type)=="Kombinationsfeld":
                     lib2_bausteine.a_click_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid)
 
-                 if (u_type) == "checkbox" or "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
+                 elif (u_type) == "checkbox" or "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
                     
                     #Start der Sequenz
                     lib2_bausteine.a_sequence_click_checkbox_start(xaml, u_name)
@@ -240,7 +242,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                     #Ende der Sequenz
                     lib2_bausteine.a_sequence_end(xaml)
 
-                 if (u_type)== "Optionsfeld":
+                 elif (u_type)== "Optionsfeld":
                     #Starten der Sequenz
                     lib2_bausteine.a_sequence_click_optionsfeld_start(xaml,u_name)
                 
@@ -254,10 +256,10 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                     lib2_bausteine.a_sequence_end(xaml)
                     #lib_bausteine.a_comment_optionsfeld(xaml)
 
-                 if (u_type)=="Text":
+                 elif (u_type)=="Text":
                     lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
                 
-                 if (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
+                 elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
                     
                     if (u_eventtype) == "Left-Down":
 
@@ -391,7 +393,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         #Ende der Sequenz
                         lib2_bausteine.a_sequence_end(xaml)
                         
-                    else:
+                    else: #Rechtsklick
                         lib2_bausteine.a_click_right_in_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_eventtype)
                         
           
@@ -460,23 +462,14 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         lib2_bausteine.a_click_right_in_explorer(xaml, automationid, u_name, u_type)
                     
 
-    else: #dann ist es eine Applikation
-
-     #gesonderte Bausteine für Klicks in Applikation
+    else: #dann ist es eine Applikation, gesonderte Bausteine
                     
-     #if (row[column[a_applicationname]])=="excel":
-     #    lib2_bausteine.a_excel_application_scope(xaml, hier muss Pfad rein)
-     #nach den Excel Bausteinen, speichert Excel
-     #    lib2_bausteine.a_excel_auto_save (xaml)
-
-     #if (row[column[a_applicationname]])=="msword":
-     #    lib2_bausteine.a_word_application_scope(xaml, hier muss Pfad rein)
-
-     #für andere Applikationen zum Öffnen
-     #lib2_bausteine.a_open_application(xaml, a_applicationname, a_windowtitle, root):)
-
+    
             if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend"))):
                 lib_bausteine.a_comment_calendar_picker(xaml)
+
+            if a_applicationname=="excel":
+                lib2_bausteine.a_excel_auto_save(xaml)
 
             #wird ID mit aufgezeichnet?
             if len(automationid)>0:
@@ -486,11 +479,11 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                     if (u_eventtype)=="Left-Down" or "Right-Down":
                         pass #dann wird zB nur eine Excel Zeile angeklickt, bekommen wir schon über die nachfolgende Aktion
                                 
-                    if (u_eventtype)=="CTRL + C":
+                    elif (u_eventtype)=="CTRL + C":
                         #Abfrage über automationid und role
                         lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, a_applicationname, a_windowtitle, automationid, u_type)
                         
-                    if (u_eventtype)=="CTRL + V":
+                    elif (u_eventtype)=="CTRL + V":
                         #Abfrage über automationid und role
                         lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, a_applicationname, a_windowtitle, automationid, u_type)
                     
@@ -498,17 +491,17 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                     elif (u_eventtype) == "ENTER":
                         lib2_bausteine.a_press_enter(xaml) 
                         
-                if (u_type) == "Bearbeiten":
+                elif (u_type) == "Bearbeiten":
                     
                     if (u_eventtype) == "Left-Down":
                         #Type Into mit automationid und role
                         lib2_bausteine.a_type_into_application(xaml, a_applicationname, a_windowtitle, u_name, automationid, u_type, input_variables)
 
-                    if (u_eventtype) == "CTRL + C":
+                    elif (u_eventtype) == "CTRL + C":
                         #Abfrage über automationid und role
                         lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, a_applicationname, a_windowtitle, automationid, u_type)
                         
-                    if (u_eventtype) == "CTRL + V":  
+                    elif (u_eventtype) == "CTRL + V":  
                         #Abfrage über automationid und role
                         lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, a_applicationname, a_windowtitle, automationid, u_type) 
                        
@@ -565,7 +558,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         lib2_bausteine.a_press_enter(xaml)    
                        
                     
-                if (u_type)=="Bearbeiten":
+                elif (u_type)=="Bearbeiten":
                     
                     if (u_eventtype)=="Left-Down" or "Right-Down":
 
@@ -639,14 +632,10 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                 
   
 
-                        
-
-
-       #Verbesserungsvorschläge am Ende:
-       #lib2_bausteine.a_sequence_auskommentiert(xaml)
-
-
-    #if number_of_strg_c_excel>=3:
+                     
+  #Verbesserungsvorschläge am Ende:
+  #lib2_bausteine.a_sequence_auskommentiert(xaml)
+  #if number_of_strg_c_excel>=3:
             #lib2_bausteine.a_sequence_read_range_start (xaml):
             #lib2_bausteine.a_read_range(outputtable_name, range, sheet_name, workbook_path)) Variablen müssen vom Frontend kommen
             #lib2_bausteine.a_comment_read_range (xaml)
@@ -654,7 +643,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
             #lib2_bausteine.a_sequence_end(xaml)
             
 
-        #wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte
+  #wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte
         #Start der Sequenz
         #lib2_bausteine.a_sequence_data_scraping_start
         #lib2_bausteine.a_comment_data_scraping (xaml):
@@ -666,10 +655,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
         #lib2_bausteine.a_sequence_auskommentiert_end(xaml) #am Ende wenn alle Vorschläge gemacht wurden
 
    
-       # finally:
-    #    if con():
-     #       cursor.close()
-      #      con.close()  # close connection to database
+   
 
 if __name__ == '__main__':
     main(sys.argv[1]) #um Datein als eigenständiges Programm zu nutzen und Elemente importierbar zu machen
