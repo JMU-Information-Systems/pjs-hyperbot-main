@@ -84,7 +84,7 @@ def main(dbname):
                 endknoten.append(lib2_bausteine.a_open_application(str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), "C:\\Program Files\\"+str(row[column['a_applicationname']])+"\\"+str(row[column['a_applicationname']])+".exe"))
 
 
-        aktionen(url, xaml, str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]))
+        aktionen(url, xaml, str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['input_variables']]))
     
 
     #baue alle noch offenen Endknoten vom Stack ab
@@ -97,7 +97,7 @@ def main(dbname):
 #Abfrage auf Applikationen
 
 #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
-def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle):
+def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle, input_variables):
     
     if a_applicationname == "msedge":
             
@@ -164,12 +164,13 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                     
                 # Abfrage der Keystroke Aktivitäten im Browser
 
-                if (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
+                if (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität
                     
+                    #Bedingung für Texteingabe
                     if (u_eventtype) == "Left-Down":       
 
                         #Suche über ID, tag=Input, type=Text
-                        lib2_bausteine.a_type_into_browser(xaml, a_applicationname,url, u_name, automationid, "Text")
+                        lib2_bausteine.a_type_into_browser(xaml, a_applicationname,url, u_name, automationid, input_variables)
                     
                     #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
                     
@@ -264,13 +265,13 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
                      
                         #Suche über Name und Tag=Input, Type=Text
-                        lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, "Text")
+                        lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, input_variables)
                         
                         #Variante 3, keine ID, kein Name, nur Tag=Input, type =text
-                        lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, "Text")
+                        lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, input_variables)
 
                         #Variante 4, keine ID, kein Name, nur Tag=Input
-                        lib2_bausteine.a_type_into_browser_no_id_var3 (xaml, a_applicationname,url, u_name, "Text")
+                        lib2_bausteine.a_type_into_browser_no_id_var3 (xaml, a_applicationname,url, u_name, input_variables)
 
                         #Ende der Sequenz, alles zwischendrin wird ausprobiert
                         lib2_bausteine.a_sequence_end (xaml)
@@ -335,10 +336,10 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
                         
                         #Variante 1, Abfrage auf automationid, name und role
-                        lib2_bausteine.a_type_into_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type)
+                        lib2_bausteine.a_type_into_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type, input_variables)
                         
                         #Variante 2, Abfrage auf automationid und name
-                        lib2_bausteine.a_type_into_explorer_var2(xaml, a_applicationname, a_windowtitle, u_name, automationid) 
+                        lib2_bausteine.a_type_into_explorer_var2(xaml, a_applicationname, a_windowtitle, u_name, automationid, input_variables) 
 
                         #Ende der Sequenz
                         lib2_bausteine.a_sequence_end(xaml)
@@ -403,11 +404,11 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
 
                         #Variante 1, Abfrage auf name und role
-                        lib2_bausteine.a_type_into_explorer_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)  #str(row[column['role']]) 
+                        lib2_bausteine.a_type_into_explorer_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type, input_variables)
 
                         #Variante 2, Abfrage nur auf name
-                        lib2_bausteine.a_type_into_explorer_no_id_var2(xaml, a_applicationname, a_windowtitle, u_name) 
-
+                        lib2_bausteine.a_type_into_explorer_no_id_var2(xaml, a_applicationname, a_windowtitle, u_name, input_variables)
+                       
                         #Ende der Sequenz
                         lib2_bausteine.a_sequence_end(xaml)
 
@@ -501,7 +502,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                     
                     if (u_eventtype) == "Left-Down":
                         #Type Into mit automationid und role
-                        lib2_bausteine.a_type_into_application(xaml, a_applicationname, a_windowtitle, u_name, automationid, u_type)
+                        lib2_bausteine.a_type_into_application(xaml, a_applicationname, a_windowtitle, u_name, automationid, u_type, input_variables)
 
                     if (u_eventtype) == "CTRL + C":
                         #Abfrage über automationid und role
@@ -572,10 +573,10 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
 
                         #Variante 2, über name und role
-                        lib2_bausteine.a_type_into_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
+                        lib2_bausteine.a_type_into_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type, input_variables)
 
                         #Variante 3, über aaname und ctrl Tag
-                        lib2_bausteine.a_type_into_application_no_id_var2(xaml, a_applicationname, a_windowtitle, u_name)
+                        lib2_bausteine.a_type_into_application_no_id_var2(xaml, a_applicationname, a_windowtitle, u_name, input_variables)
                         
                         #Ende der Sequenz
                         lib2_bausteine.a_sequence_end(xaml)
