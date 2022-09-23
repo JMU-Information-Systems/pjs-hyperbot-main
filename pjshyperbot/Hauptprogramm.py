@@ -627,7 +627,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                     else:
                         lib2_bausteine.a_click_right_in_application_var2(xaml, a_applicationname, a_windowtitle, u_name, u_type)
                 
-  
+''' 
 def verbesserungsvorschläge():
     #Verbesserungsvorschläge am Ende:
     
@@ -658,6 +658,8 @@ def verbesserungsvorschläge():
 
    
    
+
+        '''
 
 if __name__ == '__main__':
     main(sys.argv[1]) #um Datein als eigenständiges Programm zu nutzen und Elemente importierbar zu machen
