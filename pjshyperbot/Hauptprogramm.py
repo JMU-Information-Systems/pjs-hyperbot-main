@@ -35,9 +35,6 @@ def main(dbname):
     l_database = sqlite3.connect(dbname)
     cursor = l_database.cursor()
     cursor.execute("SELECT * FROM logger ORDER BY e_id")  # importiere Datenbank
-    #strg_c_excel= cursor.execute("SELECT COUNT (*) FROM testdatensatz2 where a_applicationname='excel' and u_eventtype='CTRL + C'")
-    #number_of_strg_c_excel= strg_c_excel.fetchone()[0]
-        
 
     #Sodass nicht auf einzelne Spaltennummern zugegriffen werden muss, sondern der Zugriff über den Spaltennamen erfolgt
     def matching(cursor):
@@ -385,16 +382,16 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         lib2_bausteine.a_click_left_in_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_name)
 
                         #Variante 2, automationid, name, role
-                        lib2_bausteine.a_click_left_in_explorer_var2(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_eventtype)
+                        lib2_bausteine.a_click_left_in_explorer_var2(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type)
 
                         #Variante 3, automationid und role
-                        lib2_bausteine.a_click_left_in_explorer_var3(xaml,a_applicationname, a_windowtitle, automationid, u_eventtype)
+                        lib2_bausteine.a_click_left_in_explorer_var3(xaml,a_applicationname, a_windowtitle, automationid,u_name, u_type)
                         
                         #Ende der Sequenz
                         lib2_bausteine.a_sequence_end(xaml)
                         
                     else: #Rechtsklick
-                        lib2_bausteine.a_click_right_in_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_eventtype)
+                        lib2_bausteine.a_click_right_in_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_type)
                         
           
             #dann gibt es keine ID            
@@ -450,7 +447,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         lib2_bausteine.a_sequence_click_start(xaml, u_name)
              
                         #Variante 1, name und role
-                        lib2_bausteine.a_click_left_in_explorer_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_eventtype)
+                        lib2_bausteine.a_click_left_in_explorer_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
 
                         #Variante 2, nur name
                         lib2_bausteine.a_click_left_in_explorer_no_id_var2(xaml, a_applicationname, a_windowtitle,u_name)
@@ -459,7 +456,7 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                         lib2_bausteine.a_sequence_end(xaml)
                             
                     else:
-                        lib2_bausteine.a_click_right_in_explorer(xaml, automationid, u_name, u_type)
+                        lib2_bausteine.a_click_right_in_explorer(xaml, a_applicationname, a_windowtitle, u_name, automationid, u_type)
                     
 
     else: #dann ist es eine Applikation, gesonderte Bausteine
@@ -630,24 +627,28 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
                     else:
                         lib2_bausteine.a_click_right_in_application_var2(xaml, a_applicationname, a_windowtitle, u_name, u_type)
                 
-  
+''' 
+def verbesserungsvorschläge():
+    #Verbesserungsvorschläge am Ende:
+    
 
-                     
-  #Verbesserungsvorschläge am Ende:
-  #lib2_bausteine.a_sequence_auskommentiert(xaml)
-  #if number_of_strg_c_excel>=3:
-            #lib2_bausteine.a_sequence_read_range_start (xaml):
-            #lib2_bausteine.a_read_range(outputtable_name, range, sheet_name, workbook_path)) Variablen müssen vom Frontend kommen
-            #lib2_bausteine.a_comment_read_range (xaml)
-            #Ende der Sequenz
-            #lib2_bausteine.a_sequence_end(xaml)
+    #Zählen wie oft etwas im Prozessverlauf aus Excel kopiert/eingefügt wird
+    strg_c_excel= cursor.execute("SELECT COUNT (*) FROM logger where a_applicationname='excel' and u_eventtype='CTRL + C'")
+    number_of_strg_c_excel= strg_c_excel.fetchone()[0]
+    
+    lib2_bausteine.a_sequence_auskommentiert(xaml)
+    
+    if number_of_strg_c_excel>=3:
+       
+        lib2_bausteine.a_comment_read_range (xaml)
+        lib2_bausteine.a_read_range(xaml)
+     
             
-
   #wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte
         #Start der Sequenz
         #lib2_bausteine.a_sequence_data_scraping_start
-        #lib2_bausteine.a_comment_data_scraping (xaml):
-        #lib2_bausteine.a_write_range_excel (xaml, datatable, sheetname, workbookpath): #aus Frontend die Variablen
+        #lib2_bausteine.a_comment_data_scraping (xaml)
+        #lib2_bausteine.a_write_range_excel (xaml)
         #Ende der Sequenz
         #lib2_bausteine.a_sequence_end(xaml)
 
@@ -656,6 +657,6 @@ def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_ap
 
    
    
-
+'''
 if __name__ == '__main__':
     main(sys.argv[1]) #um Datein als eigenständiges Programm zu nutzen und Elemente importierbar zu machen
