@@ -110,7 +110,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
     if a_applicationname == "msedge":
             
             #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
-            if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend"))):
+            if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
                 lib_bausteine.a_comment_calendar_picker(xaml)
             
 
@@ -166,9 +166,9 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     #Variante 1, nur über ID
                     lib2_bausteine.a_click_left_browser_optionsfeld(xaml,a_applicationname, url, u_name,automationid)
 
-                #Typ Text ist auch ein Klick, meist radio Buttons
-                elif (u_type)=="Text":
-                    lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
+                #wie Kombinationsfeld, nur wenn ID vorhanden ist berücksichtigen. Identifikation über parentid
+                elif (u_type)=="Gruppe":
+                    lib2_bausteine.a_click_gruppe(xaml,a_applicationname, u_name, automationid)
                     
                 # Abfrage der Keystroke Aktivitäten im Browser
 
@@ -261,9 +261,21 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     #Ende der Sequenz
                     lib2_bausteine.a_sequence_end(xaml)
                     #lib_bausteine.a_comment_optionsfeld(xaml)
-
+                
+                 #keine ID
                  elif (u_type)=="Text":
-                    lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
+
+                    #Start der Sequenz
+                    lib2_bausteine.a_sequence_click_start(xaml, u_name)
+                    #Variante 1, über aaname und tag=LABEL
+                    lib2_bausteine.a_click_browser_text(xaml,a_applicationname, url, u_name)
+
+                    #Variante 2, nur über aaname
+                    lib2_bausteine.a_click_browser_text_var2(xaml,a_applicationname, url, u_name)
+
+                    #Ende der Sequenz
+                    lib2_bausteine.a_sequence_end(xaml)
+
                 
                  elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
                     
