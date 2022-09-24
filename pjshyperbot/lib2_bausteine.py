@@ -835,10 +835,10 @@ def a_click_right_in_application_var2(xaml, application_name, title, name, role)
     xaml.write("            </ui:Click>\n")
 
 
-def a_type_into_application(xaml, application_name, title, name, id, role, input_variable):
+def a_type_into_application(xaml, application_name, title, id, name, role, input_variable):
     xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\""+input_variable+"\">\n")
     xaml.write("              <ui:TypeInto.Target>\n")
-    xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+    xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' name=\'"+name+"\'  role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
     xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
     xaml.write("            </ui:Target.WaitForReady>\n")
@@ -860,19 +860,8 @@ def a_type_into_application_no_id(xaml, application_name, title, name, role, inp
     xaml.write("            </ui:TypeInto>\n")
 
 
-def a_type_into_application_no_id_var2(xaml, application_name, title, name, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\""+input_variable+"\">\n")
-    xaml.write("              <ui:TypeInto.Target>\n")
-    xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt;&lt;wnd aaname=\'"+name+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("            <ui:Target.WaitForReady>\n")
-    xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("            </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:TypeInto.Target>\n")
-    xaml.write("            </ui:TypeInto>\n")
 
-
-def a_send_hotkey_strg_c_in_application(xaml, application_name, title, name, id, role):
+def a_send_hotkey_strg_c_in_application(xaml, application_name, title, id,name,  role):
     xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey STRG+C in "+name+"\" EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">\n")
     xaml.write("        <ui:SendHotkey.Target>\n")
     xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
@@ -896,22 +885,11 @@ def a_send_hotkey_strg_c_in_application_no_id(xaml, application_name, title, nam
     xaml.write("      </ui:SendHotkey>\n")
 
 
-def a_send_hotkey_strg_c_in_application_no_id_var2(xaml, application_name, title, name):
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey STRG+C in "+name+"\" EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">\n")
-    xaml.write("        <ui:SendHotkey.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt;&lt;wnd aaname=\'"+name+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("            <ui:Target.WaitForReady>\n")
-    xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("            </ui:Target.WaitForReady>\n")
-    xaml.write("          </ui:Target>\n")
-    xaml.write("        </ui:SendHotkey.Target>\n")
-    xaml.write("      </ui:SendHotkey>\n")
 
-
-def a_send_hotkey_strg_v_in_application(xaml, application_name, title, name, id, role):
+def a_send_hotkey_strg_v_in_application(xaml, application_name, title, id, name, role):
     xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey STRG+V in "+name+"\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">\n")
     xaml.write("        <ui:SendHotkey.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
     xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
     xaml.write("            </ui:Target.WaitForReady>\n")
@@ -924,30 +902,6 @@ def a_send_hotkey_strg_v_in_application_no_id(xaml, application_name, title, nam
     xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey STRG+V in "+name+"\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">\n")
     xaml.write("        <ui:SendHotkey.Target>\n")
     xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("            <ui:Target.WaitForReady>\n")
-    xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("            </ui:Target.WaitForReady>\n")
-    xaml.write("          </ui:Target>\n")
-    xaml.write("        </ui:SendHotkey.Target>\n")
-    xaml.write("      </ui:SendHotkey>\n")
-
-
-def a_send_hotkey_strg_v_in_application_no_id_var2(xaml, application_name, title, name):
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey STRG+V in "+name+"\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">\n")
-    xaml.write("        <ui:SendHotkey.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt;&lt;wnd aaname=\'"+name+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("            <ui:Target.WaitForReady>\n")
-    xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("            </ui:Target.WaitForReady>\n")
-    xaml.write("          </ui:Target>\n")
-    xaml.write("        </ui:SendHotkey.Target>\n")
-    xaml.write("      </ui:SendHotkey>\n")
-
-
-def a_send_hotkey_strg_v_in_application(xaml, application_name, title, id, name):
-    xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey STRG+V in "+name+"\" EmptyField=\"True\" Key=\"v\" KeyModifiers=\"Ctrl\">\n")
-    xaml.write("        <ui:SendHotkey.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' role=\'Element\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
     xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
     xaml.write("            </ui:Target.WaitForReady>\n")
