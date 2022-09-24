@@ -724,7 +724,7 @@ def a_type_into_browser_no_id_var3(xaml, application_name, url, name, input_vari
 
 # Applikation
 
-def a_click_single_in_application_var(xaml, application_name, title, automationid, name, role):
+def a_click_left_in_application (xaml, application_name, title, automationid, name, role):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -747,7 +747,7 @@ def a_click_single_in_application_var(xaml, application_name, title, automationi
 
 
 
-def a_click_single_in_application_no_id(xaml, application_name, title, name, role):
+def a_click_left_in_application_no_id(xaml, application_name, title, name, role):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -768,52 +768,6 @@ def a_click_single_in_application_no_id(xaml, application_name, title, name, rol
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-
-
-
-
-def a_click_single_in_application_no_id_var2(xaml, application_name, title, name):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
-    xaml.write("              <ui:Click.CursorPosition>\n")
-    xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
-    xaml.write("                  <ui:CursorPosition.OffsetX>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
-    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetY>\n")
-    xaml.write("                </ui:CursorPosition>\n")
-    xaml.write("              </ui:Click.CursorPosition>\n")
-    xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+"\' title=\'"+title+"\' /&gt;&lt;ctrl name=\'"+name+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("                  <ui:Target.WaitForReady>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("                  </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:Click.Target>\n")
-    xaml.write("            </ui:Click>\n")
-
-
-def a_click_single_in_application_no_id_var3(xaml, application_name, title, name):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
-    xaml.write("              <ui:Click.CursorPosition>\n")
-    xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
-    xaml.write("                  <ui:CursorPosition.OffsetX>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
-    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetY>\n")
-    xaml.write("                </ui:CursorPosition>\n")
-    xaml.write("              </ui:Click.CursorPosition>\n")
-    xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+"\' title=\'"+title+"\' /&gt;&lt;ctrl aaname=\'"+name+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("                  <ui:Target.WaitForReady>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("                  </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:Click.Target>\n")
-    xaml.write("            </ui:Click>\n")
 
 
 def a_click_right_in_application(xaml, application_name, title, automationid, name, role):  # für alle Anwendungen außer Browser
@@ -837,6 +791,27 @@ def a_click_right_in_application(xaml, application_name, title, automationid, na
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
+
+def a_click_right_in_application_no_id (xaml, application_name, title, automationid, name, role):  # für alle Anwendungen außer Browser
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
+    xaml.write("              <ui:Click.CursorPosition>\n")
+    xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
+    xaml.write("                  <ui:CursorPosition.OffsetX>\n")
+    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
+    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
+    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
+    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
+    xaml.write("                  </ui:CursorPosition.OffsetY>\n")
+    xaml.write("                </ui:CursorPosition>\n")
+    xaml.write("              </ui:Click.CursorPosition>\n")
+    xaml.write("              <ui:Click.Target>\n")
+    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+    xaml.write("                  <ui:Target.WaitForReady>\n")
+    xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+    xaml.write("                  </ui:Target.WaitForReady>\n")
+    xaml.write("                </ui:Target>\n")
+    xaml.write("              </ui:Click.Target>\n")
+    xaml.write("            </ui:Click>\n")
 
 def a_click_right_in_application_var2(xaml, application_name, title, name, role):  # für alle Anwendungen außer Browser
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
@@ -900,7 +875,7 @@ def a_type_into_application_no_id_var2(xaml, application_name, title, name, inpu
 def a_send_hotkey_strg_c_in_application(xaml, application_name, title, name, id, role):
     xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey STRG+C in "+name+"\" EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">\n")
     xaml.write("        <ui:SendHotkey.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+    xaml.write("                <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
     xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
     xaml.write("            </ui:Target.WaitForReady>\n")
