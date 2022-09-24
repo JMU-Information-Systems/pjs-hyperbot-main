@@ -23,7 +23,7 @@ def main(dbname):
     xaml = open(filename,"w", encoding="utf-8")
     endknoten = deque() # stack, um Endknotenhierarchie aufzuheben
     akt_name = NONE
-    #offene_apps() =[] #collection/Liste
+    offene_apps = deque() #Liste, welche Applikationsnamen der bereits offenen Anwendungen enthält
 
     endknoten.append(lib_bausteine.activity(xaml)) #schreibe Activity Header und nimm den return Wert (Endknoten) in den Stapel auf
     endknoten.append(lib_bausteine.sequence(xaml)) #schreibe Sequence Header und nimm den return Wert (Endknoten) in den Stapel auf
@@ -47,9 +47,7 @@ def main(dbname):
 
     column = matching(cursor)
        
-    for row in cursor:        
-        
-        
+    for row in cursor:         
         #Anpassen der URL, trimmen  einfügen von * sodass Selektor für alle Seiten dieser URL gilt        
         #bei der URL von WeClapp, funktioniert das Trimmen mit dem Modul urllib.parse nicht, deshalbt gesonderte Anpassung
         
@@ -58,13 +56,17 @@ def main(dbname):
         else:
             #Trimmen der URLS
             from urllib.parse import urlparse 
+            a_url = str(row[column['a_url']])
             a = urlparse(str(row[column['a_url']]))
             website_name = str(a.hostname)
             url = "*https://" + website_name + "/*"
 
         #Fehlerhandling, falls Sonderzeichen wie "&" in Spalte "name" vorhanden sind entfernen
         u_name= str(row[column['u_name']])
-        u_name=u_name.replace("&", "&amp;amp;")
+        if str(row[column['a_applicationname']]) == "msedge":
+            u_name=str(row[column['u_name']]).replace("<","&lt;").replace("&", "&amp;amp;")
+        else:
+            u_name=""
 
         #Prüfe, ob sich der Applikationsname ändert, um Bodys zu bilden
         if akt_name != str(row[column['a_applicationname']]):
@@ -72,18 +74,25 @@ def main(dbname):
                 xaml.write(endknoten.pop())
             akt_name = str(row[column['a_applicationname']])
             
-            #if a_applicationname in open applicaions attach else
-            if str(row[column['a_applicationname']]) == "msedge":
-                    endknoten.append(lib2_bausteine.a_edge_browser_start(xaml, url))
-            elif str(row[column['a_applicationname']]) == "excel":
-                    endknoten.append(lib2_bausteine.a_excel_application_scope(xaml, "workbook_path"))
-            elif str(row[column['a_applicationname']]) == "word":
-                    endknoten.append(lib2_bausteine.a_word_application_scope (xaml, "workbook_path"))
+            #if a_applicationname in open applicaions attach else open browser
+            if str(row[column['a_applicationname']]) in offene_apps:
+                if str(row[column['a_applicationname']]) == "msedge":
+                        endknoten.append(lib2_bausteine.a_edge_browser_attach(xaml, a_url))
+                else:
+                    endknoten.append(lib2_bausteine.a_attach_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']])))
             else:
-                endknoten.append(lib2_bausteine.a_open_application(str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), "C:\\Program Files\\"+str(row[column['a_applicationname']])+"\\"+str(row[column['a_applicationname']])+".exe"))
+                offene_apps.append(akt_name)
+                if str(row[column['a_applicationname']]) == "msedge":
+                        endknoten.append(lib2_bausteine.a_edge_browser_start(xaml, a_url))
+                elif str(row[column['a_applicationname']]) == "excel":
+                        endknoten.append(lib2_bausteine.a_excel_application_scope(xaml, "workbook_path"))
+                elif str(row[column['a_applicationname']]) == "word":
+                        endknoten.append(lib2_bausteine.a_word_application_scope(xaml, "workbook_path"))
+                else:
+                    endknoten.append(lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), "C:\\Program Files\\"+str(row[column['a_applicationname']])+"\\"+str(row[column['a_applicationname']])+".exe"))
 
 
-        aktionen(url, xaml, str(row[column['automationid']]), str(row[column['u_name']]), str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['input_variables']]))
+        aktionen(url, a_url, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]))
     
 
     #baue alle noch offenen Endknoten vom Stack ab
@@ -96,7 +105,7 @@ def main(dbname):
 #Abfrage auf Applikationen
 
 #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
-def aktionen(url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle, input_variables):
+def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle, input_variables):
     
     if a_applicationname == "msedge":
             
