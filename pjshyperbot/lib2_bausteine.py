@@ -80,6 +80,12 @@ def a_edge_browser_start(xaml, url):
     xaml.write("          <Sequence DisplayName=\"Do\">\n")
     return("          </Sequence>\n        </ActivityAction>\n      </ui:OpenBrowser.Body>\n    </ui:OpenBrowser>\n")
 
+def a_edge_browser_attach(xaml, a_url):
+    xaml.write("    <ui:BrowserScope BrowserType=\"[BrowserType.Edge]\" DisplayName=\"Attach Browser\"  Selector=\"&lt;html app=\'msedge.exe\' url='"+a_url+" /&gt;\">\n")
+    xaml.write("      <ui:BrowserScope.Body>\n")
+    xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
+    xaml.write("          <Sequence DisplayName=\"Do\">\n")
+    return("          </Sequence>\n         </ActivityAction>\n      </ui:BrowserScope.Body>\n    </ui:BrowserScope>\n")
 
 #Bausteine, wenn ID vorhanden ist
 
@@ -1246,7 +1252,7 @@ def a_send_hotkey_strg_v_in_explorer_no_id_var2(xaml, application_name, title, n
 
 
 # Application Activities Excel
-def a_open_excel(xaml):
+def a_open_excel(xaml): #alte Version
     xaml.write("    <ui:OpenApplication DisplayName=\"Open Application Excel\" FileName=\"C:\Program Files (x86)\Microsoft Office\root\Office16\excel.exe\" Selector=\"&lt;wnd app='excel.exe' /&gt;\">\n")
     xaml.write("      <ui:OpenApplication.Body>\n")
     xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
@@ -1299,7 +1305,19 @@ def a_open_application (xaml, application_name, windowtitle, root):
     xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
     xaml.write("              </scg:Dictionary>\n")
     xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
-    return("          </Sequence>\n        </ActivityAction>\n      </ui:OpenApplication.Body>\n    </ui:OpenApplication>\n") 
+    return("          </Sequence>\n        </ActivityAction>\n      </ui:OpenApplication.Body>\n    </ui:OpenApplication>\n")
+
+def a_attach_application (xaml, application_name, windowtitle):
+    xaml.write("    <ui:WindowScope DisplayName=\"Attach "+application_name+"\" Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;\">\n")
+    xaml.write("      <ui:WindowScope.Body>\n")
+    xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
+    xaml.write("          <Sequence DisplayName=\"Do\">\n")
+    xaml.write("            <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("              <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
+    xaml.write("              </scg:Dictionary>\n")
+    xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
+    return("          </Sequence>\n        </ActivityAction>\n      </ui:WindowScope.Body>\n    </ui:WindowScope>\n")
 
 
 def a_write_cell(xaml, cell, sheet_name, text, workbook_path):
