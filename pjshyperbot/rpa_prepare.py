@@ -25,7 +25,7 @@ class databaseContact():
            SELECT DISTINCT uilog.clickpositionx, uilog.clickpositiony, uilog.userid AS uilog_userid,
                   uilog.appid AS uilog_appid, uilog.automationid, uilog.name, uilog.type, uilog.eventtype,
                   uilog.positionx, uilog.positiony, uilog.width, uilog.height, uilog."timestamp" AS eventtime,
-                  uilog.analysisid, uilog.relativeclickx, uilog.relativeclicky, uilog."time", uilog.unifiedlabel,
+                  uilog.analysisid, uilog.relativeclickx, uilog.relativeclicky, 0, uilog.unifiedlabel,
                   uilog.value, uilog.elementclass, al.userid AS applog_userid, al.applicationname, al.windowtitle, al.url
            FROM processanalyzer.uilog
            LEFT JOIN al ON uilog.userid::text = al.userid::text AND uilog.appid = al.id AND uilog.analysisid = al.analysisid
@@ -34,8 +34,7 @@ class databaseContact():
     sqlinsert='''INSERT INTO logger (clickpositionx, clickpositiony, u_userid, u_appid, automationid, u_name, u_type, u_eventtype,
     positionx, positiony, u_width, u_height, eventtime, analysisid, relativeclickx, relativeclicky, u_time, unifiedlabel, u_value, elementclass, 
     a_userid, a_applicationname, a_windowtitle, a_url) VALUES
-    ('''
-    sqldelete='DELETE FROM logger AS log1 WHERE log1.u_time = 0 AND EXISTS (SELECT * FROM logger AS log2 WHERE log2.e_id = log1.e_id +1 AND log2.u_time > 0)'
+    (''' 
 
     #read json File f?r Extraktion der userid und intallationtime (f?r filename)
     jfile="C:\\ProgramData\\RecorderService\\Settings\\applicationsettings.json"
@@ -98,7 +97,10 @@ class databaseContact():
             print(e)
             exit
         row = cursor.fetchone()
+
+    cursor.close
     
+
     def getType(self):
         sqltype='''SELECT DISTINCT u_type FROM logger''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
         u_type = databaseContact.curs.execute(sqltype).fetchall()
