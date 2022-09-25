@@ -63,10 +63,10 @@ def main(dbname):
 
         #Fehlerhandling, falls Sonderzeichen wie "&" in Spalte "name" vorhanden sind entfernen
         u_name= str(row[column['u_name']])
-        if str(row[column['a_applicationname']]) == "msedge":
-            u_name=str(row[column['u_name']]).replace("<","&lt;").replace("&", "&amp;amp;")
-        else:
+        if str(row[column['a_applicationname']]) == "notepad++":
             u_name=""
+        else:
+            u_name=str(row[column['u_name']]).replace("<","&lt;").replace(">","&gt;").replace("&", "&amp;amp;").replace("\'","&apos;").replace("\"","&quot;")
 
         #Prüfe, ob sich der Applikationsname ändert, um Bodys zu bilden
         if akt_name != str(row[column['a_applicationname']]):
@@ -77,7 +77,7 @@ def main(dbname):
             #if a_applicationname in open applicaions attach else open browser
             if str(row[column['a_applicationname']]) in offene_apps:
                 if str(row[column['a_applicationname']]) == "msedge":
-                        endknoten.append(lib2_bausteine.a_edge_browser_attach(xaml, a_url))
+                        endknoten.append(lib2_bausteine.a_edge_browser_attach(xaml, url))
                 else:
                     endknoten.append(lib2_bausteine.a_attach_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']])))
             else:
@@ -92,7 +92,7 @@ def main(dbname):
                     endknoten.append(lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), "C:\\Program Files\\"+str(row[column['a_applicationname']])+"\\"+str(row[column['a_applicationname']])+".exe"))
 
 
-        aktionen(url, a_url, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]))
+        aktionen(url, a_url, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['input_variables']]))
     
 
     #baue alle noch offenen Endknoten vom Stack ab
