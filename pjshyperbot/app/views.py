@@ -94,7 +94,7 @@ def about(request):
         }
     )
 
-def Dateneingabe(request):
+def input(request):
 
     db = databaseContact()
     
@@ -111,13 +111,15 @@ def Dateneingabe(request):
 
     #content = request.POST.get("vname")
     #print(content)
-    if request.POST.get("vfurther")=="ja":
-        return render(request,'app/about.html', {
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/input.html',
+        {
             'title':'Hyperbot',
-            'message':'Guten Tag!',
+        
             'year':datetime.now().year,
-        })
-    else:
-        return HttpResponse("<html><body>Danke fuer deine Eingabe</body></html>")
+        }
+    )
     
  
