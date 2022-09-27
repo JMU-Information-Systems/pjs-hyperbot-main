@@ -56,7 +56,7 @@ def main(dbname):
         else:
             #Trimmen der URLS
             from urllib.parse import urlparse 
-            a_url = str(row[column['a_url']])
+            a_url = str(row[column['a_url']]).replace("&","&amp;")
             a = urlparse(str(row[column['a_url']]))
             website_name = str(a.hostname)
             url = "*https://" + website_name + "/*"
@@ -217,7 +217,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                         lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var3(xaml,a_applicationname,url,u_name)
                         
                         #Baustein Variante 4, aaname und Klasse
-                       # lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var4(xaml,a_applicationname,url,u_name,u_class)
+                        #lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var4(xaml,a_applicationname,url,u_name,u_class)
                         
                         #Baustein Variante 5, mit aaname und Tag=Span 
                         lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var5 (xaml,a_applicationname,url, u_name)
@@ -339,7 +339,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                         lib2_bausteine.a_press_enter(xaml)
                
  
-    if (a_applicationname)=="explorer": 
+    elif (a_applicationname)=="explorer": 
             
             if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
                 lib_bausteine.a_comment_calendar_picker(xaml)
