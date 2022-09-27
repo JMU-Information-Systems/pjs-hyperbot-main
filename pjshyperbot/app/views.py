@@ -96,6 +96,7 @@ def about(request):
 
 def input(request):
 
+    #if __name__ == '__main__'
     db = databaseContact()
     
     input = request.POST.items()
