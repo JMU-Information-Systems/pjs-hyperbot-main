@@ -23,9 +23,10 @@ if __name__ == '__main__':
 
 
 
-    #extractor = HTMLExtraction()
-    #variables = extractor.getVariables()
-    #myxaml = xaml()
+    extractor = HTMLExtraction()
+    variables = extractor.getVariables()
+    myxaml = xaml()
+    myxaml.replaceVariables(variables)
 
     os.environ.setdefault(
         'DJANGO_SETTINGS_MODULE',

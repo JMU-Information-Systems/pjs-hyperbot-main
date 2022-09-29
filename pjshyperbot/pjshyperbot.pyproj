@@ -56,6 +56,9 @@
     <Compile Include="Hauptprogramm.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="xaml_adjust.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="rpa_backend.py">
       <SubType>Code</SubType>
     </Compile>
@@ -75,9 +78,22 @@
     <Folder Include="app\static\app\scripts\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
+    <Folder Include="app\templates\app\static_files\" />
     <Folder Include="pjshyperbot\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\static\app\content\contact.css" />
+    <Content Include="app\static\Bild_Tris.jpg" />
+    <Content Include="app\static\Bild_Christine.png" />
+    <Content Include="app\static\Bild_Leonie.jpg" />
+    <Content Include="app\static\Briefumschlag.png" />
+    <Content Include="app\static\logo_schrift.jpg" />
+    <Content Include="app\static\logo_schrift.png" />
+    <Content Include="app\static\logo_transparent.jpg" />
+    <Content Include="app\static\logo_transparent.png" />
+    <Content Include="app\static\logo_transparent_schrift.jpg" />
+    <Content Include="app\templates\app\static_files\logo_transparent.jpg" />
+    <Content Include="app\templates\app\input.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
