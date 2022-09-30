@@ -551,8 +551,29 @@ def a_click_gruppe(xaml, application_name, url,aaname, parentid):
     xaml.write("            </ui:Click>\n")
 
 
+def a_click_left_browser_grafik (xaml, application_name, url, aaname):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+    xaml.write("              <ui:Click.CursorPosition>\n")
+    xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
+    xaml.write("                  <ui:CursorPosition.OffsetX>\n")
+    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
+    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
+    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
+    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
+    xaml.write("                  </ui:CursorPosition.OffsetY>\n")
+    xaml.write("                </ui:CursorPosition>\n")
+    xaml.write("              </ui:Click.CursorPosition>\n")
+    xaml.write("              <ui:Click.Target>\n")
+    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+name+"\' tag='IMG' /&gt;\" TimeoutMS=\"1000\">\n")
+    xaml.write("                  <ui:Target.WaitForReady>\n")
+    xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+    xaml.write("                  </ui:Target.WaitForReady>\n")
+    xaml.write("                </ui:Target>\n")
+    xaml.write("              </ui:Click.Target>\n")
+    xaml.write("            </ui:Click>\n")
+    
+    
     # über ID
-
 
 def a_send_hotkey_strg_c_browser(xaml, application_name, url, name, id):
     xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey Strg+C in "+name+"\" EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">\n")

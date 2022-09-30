@@ -169,6 +169,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                 #wie Kombinationsfeld, nur wenn ID vorhanden ist berücksichtigen. Identifikation über parentid
                 elif (u_type)=="Gruppe":
                     lib2_bausteine.a_click_gruppe(xaml,a_applicationname, u_name, automationid)
+
                     
                 # Abfrage der Keystroke Aktivitäten im Browser
 
@@ -276,6 +277,10 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     #Ende der Sequenz
                     lib2_bausteine.a_sequence_end(xaml)
 
+
+                 #wenn Grafik angeklickt wird, keine id, über aaname und tag='IMG'
+                 elif (u_type)=="Grafik":
+                     lib2_bausteine.a_click_left_browser_grafik (xaml, a_applicationname, url, u_name)
                 
                  elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
                     
