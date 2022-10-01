@@ -192,10 +192,8 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
 
                         #ID, tag=Input, type=Text
                         lib2_bausteine.a_send_hotkey_strg_v_browser(xaml, a_applicationname,url, u_name, automationid)
-                     
-                    #Baustein für Enter 
-                    elif (u_eventtype) == "ENTER":
-                        lib2_bausteine.a_press_enter(xaml)
+                   
+
                         
             #dann gibt es keine ID
             else:
@@ -253,10 +251,10 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     #Starten der Sequenz
                     lib2_bausteine.a_sequence_click_optionsfeld_start(xaml,u_name)
                 
-                    #Variante 1, über aaname und aria-role=option
+                    #Variante 1, über aaname 
                     lib2_bausteine.a_click_left_browser_optionsfeld_no_id(xaml,a_applicationname, url, u_name)
                 
-                    #Variante 2, nur über aaname
+                    #Variante 2, nur über aaname und aria-role=option
                     lib2_bausteine.a_click_left_browser_optionsfeld_var_no_id_var2(xaml,a_applicationname, url, u_name)
                     
                     #Ende der Sequenz
@@ -269,7 +267,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     #Start der Sequenz
                     lib2_bausteine.a_sequence_click_start(xaml, u_name)
                     #Variante 1, über aaname und tag=LABEL
-                    lib2_bausteine.a_click_browser_text(xaml,a_applicationname, url, u_name)
+                    lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
 
                     #Variante 2, nur über aaname
                     lib2_bausteine.a_click_browser_text_var2(xaml,a_applicationname, url, u_name)
