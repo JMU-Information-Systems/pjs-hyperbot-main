@@ -12,6 +12,7 @@ import sys
 import sqlite3
 import shutil
 import os
+from Hauptprogramm import hauptprogramm
 from pathlib import Path
 from tarfile import ENCODING
 import json
@@ -96,7 +97,8 @@ def about(request):
 
 def input(request):
 
-    #if __name__ == '__main__'
+    hauptprogramm = hauptprogramm()
+    hauptprogramm.main()
     db = databaseContact()
     
     input = request.POST.items()
