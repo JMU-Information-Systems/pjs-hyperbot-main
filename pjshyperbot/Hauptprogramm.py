@@ -20,6 +20,10 @@ import lib2_bausteine #Bausteine werden aus seperatem Skript importiert
 class hauptprogramm():
     def main(self, dbname):
         filename =  dbname[0:dbname.find(".")] + ".xaml"   # filename for XAML file like db with extension .xaml
+        
+        #Connect to SQLite
+        l_database = sqlite3.connect(dbname)
+        cursor = l_database.cursor()
 
         xaml = open(filename,"w", encoding="utf-8")
         endknoten = deque() # stack, um Endknotenhierarchie aufzuheben
@@ -28,14 +32,17 @@ class hauptprogramm():
 
         endknoten.append(lib_bausteine.activity(xaml)) #schreibe Activity Header und nimm den return Wert (Endknoten) in den Stapel auf
         endknoten.append(lib_bausteine.sequence(xaml)) #schreibe Sequence Header und nimm den return Wert (Endknoten) in den Stapel auf
+        endknoten.append(lib_bausteine.s_varaibles(xaml))#schreibe Variables Header und nimm return Wert (Endknoten) in den Stapel auf
+        cursor.execute("SELECT * FROM variables ORDER BY v_id")  #lese Variable Tabelle
+        for row in cursor:
+            lib_bausteine.variable(xaml, str(row[column['vname']]), str(row[column['vtype']]), str(row[column['vinit']]))
+        cursor.close
+        xaml.write(str(endknoten.pop()))
     
     
         lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, ggf. sind Modifikationen notwendig")
 
-        #Connect to SQLite
-        l_database = sqlite3.connect(dbname)
-        cursor = l_database.cursor()
-        cursor.execute("SELECT * FROM logger ORDER BY e_id")  # importiere Datenbank
+        cursor.execute("SELECT * FROM logger ORDER BY e_id")  #lese Logger Tabelle
 
         #Sodass nicht auf einzelne Spaltennummern zugegriffen werden muss, sondern der Zugriff über den Spaltennamen erfolgt
         def matching(cursor):
@@ -94,11 +101,12 @@ class hauptprogramm():
 
 
             self.aktionen(url, a_url, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['input_variables']]))
-    
+        cursor.close
 
         #baue alle noch offenen Endknoten vom Stack ab
         while endknoten.__len__() > 0:
-            test = endknoten.__len__()
+            #if endknoten.__len__() ==1:
+                #verbesserungsvorschlaege()
             xaml.write(str(endknoten.pop()))       
         
 
@@ -174,7 +182,7 @@ class hauptprogramm():
                     
                     # Abfrage der Keystroke Aktivitäten im Browser
 
-                    elif (u_type) == "Bearbeiten" or "Suchfeld" or "Telefonnummer":  # d.h. es ist eine Keystroke Aktivität
+                    elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität
                     
                         #Bedingung für Texteingabe
                         if (u_eventtype) == "Left-Down":       
@@ -280,14 +288,26 @@ class hauptprogramm():
                      #wenn Grafik angeklickt wird, keine id, über aaname und tag='IMG'
                      elif (u_type)=="Grafik":
                          lib2_bausteine.a_click_left_browser_grafik (xaml, a_applicationname, url, u_name)
-               
-                     
-                     elif (u_type) == "Bearbeiten" or "Suchfeld" or "Telefonnummer":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
+                
+                     elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
                     
                         if (u_eventtype) == "Left-Down":
 
+                            #Start der Sequenz
+                            lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
+                     
                             #Suche über Name und Tag=Input, Type=Text
                             lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, input_variables)
+                        
+                            #Variante 3, keine ID, kein Name, nur Tag=Input, type =text
+                            lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, input_variables)
+
+                            #Variante 4, keine ID, kein Name, nur Tag=Input
+                            lib2_bausteine.a_type_into_browser_no_id_var3 (xaml, a_applicationname,url, u_name, input_variables)
+
+                            #Ende der Sequenz, alles zwischendrin wird ausprobiert
+                            lib2_bausteine.a_sequence_end (xaml)
+                       
                     
                         #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
                     
@@ -469,7 +489,7 @@ class hauptprogramm():
                 
 
     ''' 
-    def verbesserungsvorschläge():
+    def verbesserungsvorschlaege():
         #Verbesserungsvorschläge am Ende:
     
         #Zählen wie oft etwas im Prozessverlauf aus Excel kopiert wird
@@ -498,9 +518,7 @@ class hauptprogramm():
             #lib2_bausteine.a_sequence_auskommentiert_end(xaml) #am Ende wenn alle Vorschläge gemacht wurden
 
    
-   
-
-        '''
+         '''
 
     #if __name__ == '__main__':
         #self.main(sys.argv[1]) #um Datein als eigenständiges Programm zu nutzen und Elemente importierbar zu machen
