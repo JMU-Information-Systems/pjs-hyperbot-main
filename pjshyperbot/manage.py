@@ -9,7 +9,7 @@ import os
 import sys
 
 #from rpa_backend import *
-#from rpa_prepare import databaseContact
+from rpa_prepare import databaseContact
 from HTML_Extraktion import HTMLExtraction
 
 #from xaml_adjust import xaml
@@ -18,13 +18,15 @@ if __name__ == '__main__':
     #xaml = open("test","w", encoding="utf-8")
     #writehead(xaml)
 
-    #db = databaseContact()
+    db = databaseContact()
     #type = db.getType()
 
 
 
     extractor = HTMLExtraction()
-    variables = extractor.getVariables()
+    combined,variableName, value = extractor.getVariables()
+    db.insertInputWeclapp(variableName)
+
     #myxaml = xaml()
     #myxaml.replaceVariables(variables)
 
