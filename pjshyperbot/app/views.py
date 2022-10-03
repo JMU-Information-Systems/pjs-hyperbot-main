@@ -98,7 +98,21 @@ def about(request):
 def input(request):
 
     hauptprogramm = hauptprogramm()
-    hauptprogramm.main()
+
+        #read json File f?r Extraktion der userid und intallationtime (f?r filename)
+    jfile="C:\\ProgramData\\RecorderService\\Settings\\applicationsettings.json"
+
+    #Auslesen der UserID und Installationtime
+    with open(jfile, "r") as json_datei:
+        json_liste= json.load(json_datei)
+        userid=(str(json_liste['AnonymousUserId']))
+        filename=str(json_liste['InstallationTimeUtc']).replace('-','').replace(':','').replace('T','_')[:15]    
+    sqlread = sqlread.replace('%s',userid)
+    fpath=os.path.dirname(__file__)
+    dfile=Path(fpath + '\\' + filename + '.xaml')
+    
+
+    hauptprogramm.main(dfile)
     db = databaseContact()
     
     input = request.POST.items()
