@@ -174,7 +174,7 @@ class hauptprogramm():
                     
                     # Abfrage der Keystroke Aktivitäten im Browser
 
-                    elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität
+                    elif (u_type) == "Bearbeiten" or "Suchfeld" or "Telefonnummer":  # d.h. es ist eine Keystroke Aktivität
                     
                         #Bedingung für Texteingabe
                         if (u_eventtype) == "Left-Down":       
@@ -280,26 +280,14 @@ class hauptprogramm():
                      #wenn Grafik angeklickt wird, keine id, über aaname und tag='IMG'
                      elif (u_type)=="Grafik":
                          lib2_bausteine.a_click_left_browser_grafik (xaml, a_applicationname, url, u_name)
-                
-                     elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
+               
+                     
+                     elif (u_type) == "Bearbeiten" or "Suchfeld" or "Telefonnummer":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
                     
                         if (u_eventtype) == "Left-Down":
 
-                            #Start der Sequenz
-                            lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
-                     
                             #Suche über Name und Tag=Input, Type=Text
                             lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, input_variables)
-                        
-                            #Variante 3, keine ID, kein Name, nur Tag=Input, type =text
-                            lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, input_variables)
-
-                            #Variante 4, keine ID, kein Name, nur Tag=Input
-                            lib2_bausteine.a_type_into_browser_no_id_var3 (xaml, a_applicationname,url, u_name, input_variables)
-
-                            #Ende der Sequenz, alles zwischendrin wird ausprobiert
-                            lib2_bausteine.a_sequence_end (xaml)
-                       
                     
                         #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
                     
