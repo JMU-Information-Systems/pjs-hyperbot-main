@@ -109,7 +109,7 @@ class databaseContact():
         return(u_type)
 
     def getDataFrontend(self):
-        sqltype='''SELECT DISTINCT u_id, u_type, u_name, a_url, a_applicationname, a_windowtitle FROM logger WHERE u_type="Bearbeiten"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
+        sqltype='''SELECT DISTINCT e_id, u_type, u_name, a_url, a_applicationname, a_windowtitle FROM logger WHERE u_type="Bearbeiten"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
         data = databaseContact.curs.execute(sqltype).fetchall()
         
         #Hier wird geschaut, ob ein Pfad abgefragt werden muss (wenn mit Excel oder Word gearbeitet wurde)
@@ -162,7 +162,17 @@ class databaseContact():
         combined = np.column_stack((v_id, variableName, vtype, vinit))
 
         print(str(combined))
-        
+
+    def getVariables(self):
+        sqlselect = '''SELECT DISTINCT vname FROM variables'''
+        data = databaseContact.curs.execute(sqlselect).fetchall()
+        values = []
+        i = 0
+        for a in data:
+            a = str(a).replace("(","").replace(")","").replace("'","").replace(",","")
+            values.append(a)
+            i = i+1
+        return(values)
 
 
 
