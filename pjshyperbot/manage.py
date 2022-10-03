@@ -12,7 +12,7 @@ import sys
 #from rpa_prepare import databaseContact
 from HTML_Extraktion import HTMLExtraction
 
-from xaml_adjust import xaml
+#from xaml_adjust import xaml
     
 if __name__ == '__main__':
     #xaml = open("test","w", encoding="utf-8")
@@ -25,8 +25,8 @@ if __name__ == '__main__':
 
     extractor = HTMLExtraction()
     variables = extractor.getVariables()
-    myxaml = xaml()
-    myxaml.replaceVariables(variables)
+    #myxaml = xaml()
+    #myxaml.replaceVariables(variables)
 
     os.environ.setdefault(
         'DJANGO_SETTINGS_MODULE',
