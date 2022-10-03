@@ -100,6 +100,6 @@ class HTMLExtraction():
         #Uhrzeit=(x[6])
         
 
-        return (combined)
+        return (combined,variableName, value)
 
 
