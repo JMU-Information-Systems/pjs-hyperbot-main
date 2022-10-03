@@ -1,7 +1,9 @@
+from multiprocessing import Value
 import time
 import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from array import array
 chrome_options=Options()
 import requests
 import urllib.request
@@ -9,6 +11,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from urllib.request import urlopen
 import numpy as np
+import re
 
 class HTMLExtraction():
 
@@ -43,27 +46,50 @@ class HTMLExtraction():
         #for e in hh.findAll('br'):
             #e.extract()
 
-        
+
         hh=hh.text
+        txt = hh
+        inputWeclapp = re.findall("<\s*td\s*[^>]*>(.*?)<\s*\/\s*td>",txt)
+
+        a = 1
+
+        value = []
+        variableName = []
+
+        for i in inputWeclapp:
+            i = i.replace("&nbsp;","")
+            if a % 2 == 0:
+                value.append(i)
+                #print("even")
+            else:
+                variableName.append(i)
+                #print("odd")
+            a = a+1
+        
+        combined = np.column_stack((variableName, value))
+        print(str(combined))
+
+        
 
         #print("hh" + str(hh))
-        hh=hh.replace('<br>','\n')
-        hh=hh.replace('<p>','\n')
+        #hh=hh.replace('<br>','\n')
+        #hh=hh.replace('<p>','\n')
+        #hh = hh.replace("","")
 
         #print(hh)
 
-        import re
-        txt = hh
+        
+        
 
         #print("Txt" + txt)
 
-        value = re.findall("\:(.*)",txt)
-        variableName = re.findall("(.*):",txt)
+        #value = re.findall("\:(.*)",txt)
+        #variableName = re.findall("(.*):",txt)
         
 
-        combined = np.column_stack((variableName, value))
+        #combined = np.column_stack((variableName, value))
 
-        print(combined[0][0])
+        #print(combined[0][0])
 
         #Ersteller=(x[0])
         #Ankunftszeit=(x[1])
