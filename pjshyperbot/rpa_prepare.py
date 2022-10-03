@@ -112,7 +112,7 @@ class databaseContact():
         
         #Hier wird geschaut, ob ein Pfad abgefragt werden muss (wenn mit Excel oder Word gearbeitet wurde)
         sqlneedpath = '''SELECT a_applicationname FROM logger WHERE a_applicationname="excel" OR a_applicationname="ms.word"'''
-        needpath = databaseContact.curs.execute(sqltype).rowcount
+        needpath = len(databaseContact.curs.execute(sqlneedpath).fetchall())
         if needpath > 0:
             a = 1
         else:
