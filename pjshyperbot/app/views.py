@@ -13,6 +13,7 @@ import sqlite3
 import shutil
 import os
 from Hauptprogramm import hauptprogramm
+from HTML_Extraktion import HTMLExtraction
 from pathlib import Path
 from tarfile import ENCODING
 import json
@@ -65,7 +66,11 @@ def about(request):
         DataFrontend[i][3] = str(urlparse(str(row[3])).hostname)
         i=i+1
     
+    #extractor = HTMLExtraction()
+    #combined,variableName, value = extractor.getVariables()
+    #db.insertInputWeclapp(variableName)
 
+    variables = db.getVariables()
     #DataFrontend[0][3] = "test"
 
     #print(type(DataFrontend))
@@ -92,6 +97,7 @@ def about(request):
             'message': DataFrontend, #'Guten Tag!',
             'a':a,
             'year':datetime.now().year,
+            'variables': variables,
         }
     )
 
