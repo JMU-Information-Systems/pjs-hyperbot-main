@@ -560,38 +560,46 @@
                         {% for col in row %}
                         <td class="col">{{col}}</td>
                         {% endfor %}
-                        <td class="col col-7" data-label="vname"><input type="text" class="form-control" name={{row}} required /></td>
+                        <td class="col col-7" data-label="vname">
+                            <select type="text" class="form-control" name={{row}} required>
+                                {% for value in variables %}
+                                <option value={{value}}>{{value}}</option>
+                                {% endfor %}
+
+                            </select>
+                        </td>
+                        <!-- <td class="col col-7" data-label="vname"><input type="text" class="form-control" name={{row}} required /></td>-->
                     </tr>
-                    {% endfor %}
-                </table>
-            </div>
+            {% endfor %}
+        </table>
+    </div>
 
-            <!-- Wenn Excel oder Word verwendet wurde, dann nach dem Pfad fragen -->
-            <div class="container">
-                {% if a == 1%}
-                <legend style="color:white;">Please enter the path of the used file:</legend>
-                <input type="text" class="form-control" name=path required placeholder="path of the used file" required />
+    <!-- Wenn Excel oder Word verwendet wurde, dann nach dem Pfad fragen -->
+                        <div class="container">
+                            {% if a == 1%}
+                            <legend style="color:white;">Please enter the path of the used file:</legend>
+                            <input type="text" class="form-control" name=path required placeholder="path of the used file" required />
 
-                {% endif %}
-            </div>
+                            {% endif %}
+                        </div>
 
-            <legend style="color:white;">Did you use data scraping?</legend>
-            <div class="container">
-                <fieldset>
+                        <legend style="color:white;">Did you use data scraping?</legend>
+                        <div class="container">
+                            <fieldset>
 
-                    <h1 class="btn-switch" ">
-                        <input type="radio" id="yes" name="switch" class="btn-switch__radio btn-switch__radio_yes" />
-                        <input type="radio" checked id="no" name="switch" class="btn-switch__radio btn-switch__radio_no" />
-                        <label for="yes" class="btn-switch__label btn-switch__label_yes"><span class="btn-switch__txt">Yes</span></label>
-                        <label for="no" class="btn-switch__label btn-switch__label_no"><span class="btn-switch__txt">No</span></label>
-                    </h1>
-                </fieldset>
+                                <h1 class="btn-switch" ">
+                                    <input type="radio" id="yes" name="switch" class="btn-switch__radio btn-switch__radio_yes" />
+                                    <input type="radio" checked id="no" name="switch" class="btn-switch__radio btn-switch__radio_no" />
+                                    <label for="yes" class="btn-switch__label btn-switch__label_yes"><span class="btn-switch__txt">Yes</span></label>
+                                    <label for="no" class="btn-switch__label btn-switch__label_no"><span class="btn-switch__txt">No</span></label>
+                                </h1>
+                            </fieldset>
 
-            </div>
+                        </div>
 
-            <p></p>
-            <button type="submit" class="btn btn--green">Abschicken</button>
-        </div>
+                        <p></p>
+                        <button type="submit" class="btn btn--green">Abschicken</button>
+</div>
 
 </form>
 </body>
