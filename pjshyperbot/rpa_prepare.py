@@ -9,6 +9,8 @@ from pathlib import Path
 from tarfile import ENCODING
 import psycopg2 #Modul um eine Verbindung zum Datenbanksystem postgres herzustellen, gew?nschte Datenbank zu implementieren und SQL Befehle auszuf?hren
 import json
+import numpy as np
+
 
 
 """def main():
@@ -137,9 +139,31 @@ class databaseContact():
                 databaseContact.curs.execute(sqlupdate)
                 databaseContact.cons.commit()
 
+    def insertInputWeclapp(self, variableName):
 
+        
+        #sqlupdate = '''INSERT INTO variables (v_id, vname, vtype, vinit) VALUES ('''
+        i = len(variableName)
+        n = 1
+        v_id = []
+        vtype = []
+        vinit = []
+        while n <= i:
+            sqlupdate = '''INSERT INTO variables (v_id, vname, vtype, vinit) VALUES (''' + str(n) + ", " +'\''+ variableName[n-1]+'\''+ ", "+'\'' + 'String'+'\'' + ", "+'\'' + ''+'\'' + ')'
+            print(str(sqlupdate))
+            databaseContact.curs.execute(sqlupdate)
+            databaseContact.cons.commit()
+            v_id.append(n)
+            vtype.append("String")
+            vinit.append("")
+            n = n+1
+        
 
-  
+        combined = np.column_stack((v_id, variableName, vtype, vinit))
+
+        print(str(combined))
+        
+
 
 
 """
