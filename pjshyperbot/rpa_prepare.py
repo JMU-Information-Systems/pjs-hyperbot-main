@@ -135,7 +135,7 @@ class databaseContact():
             if key.isnumeric():
 
 
-                sqlupdate = '''UPDATE logger SET input_variables = "''' + value + '''" WHERE u_id = ''' + key 
+                sqlupdate = '''UPDATE logger SET input_variables = "''' + value + '''" WHERE e_id = ''' + key 
                 databaseContact.curs.execute(sqlupdate)
                 databaseContact.cons.commit()
 
