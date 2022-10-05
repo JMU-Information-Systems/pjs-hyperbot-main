@@ -109,7 +109,7 @@ class databaseContact():
         return(u_type)
 
     def getDataFrontend(self):
-        sqltype='''SELECT DISTINCT e_id, u_type, u_name, a_url, a_applicationname, a_windowtitle FROM logger WHERE u_type="Bearbeiten"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
+        sqltype='''SELECT DISTINCT e_id, u_type, u_name, a_url, a_applicationname, a_windowtitle FROM logger WHERE u_type="Bearbeiten" OR u_type="Suchfeld" OR u_type="Telefonnummer"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
         data = databaseContact.curs.execute(sqltype).fetchall()
         
         #Hier wird geschaut, ob ein Pfad abgefragt werden muss (wenn mit Excel oder Word gearbeitet wurde)
