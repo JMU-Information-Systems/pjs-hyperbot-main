@@ -21,9 +21,7 @@ if __name__ == '__main__':
     db = databaseContact()
     #type = db.getType()
 
-    extractor = HTMLExtraction()
-    combined,variableName, value = extractor.getVariables()
-    db.insertInputWeclapp(variableName)
+    
 
     #myxaml = xaml()
     #myxaml.replaceVariables(variables)
