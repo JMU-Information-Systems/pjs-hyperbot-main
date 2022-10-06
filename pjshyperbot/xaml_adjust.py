@@ -43,7 +43,7 @@ class xaml():
         mytext = text_file.read()
 
     #print("TXT")
-    print(repr(mytext))
+    #print(repr(mytext))
 
     def replaceVariables(self, inputArray):
         #print(repr(xaml.text))
@@ -51,12 +51,12 @@ class xaml():
         for i in inputArray:
             #i = i.tolist
             myfile = myfile.replace(i[0],i[1])
-            print("1. Wert")
+            #print("1. Wert")
             #print(str(i))
-            print(str(i[0]))
+            #print(str(i[0]))
 
-            print("1. Wert")
-            print(str(i[1]))
+            #print("1. Wert")
+            #print(str(i[1]))
         pathtxt = Path(xaml.filenametxt)
 
         #txt wieder in XAML umbenennen 
