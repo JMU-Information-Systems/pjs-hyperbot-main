@@ -41,6 +41,8 @@ class HTMLExtraction():
         soup = BeautifulSoup(driver.page_source, features="html.parser")
 
         #hh=soup.find_all("div", {"id": "pageForm:taskDescriptionXRow"})
+
+
         hh=soup.find("textarea", {"id": "pageForm:taskDescriptionX_TA"})
         
         #for e in hh.findAll('br'):
@@ -49,6 +51,8 @@ class HTMLExtraction():
 
         hh=hh.text
         txt = hh
+
+        #Extraktion aller Tabellenzellen (<td>-Tags), um die Eingaben in der Tabelle der Aufgabenvorlage auslesen zu können
         inputWeclapp = re.findall("<\s*td\s*[^>]*>(.*?)<\s*\/\s*td>",txt)
 
         a = 1
@@ -56,6 +60,8 @@ class HTMLExtraction():
         value = []
         variableName = []
 
+
+        #speichern aller geraden Werte von a (enspricht der zweiten Spalte) in value und der ungeraden Werte von a (enspricht der ersten Spalte) in variableName
         for i in inputWeclapp:
             i = i.replace("&nbsp;","")
             if a % 2 == 0:
@@ -67,7 +73,7 @@ class HTMLExtraction():
             a = a+1
         
         combined = np.column_stack((variableName, value))
-        print(str(combined))
+        #print(str(combined))
 
         
 
