@@ -1,8 +1,9 @@
-"""
+﻿"""
 Definition of views.
 """
 
 from datetime import datetime
+from tabnanny import filename_only
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponse
@@ -22,6 +23,7 @@ from rpa_prepare import databaseContact
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import numpy as np
+from django.core.files.storage import FileSystemStorage
 #def getUType():
  #   db = databaseContact()
   #  type = db.getType()
@@ -55,22 +57,12 @@ def contact(request):
     )
 
 def about(request):
-    db = databaseContact()
-    DataFrontend, a = db.getDataFrontend()
-    #print("Type" + str(type))
-    assert isinstance(request, HttpRequest)
-    DataFrontend = np.array(DataFrontend)
-    i = 0
-    for row in DataFrontend:
-
-        DataFrontend[i][3] = str(urlparse(str(row[3])).hostname)
-        i=i+1
+   
     
     #extractor = HTMLExtraction()
     #combined,variableName, value = extractor.getVariables()
     #db.insertInputWeclapp(variableName)
 
-    variables = db.getVariables()
     #DataFrontend[0][3] = "test"
 
     #print(type(DataFrontend))
@@ -83,10 +75,7 @@ def about(request):
     #relevantData = db.getRelevantDataFrontend(curs)
     #print(relevantData)
 
-    
-
-
-    
+   
     assert isinstance(request, HttpRequest)
 
     return render(
@@ -94,43 +83,56 @@ def about(request):
         'app/about.html',
         {
             'title':'Hyperbot',
-            'message': DataFrontend, #'Guten Tag!',
-            'a':a,
             'year':datetime.now().year,
-            'variables': variables,
         }
     )
 
 def input(request):
 
-    #hauptprogramm = hauptprogramm()
-
+    
         #read json File f?r Extraktion der userid und intallationtime (f?r filename)
     jfile="C:\\ProgramData\\RecorderService\\Settings\\applicationsettings.json"
 
-    #Auslesen der UserID und Installationtime
-    #with open(jfile, "r") as json_datei:
-     #   json_liste= json.load(json_datei)
-      #  userid=(str(json_liste['AnonymousUserId']))
-       # filename=str(json_liste['InstallationTimeUtc']).replace('-','').replace(':','').replace('T','_')[:15]    
-    #sqlread = sqlread.replace('%s',userid)
-    #fpath=os.path.dirname(__file__)
-    #dfile=Path(fpath + '\\' + filename + '.xaml')
-    
+    if request.method == 'POST':
+        uploaded_file = request.FILES['file']
+        fs = FileSystemStorage()
 
-    #hauptprogramm.main(dfile)
+        #Wenn eine Datei mit gleichem Namen schon vorhanden ist, dann wird sie geloescht 
+        if fs.exists(uploaded_file.name):
+            fs.delete(uploaded_file.name)
+        fs.save(uploaded_file.name, uploaded_file)
+
+    filename = uploaded_file.name
+
     db = databaseContact()
+
+    extractor = HTMLExtraction()
+    combined,variableName, value = extractor.getVariables()
+
+    db.insertInputWeclapp(variableName, filename)
+
+    variables = db.getVariables(filename)
+
+    DataFrontend, a = db.getDataFrontend(filename)
+    #print("Type" + str(type))
+    assert isinstance(request, HttpRequest)
+    DataFrontend = np.array(DataFrontend)
+    i = 0
+    for row in DataFrontend:
+
+        DataFrontend[i][3] = str(urlparse(str(row[3])).hostname)
+        i=i+1
+   
+    #db = databaseContact()
     
-    input = request.POST.items()
-    print("Typ" + str(type(input)))
-    db.insertInput(input)
+    
 
 
-    for key, value in input:
+    #for key, value in input:
         
-        print('Key: %s' % (key) ) 
+        #print('Key: %s' % (key) ) 
     
-        print('Value %s' % (value) )
+        #print('Value %s' % (value) )
 
     #content = request.POST.get("vname")
     #print(content)
@@ -140,9 +142,28 @@ def input(request):
         'app/input.html',
         {
             'title':'Hyperbot',
-        
+            'message': DataFrontend, #'Guten Tag!',
+            'a':a,
+            'year':datetime.now().year,
+            'variables': variables,
+            'filename': filename,
+        }
+    )
+
+def nextSteps(request):
+
+    db = databaseContact()
+    myinput = request.POST.items()
+    filename = request.POST.get("filename")
+    #print("Typ" + str(type(input)))
+    db.insertInput(myinput, filename)
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'app/nextSteps.html',
+        {
+            'title':'Hyperbot',
             'year':datetime.now().year,
         }
     )
-    
- 
