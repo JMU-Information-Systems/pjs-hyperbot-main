@@ -103,29 +103,58 @@ class databaseContact():
     cursor.close
     
 
-    def getType(self):
-        sqltype='''SELECT DISTINCT u_type FROM logger''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
-        u_type = databaseContact.curs.execute(sqltype).fetchall()
-        return(u_type)
+    #def getType(self):
+     #   sqltype='''SELECT DISTINCT u_type FROM logger''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
+      #  u_type = databaseContact.curs.execute(sqltype).fetchall()
+       # return(u_type)
 
-    def getDataFrontend(self):
+
+    #Daten, die im Frontend angezeigt werden, werden in dieser Methode aus der Datenbank extrahiert
+    def getDataFrontend(self, filename):
+        fpath=os.path.dirname(__file__)
+        dfile=Path(fpath + '\\' + filename) #Aufzeichnungsdb in sqlite (Ziel)
+
+        try:
+            #connect to sqlite3
+            cons=sqlite3.connect(dfile,check_same_thread=False)
+            curs=cons.cursor()
+        except sqlite3.Error as e:
+            print(e)
+            exit
+        #Pfad aus Frontend übergeben 
         sqltype='''SELECT DISTINCT e_id, u_type, u_name, a_url, a_applicationname, a_windowtitle FROM logger WHERE u_type="Bearbeiten" OR u_type="Suchfeld" OR u_type="Telefonnummer"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
-        data = databaseContact.curs.execute(sqltype).fetchall()
+        
+        #curs für "neue" DB aus Frontend anlegen
+        
+        data = curs.execute(sqltype).fetchall()
         
         #Hier wird geschaut, ob ein Pfad abgefragt werden muss (wenn mit Excel oder Word gearbeitet wurde)
         sqlneedpath = '''SELECT a_applicationname FROM logger WHERE a_applicationname="excel" OR a_applicationname="ms.word"'''
-        needpath = len(databaseContact.curs.execute(sqlneedpath).fetchall())
+        needpath = len(curs.execute(sqlneedpath).fetchall())
         if needpath > 0:
             a = 1
         else:
             a = 0
 
+        curs.close()
         return(data, a)
 
-    def insertInput(self, input):
+    #In dieser Methode werden die Eingaben zu den Namen der Variaben aus dem Frontend in der Datenbank gespeichert. 
+    #Dafuer wird eine neue Spalte input_variables angelegt 
+    def insertInput(self, input, filename):
+        fpath=os.path.dirname(__file__)
         
+        dfile=Path(fpath + '\\' + filename) 
+
+        try:
+            #connect to sqlite3
+            cons=sqlite3.connect(dfile,check_same_thread=False)
+            curs=cons.cursor()
+        except sqlite3.Error as e:
+            print(e)
+            exit
         sqlalter = '''ALTER TABLE logger ADD input_variables TEXT'''
-        databaseContact.curs.execute(sqlalter)
+        curs.execute(sqlalter)
 
         for key, value in input:
             
@@ -136,13 +165,30 @@ class databaseContact():
 
 
                 sqlupdate = '''UPDATE logger SET input_variables = "''' + value + '''" WHERE e_id = ''' + key 
-                databaseContact.curs.execute(sqlupdate)
-                databaseContact.cons.commit()
+                curs.execute(sqlupdate)
+                cons.commit()
+        curs.close()
 
-    def insertInputWeclapp(self, variableName):
 
-        
+    #In dieser Methode werden die mit Hilfe der HTML_Extraktion Klasse aus Weclapp extrahierten Werte in der Tabelle variables abgespeichert
+    def insertInputWeclapp(self, variableName, filename):
+        fpath=os.path.dirname(__file__)
+        dfile=Path(fpath + '\\' + filename)
+
+        try:
+            #connect to sqlite3
+            cons=sqlite3.connect(dfile,check_same_thread=False)
+            curs=cons.cursor()
+        except sqlite3.Error as e:
+            print(e)
+            exit
+
+        #Zu Beginn muss die Tabelle leer sein 
+        curs.execute("DELETE FROM variables")
         #sqlupdate = '''INSERT INTO variables (v_id, vname, vtype, vinit) VALUES ('''
+
+
+
         i = len(variableName)
         n = 1
         v_id = []
@@ -150,28 +196,40 @@ class databaseContact():
         vinit = []
         while n <= i:
             sqlupdate = '''INSERT INTO variables (v_id, vname, vtype, vinit) VALUES (''' + str(n) + ", " +'\''+ variableName[n-1]+'\''+ ", "+'\'' + 'String'+'\'' + ", "+'\'' + ''+'\'' + ')'
-            print(str(sqlupdate))
-            databaseContact.curs.execute(sqlupdate)
-            databaseContact.cons.commit()
+            #print(str(sqlupdate))
+            curs.execute(sqlupdate)
+            cons.commit()
             v_id.append(n)
             vtype.append("String")
             vinit.append("")
             n = n+1
-        
-
+        curs.close()
         combined = np.column_stack((v_id, variableName, vtype, vinit))
 
         print(str(combined))
 
-    def getVariables(self):
+    #Abfrage der verschiedenen Variablen aus der Datenbank. 
+    def getVariables(self, filename):
+        fpath=os.path.dirname(__file__)
+        dfile=Path(fpath + '\\' + filename) #Aufzeichnungsdb in sqlite (Ziel)
+
+        try:
+            #connect to sqlite3
+            cons=sqlite3.connect(dfile,check_same_thread=False)
+            curs=cons.cursor()
+        except sqlite3.Error as e:
+            print(e)
+            exit
         sqlselect = '''SELECT DISTINCT vname FROM variables'''
-        data = databaseContact.curs.execute(sqlselect).fetchall()
+        data = curs.execute(sqlselect).fetchall()
         values = []
         i = 0
         for a in data:
             a = str(a).replace("(","").replace(")","").replace("'","").replace(",","")
             values.append(a)
             i = i+1
+
+        curs.close()
         return(values)
 
 
