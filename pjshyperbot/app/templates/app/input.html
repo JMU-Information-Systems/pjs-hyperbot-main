@@ -529,14 +529,90 @@
 
 </head>
 <body>
-    <h2>
-        Thanks for your input!
-    </h2>
+    <h2>{{ title }}.</h2>
+    <h5>To be able to start with the automation, we still need some information from you:</h5>
 
 
-    <p>Your XAML file was generated successfully. Open the XAML file in UI Path in File Explorer under the path ... and check the result.</p>
-    <p>Next steps:</p>
-    <p>Would you prefer to start again?</p>
+
+
+
+
+    <form action="nextSteps/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+
+            <legend style="color:white;">Please enter the name of the use case:</legend>
+            <div class="container">
+
+                <input type="text" class="form-control" name=useCase required placeholder="use case" required />
+            </div>
+
+            <legend style="color:white;">Please enter the name of the variable:</legend>
+            <div class="container">
+                <table class="responsive-table">
+                    <tr class="table-header">
+                        <th class="col col-1">Id</th>
+                        <th class="col col-2">type</th>
+                        <th class="col col-3">name</th>
+                        <th class="col col-4">URL</th>
+                        <th class="col col-5">Application</th>
+                        <th class="col col-6">Window</th>
+                        <th class="col col-7">variable name</th>
+                    </tr>
+
+                    {% for row in message %}
+                    <tr class="table-row">
+                        {% for col in row %}
+                        <td class="col">{{col}}</td>
+                        {% endfor %}
+                        <td class="col col-7" data-label="vname">
+                            <select type="text" class="form-control" name={{row}} required>
+                                {% for value in variables %}
+                                <option value={{value}}>{{value}}</option>
+                                {% endfor %}
+
+                            </select>
+                        </td>
+                        <!-- <td class="col col-7" data-label="vname"><input type="text" class="form-control" name={{row}} required /></td>-->
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <!-- Wenn Excel oder Word verwendet wurde, dann nach dem Pfad fragen -->
+            <div class="container">
+                {% if a == 1%}
+                <legend style="color:white;">Please enter the path of the used file:</legend>
+                <input type="text" class="form-control" name=path required placeholder="path of the used file" required />
+
+                {% endif %}
+            </div>
+
+            <legend style="color:white;">Did you use data scraping?</legend>
+            <div class="container">
+                <fieldset>
+
+                    <h1 class="btn-switch" ">
+                        <input type="radio" id="yes" name="switch" class="btn-switch__radio btn-switch__radio_yes" />
+                        <input type="radio" checked id="no" name="switch" class="btn-switch__radio btn-switch__radio_no" />
+                        <label for="yes" class="btn-switch__label btn-switch__label_yes"><span class="btn-switch__txt">Yes</span></label>
+                        <label for="no" class="btn-switch__label btn-switch__label_no"><span class="btn-switch__txt">No</span></label>
+                    </h1>
+                </fieldset>
+
+            </div>
+            <select style="visibility:hidden" type="text" class="form-control" name="filename" required>
+                
+                <option value={{filename}}>{{filename}}</option>
+                
+
+            </select>
+            
+            <p></p>
+            <button type="submit" class="btn btn--green">Abschicken</button>
+        </div>
+
+    </form>
 </body>
 </html>
     {% endblock %}
