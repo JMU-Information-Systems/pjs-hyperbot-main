@@ -103,12 +103,13 @@ def input(request):
             fs.delete(uploaded_file.name)
         fs.save(uploaded_file.name, uploaded_file)
 
+
     filename = uploaded_file.name
 
     db = databaseContact()
-
+    task = request.POST.get("useCase")
     extractor = HTMLExtraction()
-    combined,variableName, value = extractor.getVariables()
+    combined,variableName, value = extractor.getVariables(task)
 
     db.insertInputWeclapp(variableName, filename)
 
