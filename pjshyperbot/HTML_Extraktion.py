@@ -12,6 +12,8 @@ from urllib.request import urlopen
 from urllib.request import urlopen
 import numpy as np
 import re
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 
 class HTMLExtraction():
 
@@ -21,7 +23,7 @@ class HTMLExtraction():
         driver=webdriver.Chrome(PATH)
 
         driver.get("http://132.187.226.138:8080/webapp/view/common/login.page")
-        loginurl="http://132.187.226.138:8080/webapp/view/groupware/task/taskOverview.page?mid=22"
+        loginurl="http://132.187.226.138:8080/webapp/view/settings/organizer/organizerSettings.page?mid=261"
 
         username="rpa.team22@gmail.com"
         password="RPA2022#"
@@ -35,7 +37,17 @@ class HTMLExtraction():
         time.sleep(1)
 
         #Nimmt erste Aufgabe die angezeigt wird, neue Aufgaben werden oben angeordnet
-        driver.find_element("id", "pageForm:taskListTable:0:j_id372").click()
+        driver.find_element("name", "pageForm:editTaskTemplateOrganizationList").click()
+        time.sleep(4)
+        
+        a="Test"
+
+        source=driver.find_element(By.XPATH, "//*[contains(text(), '{0}')]".format(a))
+
+        action = ActionChains(driver)
+
+        action.double_click(on_element=source)
+        action.perform()
         time.sleep(3)
 
         soup = BeautifulSoup(driver.page_source, features="html.parser")
