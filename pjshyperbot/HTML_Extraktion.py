@@ -38,9 +38,9 @@ class HTMLExtraction():
 
         #Nimmt erste Aufgabe die angezeigt wird, neue Aufgaben werden oben angeordnet
         driver.find_element("name", "pageForm:editTaskTemplateOrganizationList").click()
-        time.sleep(4)
+        time.sleep(7)
         
-        a="Test"
+        a="TestPJS"
 
         source=driver.find_element(By.XPATH, "//*[contains(text(), '{0}')]".format(a))
 
@@ -48,14 +48,14 @@ class HTMLExtraction():
 
         action.double_click(on_element=source)
         action.perform()
-        time.sleep(3)
+        time.sleep(10)
 
         soup = BeautifulSoup(driver.page_source, features="html.parser")
 
         #hh=soup.find_all("div", {"id": "pageForm:taskDescriptionXRow"})
 
 
-        hh=soup.find("textarea", {"id": "pageForm:taskDescriptionX_TA"})
+        hh=soup.find("textarea", {"id": "idTaskTemplateMPForm:taskDescriptionX_TA"})
         
         #for e in hh.findAll('br'):
             #e.extract()
