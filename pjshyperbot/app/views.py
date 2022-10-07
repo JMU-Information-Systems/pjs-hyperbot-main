@@ -24,6 +24,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import numpy as np
 from django.core.files.storage import FileSystemStorage
+#import Hauptprogramm 
 #def getUType():
  #   db = databaseContact()
   #  type = db.getType()
@@ -151,12 +152,20 @@ def input(request):
     )
 
 def nextSteps(request):
-
     db = databaseContact()
     myinput = request.POST.items()
     filename = request.POST.get("filename")
     #print("Typ" + str(type(input)))
     db.insertInput(myinput, filename)
+
+    fpath=os.path.dirname(__file__)
+    filename = request.POST.get("filename")
+
+    dbname = Path(fpath + '\\' + filename)
+    myhauptprogramm = hauptprogramm()
+    myhauptprogramm.main(filename)
+
+
     assert isinstance(request, HttpRequest)
 
     return render(
