@@ -17,7 +17,7 @@ from selenium.webdriver.common.by import By
 
 class HTMLExtraction():
 
-    def getVariables(self):
+    def getVariables(self, task):
         chrome_options.add_argument("--headless")
         PATH="C:\Program Files (x86)\chromedriver.exe"
         driver=webdriver.Chrome(PATH)
@@ -40,9 +40,9 @@ class HTMLExtraction():
         driver.find_element("name", "pageForm:editTaskTemplateOrganizationList").click()
         time.sleep(7)
         
-        a="TestPJS"
+        #a="TestPJS"
 
-        source=driver.find_element(By.XPATH, "//*[contains(text(), '{0}')]".format(a))
+        source=driver.find_element(By.XPATH, "//*[contains(text(), '{0}')]".format(task))
 
         action = ActionChains(driver)
 
