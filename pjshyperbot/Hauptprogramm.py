@@ -4,7 +4,6 @@ from aifc import Error
 from ast import Not
 from distutils.errors import LibError
 from pickle import NONE
-import sys
 import sqlite3
 from tkinter.tix import COLUMN
 import psycopg2 #Modul um eine Verbindung zum Datenbanksystem postgres herzustellen, gewünschte Datenbank zu implementieren und SQL Befehle auszuführen
@@ -16,10 +15,16 @@ from collections import deque
 import lib_bausteine
 import lib2_bausteine #Bausteine werden aus seperatem Skript importiert
 
+
 # argument is the name of the database as produced by the prepare plus additional table for input/output links
 class hauptprogramm():
     def main(self, dbname):
+        
+        
+
         filename =  dbname[0:dbname.find(".")] + ".xaml"   # filename for XAML file like db with extension .xaml
+
+        
         
         #Connect to SQLite
         l_database = sqlite3.connect(dbname)
@@ -34,6 +39,15 @@ class hauptprogramm():
         endknoten.append(lib_bausteine.sequence(xaml)) #schreibe Sequence Header und nimm den return Wert (Endknoten) in den Stapel auf
         endknoten.append(lib_bausteine.s_varaibles(xaml))#schreibe Variables Header und nimm return Wert (Endknoten) in den Stapel auf
         cursor.execute("SELECT * FROM variables ORDER BY v_id")  #lese Variable Tabelle
+        def matching(cursor):
+            results = {}
+            column = 0
+            for x in cursor.description:
+                results[x[0]] = column
+                column = column + 1
+            return results
+        column = matching(cursor)
+
         for row in cursor:
             lib_bausteine.variable(xaml, str(row[column['vname']]), str(row[column['vtype']]), str(row[column['vinit']]))
         cursor.close
@@ -114,7 +128,7 @@ class hauptprogramm():
     #Abfrage auf Applikationen
 
     #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
-    def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle, input_variables):
+    def aktionen(self, url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle, input_variables):
     
         if a_applicationname == "msedge":
             
