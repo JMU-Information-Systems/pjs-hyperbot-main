@@ -66,7 +66,7 @@ class HTMLExtraction():
         hh=hh.text
         txt = hh
 
-        #Extraktion aller Tabellenzellen (<td>-Tags), um die Eingaben in der Tabelle der Aufgabenvorlage auslesen zu können
+        #Extraktion aller Tabellenzellen (<td>-Tags), um die Eingaben in der Tabelle der Aufgabenvorlage auslesen zu kï¿½nnen
         inputWeclapp = re.findall("<\s*td\s*[^>]*>(.*?)<\s*\/\s*td>",txt)
 
         a = 1

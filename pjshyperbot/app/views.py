@@ -153,7 +153,7 @@ def nextSteps(request):
 
     dbname = Path(fpath + '\\' + filename)
     #myhauptprogramm = hauptprogramm()
-    Hauptprogramm.main(filename)
+    Hauptprogramm.main(filename, "Dienstreise Tabelle")
 
 
     assert isinstance(request, HttpRequest)
