@@ -541,7 +541,7 @@
         {% csrf_token %}
         <div class="form-group">
 
-           
+
 
             <legend style="color:white;">Please enter the name of the variable:</legend>
             <div class="container">
@@ -598,12 +598,12 @@
 
             </div>
             <select style="visibility:hidden" type="text" class="form-control" name="filename" required>
-                
                 <option value={{filename}}>{{filename}}</option>
-                
-
             </select>
-            
+            <select style="visibility:hidden" type="text" class="form-control" name="task" required>
+                <option value={{task}}>{{task}}</option>
+            </select>
+
             <p></p>
             <button type="submit" class="btn btn--green">Abschicken</button>
         </div>
