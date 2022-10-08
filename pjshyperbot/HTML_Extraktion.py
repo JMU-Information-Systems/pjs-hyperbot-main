@@ -42,7 +42,8 @@ class HTMLExtraction():
         
         #a="TestPJS"
 
-        source=driver.find_element(By.XPATH, "//*[contains(text(), '{0}')]".format(task))
+        #source=driver.find_element(By.XPATH, "//*[contains(text(), '{0}')]".format(task))
+        source=driver.find_element(By.XPATH, "//*[normalize-space()='{0}']".format(a))
 
         action = ActionChains(driver)
 
