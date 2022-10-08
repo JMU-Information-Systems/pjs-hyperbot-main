@@ -42,14 +42,15 @@ class HTMLExtraction():
         
         #a="TestPJS"
 
-        #source=driver.find_element(By.XPATH, "//*[contains(text(), '{0}')]".format(task))
-        source=driver.find_element(By.XPATH, "//*[normalize-space()='{0}']".format(a))
+        source=driver.find_element(By.XPATH, "//div[contains(text(), '{0}')]".format(task))
+        #source=driver.find_element(By.XPATH, "//*[normalize-space()='{0}']".format(a))
 
+        time.sleep(7)
         action = ActionChains(driver)
 
         action.double_click(on_element=source)
         action.perform()
-        time.sleep(10)
+        time.sleep(4)
 
         soup = BeautifulSoup(driver.page_source, features="html.parser")
 
