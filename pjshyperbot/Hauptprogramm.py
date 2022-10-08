@@ -14,7 +14,7 @@ import lib2_bausteine
 
 
 # argument is the name of the database as produced by the prepare plus additional table for input/output links
-def main(dbname):
+def main(dbname,task):
     filename =  dbname[0:dbname.find(".")] + ".xaml"   # filename for XAML file like db with extension .xaml
 
     #Connect to SQLite
@@ -46,7 +46,6 @@ def main(dbname):
     
     
     lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, ggf. sind Modifikationen notwendig")
-
     cursor.execute("SELECT * FROM logger ORDER BY e_id")  #lese Logger Tabelle
 
     #Sodass nicht auf einzelne Spaltennummern zugegriffen werden muss, sondern der Zugriff über den Spaltennamen erfolgt
@@ -121,6 +120,13 @@ def main(dbname):
 #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
 def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle, input_variables):
     
+    #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
+    #um auf Filter zu klicken
+    #lib2_bausteine.a_sequence_variablenextraktion(xaml, task) klickt auf richtigen Filter
+
+    #lib2_bausteine.a_get_text(xaml, #Angabe der tablerow, je nach Anzahl der Reihen)
+
+
     if a_applicationname == "msedge":
         #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
         if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
@@ -137,7 +143,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
             #größer 0, d.h. es wurde eine ID mit aufgezeichnet
             
         if len(automationid)>0: 
-            if u_type == "Schaltfläche" or "Link": #dann ist es eine Klickakitivität
+            if u_type == "Schaltfläche" or u_type=="Link": #dann ist es eine Klickakitivität
                 if str.__contains__(u_name, (("Minimieren") or ("Maximieren") or ("Abbrechen"))): #Ausschluss, dies wird nicht automatisiert
                         pass
 
@@ -165,39 +171,39 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
             
                 #Abfrage auf andere Eventtypen im Browser                        
 
-            elif (u_type)=="Kombinationsfeld":
+            elif u_type == "Kombinationsfeld":
                 lib2_bausteine.a_click_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid)        
             
-            elif (u_type) == "checkbox" or "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
+            elif u_type == "checkbox" or (u_type) == "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
                 #Variante über ID
                 lib2_bausteine.a_click_left_browser_checkbox(xaml, a_applicationname,url,u_name, automationid)
       
-            elif (u_type)== "Optionsfeld":
+            elif u_type== "Optionsfeld":
                 #Variante 1, nur über ID
                 lib2_bausteine.a_click_left_browser_optionsfeld(xaml,a_applicationname, url, u_name,automationid)
 
             #wie Kombinationsfeld, nur wenn ID vorhanden ist berücksichtigen. Identifikation über parentid
-            elif (u_type)=="Gruppe":
+            elif u_type=="Gruppe":
                 lib2_bausteine.a_click_gruppe(xaml,a_applicationname, u_name, automationid)
 
                     
             # Abfrage der Keystroke Aktivitäten im Browser
 
-            elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität
+            elif u_type == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität
                 #Bedingung für Texteingabe
-                if (u_eventtype) == "Left-Down":       
+                if u_eventtype == "Left-Down":       
 
                     #Suche über ID, tag=Input, type=Text
                     lib2_bausteine.a_type_into_browser(xaml, a_applicationname,url, u_name, automationid, input_variables)
                     
                 #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
                     
-                elif (u_eventtype) == "CTRL + C":
+                elif u_eventtype == "CTRL + C":
 
                     #ID, tag=Input, type=Text
                     lib2_bausteine.a_send_hotkey_strg_c_browser(xaml, a_applicationname,url, u_name, automationid)
 
-                elif (u_eventtype) == "CTRL + V":
+                elif u_eventtype == "CTRL + V":
 
                     #ID, tag=Input, type=Text
                     lib2_bausteine.a_send_hotkey_strg_v_browser(xaml, a_applicationname,url, u_name, automationid)
@@ -206,7 +212,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
         #dann gibt es keine ID
         else:
             #Bedingung für Klickaktivität
-            if u_type == "Schaltfläche" or "Link":
+            if u_type == "Schaltfläche" or u_type=="Link":
                 #Linksklick
                 if u_eventtype == "Left-Down":
                     #Starten der Sequenz
@@ -232,13 +238,13 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                       
                     lib2_bausteine.a_sequence_end(xaml)
 
-                elif (u_eventtype) == "Right-down":
+                elif u_eventtype == "Right-down":
                         lib2_bausteine.a_click_right_browser_schaltfläche(xaml,a_applicationname,url, u_name, automationid)
 
-                elif (u_type)=="Kombinationsfeld":
+                elif u_type=="Kombinationsfeld":
                     lib2_bausteine.a_click_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid)
 
-                elif (u_type) == "checkbox" or "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
+                elif u_type == "checkbox" or u_type=="Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
                     
                     #Start der Sequenz
                     lib2_bausteine.a_sequence_click_checkbox_start(xaml, u_name)
@@ -252,7 +258,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     #Ende der Sequenz
                     lib2_bausteine.a_sequence_end(xaml)
 
-                elif (u_type)== "Optionsfeld":
+                elif u_type== "Optionsfeld":
                     #Starten der Sequenz
                     lib2_bausteine.a_sequence_click_optionsfeld_start(xaml,u_name)
                 
@@ -267,7 +273,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     #lib_bausteine.a_comment_optionsfeld(xaml)
                 
                 #keine ID
-                elif (u_type)=="Text":
+                elif u_type=="Text":
                     #Start der Sequenz
                     lib2_bausteine.a_sequence_click_start(xaml, u_name)
                     #Variante 1, über aaname und tag=LABEL
@@ -281,11 +287,11 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
 
 
                 #wenn Grafik angeklickt wird, keine id, über aaname und tag='IMG'
-                elif (u_type)=="Grafik":
+                elif u_type=="Grafik":
                     lib2_bausteine.a_click_left_browser_grafik (xaml, a_applicationname, url, u_name)
                 
-                elif (u_type) == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
-                    if (u_eventtype) == "Left-Down":
+                elif u_type == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
+                    if u_eventtype == "Left-Down":
 
                         #Start der Sequenz
                         lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
@@ -305,7 +311,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     
                     #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
                     
-                    elif (u_eventtype) == "CTRL + C":
+                    elif u_eventtype == "CTRL + C":
                         
                         #Starten der Sequenz
                         lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml, u_name)
@@ -324,7 +330,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     
                     #es wird etwas eingefügt, Send Hotkey Strg+V
 
-                    elif (u_eventtype) == "CTRL + V":
+                    elif u_eventtype == "CTRL + V":
                         
                         #Start der Sequenz     
                         lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml, u_name)
@@ -341,36 +347,36 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                         lib2_bausteine.a_sequence_end(xaml) 
                            
                     #Baustein für Enter 
-                    elif (u_eventtype) == "ENTER":
+                    elif u_eventtype == "ENTER":
                         lib2_bausteine.a_press_enter(xaml)
                
  
-    elif (a_applicationname)=="explorer": 
+    elif a_applicationname=="explorer": 
         if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
             lib_bausteine.a_comment_calendar_picker(xaml)
         
-        if (u_type) == "Bearbeiten": 
+        if u_type == "Bearbeiten": 
             
-            if (u_eventtype) == "Left-Down": #dann ist es eine Texteingabe
+            if u_eventtype == "Left-Down": #dann ist es eine Texteingabe
                    
                 #Variante 1, Abfrage auf automationid, name und role   
                 lib2_bausteine.a_type_into_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type, input_variables)
                 
-            elif (u_eventtype) == "CTRL + C":
+            elif u_eventtype == "CTRL + C":
                 #über ID, name und role, uia Selektor
                 lib2_bausteine.a_send_hotkey_strg_c_in_explorer(xaml, a_applicationname, a_windowtitle, u_name, automationid, u_type)
                   
-            elif (u_eventtype) == "CTRL + V":
+            elif u_eventtype == "CTRL + V":
                 #über ID, name und role, uia Selektor
                 lib2_bausteine.a_send_hotkey_strg_v_in_explorer(xaml, a_applicationname, a_windowtitle, u_name, automationid, u_type)
                  
-            elif (u_eventtype) == "ENTER":
+            elif u_eventtype == "ENTER":
                 lib2_bausteine.a_press_enter(xaml)    
             
                 
         else: #dann immer Klickaktivität, keine weitere Unterscheidung nach Typ notwendig, da dieser immer mitgeliefert wird und mit Logger übereinstimmt
                     
-            if (u_eventtype)=="Left-Down":
+            if u_eventtype=="Left-Down":
                 #Linksklick, Name und Role
                 lib2_bausteine.a_click_left_in_explorer(xaml, a_applicationname, a_windowtitle, u_type)
                   
@@ -388,39 +394,39 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
 
         #wird ID mit aufgezeichnet?
         if len(automationid)>0:
-            if (u_type) == "Bearbeiten":
+            if u_type == "Bearbeiten":
 
-                if (u_eventtype) == "Left-Down":
+                if u_eventtype == "Left-Down":
                     #Type Into mit automationid, name und role
                     lib2_bausteine.a_type_into_application(xaml, a_applicationname, a_windowtitle, automationid,  u_name, u_type, input_variables)
 
-                elif (u_eventtype) == "CTRL + C":
+                elif u_eventtype == "CTRL + C":
                     #Abfrage über automationid und role
                     lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, a_applicationname, a_windowtitle, automationid,u_name, u_type)
                         
-                elif (u_eventtype) == "CTRL + V":  
+                elif u_eventtype == "CTRL + V":  
                     #Abfrage über automationid und role
                     lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, a_applicationname, a_windowtitle, automationid,u_name, u_type) 
                        
-                elif (u_eventtype) == "ENTER":
+                elif u_eventtype == "ENTER":
                     lib2_bausteine.a_press_enter(xaml)  
 
 
-            if (u_type)=="Element":
+            if u_type=="Element":
                     
-                if (u_eventtype)=="Left-Down" or "Right-Down":
+                if u_eventtype=="Left-Down" or u_eventtype=="Right-Down":
                     pass #dann wird zB nur eine Excel Zeile angeklickt, bekommen wir schon über die nachfolgende Aktion
                                 
-                elif (u_eventtype)=="CTRL + C":
+                elif u_eventtype=="CTRL + C":
                     #Abfrage über automationid und role
                     lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, a_applicationname, a_windowtitle, automationid,u_name, u_type)
                         
-                elif (u_eventtype)=="CTRL + V":
+                elif u_eventtype=="CTRL + V":
                     #Abfrage über automationid und role
                     lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, a_applicationname, a_windowtitle, automationid,u_name, u_type)
                     
                         
-                elif (u_eventtype) == "ENTER":
+                elif u_eventtype == "ENTER":
                     lib2_bausteine.a_press_enter(xaml) 
                         
                                  
@@ -428,7 +434,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
             #um alle Klickaktivitäten abzudecken
             else:
                         
-                if (u_eventtype) == "Left-Down":
+                if u_eventtype == "Left-Down":
            
                     #über automationid, name und role
                     lib2_bausteine.a_click_left_in_application (xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type)
@@ -438,39 +444,39 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
             
         #dann gibt es keine ID            
         else: 
-            if (u_type)=="Element":
+            if u_type=="Element":
                     
-                if (u_eventtype)=="Left-Down" or "Right-Down":
+                if u_eventtype=="Left-Down" or u_eventtype=="Right-Down":
                     pass #dann wird zB nur eine Excel Zeile angeklickt, bekommen wir schon über die nachfolgende Aktion
                                 
-                elif (u_eventtype)=="CTRL + C":
+                elif u_eventtype=="CTRL + C":
                     lib2_bausteine.a_send_hotkey_strg_c_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
                     
                              
-                elif (u_eventtype)=="CTRL + V":
+                elif u_eventtype=="CTRL + V":
                     lib2_bausteine.a_send_hotkey_strg_v_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
                         
-                elif (u_eventtype) == "ENTER":
+                elif u_eventtype == "ENTER":
                     lib2_bausteine.a_press_enter(xaml)    
                        
                     
-            elif (u_type)=="Bearbeiten":
+            elif u_type=="Bearbeiten":
                     
-                if (u_eventtype)=="Left-Down" or "Right-Down":
+                if u_eventtype=="Left-Down" or u_eventtype=="Right-Down":
                     lib2_bausteine.a_type_into_application(xaml, )
                                 
-                elif (u_eventtype)=="CTRL + C":
+                elif u_eventtype=="CTRL + C":
                     lib2_bausteine.a_send_hotkey_strg_c_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
                                        
-                elif (u_eventtype)=="CTRL + V":
+                elif u_eventtype=="CTRL + V":
                     lib2_bausteine.a_send_hotkey_strg_v_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
                      
-                elif (u_eventtype) == "ENTER":
+                elif u_eventtype == "ENTER":
                     lib2_bausteine.a_press_enter(xaml) 
                     
             #um Klickaktivitäten abzudecken
             else: 
-                if (u_eventtype) == "Left-Down":
+                if u_eventtype == "Left-Down":
                     lib2_bausteine.a_click_left_in_application_no_id(xaml,a_applicationname, a_windowtitle, u_name, u_type)
                 else:
                     lib2_bausteine.a_click_right_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
