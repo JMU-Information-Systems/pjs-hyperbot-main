@@ -19,7 +19,6 @@ import numpy as np
 
 
 class databaseContact():
-    print("Test")
     sqlread='''WITH al AS (
            SELECT DISTINCT applog.id, applog.userid, applog.applicationname, applog.windowtitle, applog.url, applog.analysisid
            FROM processanalyzer.applog WHERE applog.applicationname IS NOT NULL AND applog.applicationname::text <> ''::text
