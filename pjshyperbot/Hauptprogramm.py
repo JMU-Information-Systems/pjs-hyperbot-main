@@ -41,13 +41,20 @@ def main(dbname,task):
 
     for row in cursor:
         lib_bausteine.variable(xaml, str(row[column['vname']]), str(row[column['vtype']]), str(row[column['vinit']]))
-    cursor.close
     xaml.write(str(endknoten.pop()))
     
     
     lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, ggf. sind Modifikationen notwendig")
-    cursor.execute("SELECT * FROM logger ORDER BY e_id")  #lese Logger Tabelle
+    #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
+    lib2_bausteine.a_sequence_variablenextraktion(xaml, task)
 
+    #lib2_bausteine.a_get_text(xaml, #Angabe der tablerow, je nach Anzahl der Reihen)    
+    for row in cursor:
+        lib2_bausteine.a_get_text (xaml, str(row[column['v_id']]), str(row[column['vname']]))
+    xaml.write(str(endknoten.pop()))
+    cursor.close
+
+    cursor.execute("SELECT * FROM logger ORDER BY e_id")  #lese Logger Tabelle
     #Sodass nicht auf einzelne Spaltennummern zugegriffen werden muss, sondern der Zugriff über den Spaltennamen erfolgt
     def matching(cursor):
         results = {}
@@ -120,13 +127,6 @@ def main(dbname,task):
 #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
 def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle, input_variables):
     
-    #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
-    #um auf Filter zu klicken
-    #lib2_bausteine.a_sequence_variablenextraktion(xaml, task) klickt auf richtigen Filter
-
-    #lib2_bausteine.a_get_text(xaml, #Angabe der tablerow, je nach Anzahl der Reihen)
-
-
     if a_applicationname == "msedge":
         #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
         if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
