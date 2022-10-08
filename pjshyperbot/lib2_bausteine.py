@@ -1243,7 +1243,6 @@ def a_sequence_auskommentiert_end (xaml):
     xaml.write("    </ui:CommentOut>\n")
 
 
-
 def a_sequence_variablenextraktion (xaml, task):
     xaml.write("  <Sequence DisplayName=\"Extraktion\">\n")
     xaml.write("    <sap:WorkflowViewStateService.ViewState>\n")
@@ -1385,9 +1384,10 @@ def a_sequence_variablenextraktion (xaml, task):
     xaml.write("    </ActivityAction>\n")
     xaml.write("  </ui:OpenBrowser.Body>\n")
     xaml.write("</ui:OpenBrowser>\n")
+    return(" </Sequence>\n <ui:CloseWindow TimeoutMS=\"{x:Null}\" UseWindow=\"{x:Null}\" DisplayName=\"Close Window 'msedge.exe Aufgabe:'\" Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n </Sequence>\n")
   
 
-def a_get_text (xaml, tablerow):
+def a_get_text (xaml, tablerow, vname):
     xaml.write("  <ui:GetValue DisplayName=\"Get Text\" >\n")
     xaml.write("    <ui:GetValue.Target>\n")
     xaml.write("      <ui:Target Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;&lt;webctrl tag=\'IFRAME\' idx=\'2\' /&gt;&lt;webctrl tag=\'TABLE\' /&gt;&lt;webctrl tableCol=\'2\' tableRow=\'"+tablerow+"\' tag=\'TD\' /&gt;\">\n")
@@ -1400,6 +1400,5 @@ def a_get_text (xaml, tablerow):
     xaml.write("      </ui:Target>\n")
     xaml.write("    </ui:GetValue.Target>\n")
     xaml.write("  </ui:GetValue>\n")
-    xaml.write(" </Sequence>\n")
-    xaml.write(" <ui:CloseWindow TimeoutMS=\"{x:Null}\" UseWindow=\"{x:Null}\" DisplayName=\"Close Window 'msedge.exe Aufgabe:'\" Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n")
-    xaml.write(" </Sequence>\n")
+    xaml.write("        <OutArgument x:TypeArguments=\"x:Object\">[" + vname + "]</OutArgument>")
+    
