@@ -51,14 +51,14 @@ def a_comment(xaml,id,txt): #kommentar
     xaml.write("    <ui:Comment sap2010:WorkflowViewState.IdRef=\"Comment_" + id + "\" Text=\"" + txt + "\" />\n")
 
 def a_comment_calendar_picker (xaml):
-    xaml.write("            <ui:Comment Text=\"Kalender Picker: Prüfen, ob Datum manuell eingegeben werden kann. Dann ganz normal mit Type Into. Ansonsten bitte Klickaktivität manuell einbauen mit dynamischem Selektor, der entsprechend das gewünschte Datum auswählen kann. &#xD;&#xA;&#xD;&#xA;Wichtig: Es kann sein, dass der Monat mit dem gewünschten Datum nicht direkt angezeigt wird, wenn der Kalender geöffnet ist. &#xD;&#xA;&#xD;&#xA;Dann so vorgehen:&#xD;&#xA;&#xD;&#xA;Try Catch Aktivität einbauen, innerhalb einer while Schleife:&#xD;&#xA;&#xD;&#xA;while Schleife: Bedingung&#xD;&#xA;&#xD;&#xA;im Try: &#xD;&#xA;Klickaktivität mit gewünschtem Datum, versucht Feld zu finden&#xD;&#xA;dann: while schleifen Bedingung auf True setzen&#xD;&#xA;&#xD;&#xA;im except: Klickaktivität auf &quot;Weiter&quot;, bis gewünschter Monat angezeigt wird&#xD;&#xA;&#xD;&#xA;While Schleife: Läuft solange bis Try Aktivität erfolgreich durchgeführt wurde\" />")
+    xaml.write("            <ui:Comment Text=\"Kalender Picker: Pr?fen, ob Datum manuell eingegeben werden kann. Dann ganz normal mit Type Into. Ansonsten bitte Klickaktivit?t manuell einbauen mit dynamischem Selektor, der entsprechend das gew?nschte Datum ausw?hlen kann. &#xD;&#xA;&#xD;&#xA;Wichtig: Es kann sein, dass der Monat mit dem gew?nschten Datum nicht direkt angezeigt wird, wenn der Kalender ge?ffnet ist. &#xD;&#xA;&#xD;&#xA;Dann so vorgehen:&#xD;&#xA;&#xD;&#xA;Try Catch Aktivit?t einbauen, innerhalb einer while Schleife:&#xD;&#xA;&#xD;&#xA;while Schleife: Bedingung&#xD;&#xA;&#xD;&#xA;im Try: &#xD;&#xA;Klickaktivit?t mit gew?nschtem Datum, versucht Feld zu finden&#xD;&#xA;dann: while schleifen Bedingung auf True setzen&#xD;&#xA;&#xD;&#xA;im except: Klickaktivit?t auf &quot;Weiter&quot;, bis gew?nschter Monat angezeigt wird&#xD;&#xA;&#xD;&#xA;While Schleife: L?uft solange bis Try Aktivit?t erfolgreich durchgef?hrt wurde\" />")
 
 #def a_comment_optionsfeld (xaml):
-    #xaml.write("            <ui:Comment Text=\"Optionsfeld: Hier könnte evtl. auch eine Select Item Aktivität sinnvoll sein\" />")
+    #xaml.write("            <ui:Comment Text=\"Optionsfeld: Hier k?nnte evtl. auch eine Select Item Aktivit?t sinnvoll sein\" />")
 
-#Open Browser Aktivitäten
+#Open Browser Aktivit?ten
 
-#def a_attach_browser(xaml, url): #auf bereits geöffnetes Fenster zurückspringen, wenn User bspw. von Browser zu Excel und dann wieder zum browser wechselt
+#def a_attach_browser(xaml, url): #auf bereits ge?ffnetes Fenster zur?ckspringen, wenn User bspw. von Browser zu Excel und dann wieder zum browser wechselt
     #xaml.write("    <ui:BrowserScope BrowserType=\"Edge\" ContinueOnError=\"True\" DisplayName=\"Attach Browser\" sap:VirtualizedContainerService.HintSize=\"434,230.666666666667\" sap2010:WorkflowViewState.IdRef=\"BrowserScope_1\"  Selector=\"&lt;html app=\'msedge.exe\' url=\'"+url+"\'/&gt;\" TimeoutMS=\"1000\">\n")
     #xaml.write("      <ui:BrowserScope.Body>\n")
     #xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
