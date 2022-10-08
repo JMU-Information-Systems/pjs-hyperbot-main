@@ -7,24 +7,19 @@ from tabnanny import filename_only
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponse
-import sqlite3
 from datetime import datetime
-import sys
-import sqlite3
-import shutil
 import os
-from Hauptprogramm import hauptprogramm
+import Hauptprogramm
 from HTML_Extraktion import HTMLExtraction
 from pathlib import Path
 from tarfile import ENCODING
-import json
-import psycopg2
 from rpa_prepare import databaseContact
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import numpy as np
 from django.core.files.storage import FileSystemStorage
-#import Hauptprogramm 
+
+
 #def getUType():
  #   db = databaseContact()
   #  type = db.getType()
@@ -58,8 +53,6 @@ def contact(request):
     )
 
 def about(request):
-   
-    
     #extractor = HTMLExtraction()
     #combined,variableName, value = extractor.getVariables()
     #db.insertInputWeclapp(variableName)
@@ -89,9 +82,7 @@ def about(request):
     )
 
 def input(request):
-
-    
-        #read json File f?r Extraktion der userid und intallationtime (f?r filename)
+    #read json File f?r Extraktion der userid und intallationtime (f?r filename)
     jfile="C:\\ProgramData\\RecorderService\\Settings\\applicationsettings.json"
 
     if request.method == 'POST':
@@ -126,8 +117,6 @@ def input(request):
         i=i+1
    
     #db = databaseContact()
-    
-    
 
 
     #for key, value in input:
@@ -163,8 +152,8 @@ def nextSteps(request):
     filename = request.POST.get("filename")
 
     dbname = Path(fpath + '\\' + filename)
-    myhauptprogramm = hauptprogramm()
-    myhauptprogramm.main(filename)
+    #myhauptprogramm = hauptprogramm()
+    Hauptprogramm.main(filename)
 
 
     assert isinstance(request, HttpRequest)
