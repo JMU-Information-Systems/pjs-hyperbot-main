@@ -529,7 +529,7 @@ def a_click_browser_text_var2 (xaml, application_name, url, aaname):
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-def a_click_gruppe(xaml, application_name, url,aaname, parentid):
+def a_click_gruppe(xaml, application_name, url,aaname, id):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf " +aaname+ "\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -542,7 +542,7 @@ def a_click_gruppe(xaml, application_name, url,aaname, parentid):
     xaml.write("                </ui:CursorPosition>\n")
     xaml.write("              </ui:Click.CursorPosition>\n")
     xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag=\'SPAN\' parentid=\'"+parentid+"\'/&gt;\" TimeoutMS=\"1000\">\n")
+    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag=\'SPAN\' parentid=\'"+id+"\'/&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("                  <ui:Target.WaitForReady>\n")
     xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
     xaml.write("                  </ui:Target.WaitForReady>\n")
