@@ -138,6 +138,7 @@ def input(request):
             'year':datetime.now().year,
             'variables': variables,
             'filename': filename,
+            'task': task,
         }
     )
 
@@ -145,6 +146,7 @@ def nextSteps(request):
     db = databaseContact()
     myinput = request.POST.items()
     filename = request.POST.get("filename")
+    task = request.POST.get("task")
     #print("Typ" + str(type(input)))
     db.insertInput(myinput, filename)
 
@@ -153,7 +155,7 @@ def nextSteps(request):
 
     dbname = Path(fpath + '\\' + filename)
     #myhauptprogramm = hauptprogramm()
-    Hauptprogramm.main(filename, "Dienstreise Tabelle")
+    Hauptprogramm.main(filename, task)
 
 
     assert isinstance(request, HttpRequest)
