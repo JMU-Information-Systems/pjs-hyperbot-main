@@ -1385,7 +1385,7 @@ def a_sequence_variablenextraktion (xaml, task):
     xaml.write("    </ActivityAction>\n")
     xaml.write("  </ui:OpenBrowser.Body>\n")
     xaml.write("</ui:OpenBrowser>\n")
-    return(" </Sequence>\n <ui:CloseWindow TimeoutMS=\"{x:Null}\" UseWindow=\"{x:Null}\" DisplayName=\"Close Window 'msedge.exe Aufgabe:'\" Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n </Sequence>\n")
+    return(" <ui:CloseWindow TimeoutMS=\"{x:Null}\" UseWindow=\"{x:Null}\" DisplayName=\"Close Window 'msedge.exe Aufgabe:'\" Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n </Sequence>\n")
   
 
 def a_get_text (xaml, tablerow, vname):
