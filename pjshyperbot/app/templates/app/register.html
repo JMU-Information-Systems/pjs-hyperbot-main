@@ -360,7 +360,7 @@
         <form method='POST'>
             {% csrf_token %}
             {{ form.as_p }}
-            <button type='submit'>Register</button>
+            <button type='submit' class="btn btn--green">Register</button>
         </form>
         <p>Already have an account? Please <a href='/login'>Login</a></p>
     </div>
