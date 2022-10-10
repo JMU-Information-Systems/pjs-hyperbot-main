@@ -18,8 +18,17 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import numpy as np
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import redirect
 
-
+def register(request):
+    form = UserCreationForm(request.POST or None)
+    if form.is_valid():
+        user_obj = form.save()
+        return redirect('/login')
+    context = {"form": form}
+    return render(request, "app/register.html", context)
 #def getUType():
  #   db = databaseContact()
   #  type = db.getType()
@@ -52,6 +61,7 @@ def contact(request):
         }
     )
 
+@login_required
 def about(request):
     #extractor = HTMLExtraction()
     #combined,variableName, value = extractor.getVariables()
