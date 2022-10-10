@@ -34,7 +34,7 @@ def activity(xaml):   #write header of UIPath XAML file
     return ("</Activity>")
 
 def sequence(xaml): #write sequence header of UiPath XAML file
-    xaml.write("  <Sequence sap2010:WorkflowViewState.IdRef=\"Sequence_16\">\n    <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("  <Sequence sap2010:WorkflowViewState.IdRef=\"Sequence_Start\">\n    <sap:WorkflowViewStateService.ViewState>\n")
     xaml.write("      <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n        <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n      </scg:Dictionary>\n    </sap:WorkflowViewStateService.ViewState>\n")
     return("  </Sequence>\n")
 

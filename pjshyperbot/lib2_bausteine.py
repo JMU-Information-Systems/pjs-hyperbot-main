@@ -690,7 +690,7 @@ def a_sequence_typeinto_start(xaml, name):
 
 # über automationid
 def a_type_into_browser(xaml, application_name, url, name, id, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\""+input_variable+"\">\n")
+    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
     xaml.write("              <ui:TypeInto.Target>")
     xaml.write("               <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl id=\'"+id+"\' tag=\'INPUT\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
@@ -703,7 +703,7 @@ def a_type_into_browser(xaml, application_name, url, name, id, input_variable):
 
 # wenn keine automationID, dann tag=Input, Type=Text
 def a_type_into_browser_no_id(xaml, application_name, url, name, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\""+input_variable+"\">\n")
+    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
     xaml.write("              <ui:TypeInto.Target>\n")
     xaml.write("               <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag=\'INPUT\' type=\'text\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
@@ -716,7 +716,7 @@ def a_type_into_browser_no_id(xaml, application_name, url, name, input_variable)
 
 # wenn weder automationID noch Name, nur Tag=Input
 def a_type_into_browser_no_id_var2(xaml, application_name, url, name, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\""+input_variable+"\">\n")
+    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
     xaml.write("              <ui:TypeInto.Target>\n")
     xaml.write("               <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag=\'INPUT\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
@@ -844,7 +844,7 @@ def a_click_right_in_application_var2(xaml, application_name, title, name, role)
 
 
 def a_type_into_application(xaml, application_name, title, id, name, role, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\""+input_variable+"\">\n")
+    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
     xaml.write("              <ui:TypeInto.Target>\n")
     xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' name=\'"+name+"\'  role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
@@ -857,7 +857,7 @@ def a_type_into_application(xaml, application_name, title, id, name, role, input
 
 # Abfrage über name und role
 def a_type_into_application_no_id(xaml, application_name, title, name, role, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\""+input_variable+"\">\n")
+    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
     xaml.write("              <ui:TypeInto.Target>\n")
     xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
@@ -972,7 +972,7 @@ def a_click_right_in_explorer(xaml, application_name, title, name, role):
 
 # über ID, name und role, uia Selektor
 def a_type_into_explorer(xaml, application_name, title, id, name, role, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\""+input_variable+"\">\n")
+    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
     xaml.write("              <ui:TypeInto.Target>\n")
     xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' &lt;uia automationid=\'"+id+"\' name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("            <ui:Target.WaitForReady>\n")
@@ -1385,7 +1385,7 @@ def a_sequence_variablenextraktion (xaml, task):
     xaml.write("    </ActivityAction>\n")
     xaml.write("  </ui:OpenBrowser.Body>\n")
     xaml.write("</ui:OpenBrowser>\n")
-    return(" </Sequence>\n <ui:CloseWindow TimeoutMS=\"{x:Null}\" UseWindow=\"{x:Null}\" DisplayName=\"Close Window 'msedge.exe Aufgabe:'\" Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n </Sequence>\n")
+    return(" <ui:CloseWindow TimeoutMS=\"{x:Null}\" UseWindow=\"{x:Null}\" DisplayName=\"Close Window 'msedge.exe Aufgabe:'\" Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n </Sequence>\n")
   
 
 def a_get_text (xaml, tablerow, vname):
@@ -1400,6 +1400,7 @@ def a_get_text (xaml, tablerow, vname):
     xaml.write("        </ui:Target.WaitForReady>\n")
     xaml.write("      </ui:Target>\n")
     xaml.write("    </ui:GetValue.Target>\n")
-    xaml.write("  </ui:GetValue>\n")
+    xaml.write("  <ui:GetValue.Value>\n")
     xaml.write("        <OutArgument x:TypeArguments=\"x:Object\">[" + vname + "]</OutArgument>")
-    
+    xaml.write("      </ui:GetValue.Value>\n")
+    xaml.write("    </ui:GetValue>\n")
