@@ -1258,6 +1258,7 @@ def a_sequence_variablenextraktion (xaml, task):
     xaml.write("          </ActivityAction.Argument>\n")
     xaml.write("          <Sequence DisplayName=\"Do\">\n")
     xaml.write("            <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("              <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
     xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
     xaml.write("                <x:Boolean x:Key=\"IsPinned\">False</x:Boolean>\n")
     xaml.write("              </scg:Dictionary>\n")
