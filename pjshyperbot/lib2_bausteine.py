@@ -1400,6 +1400,7 @@ def a_get_text (xaml, tablerow, vname):
     xaml.write("        </ui:Target.WaitForReady>\n")
     xaml.write("      </ui:Target>\n")
     xaml.write("    </ui:GetValue.Target>\n")
-    xaml.write("  </ui:GetValue>\n")
+    xaml.write("  <ui:GetValue.Value>\n")
     xaml.write("        <OutArgument x:TypeArguments=\"x:Object\">[" + vname + "]</OutArgument>")
-    
+    xaml.write("      </ui:GetValue.Value>\n")
+    xaml.write("    </ui:GetValue>\n")
