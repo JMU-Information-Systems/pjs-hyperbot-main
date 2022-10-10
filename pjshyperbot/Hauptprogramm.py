@@ -46,7 +46,7 @@ def main(dbname,task):
     
     lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, ggf. sind Modifikationen notwendig")
     #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
-    lib2_bausteine.a_sequence_variablenextraktion(xaml, task)
+    endknoten.append(lib2_bausteine.a_sequence_variablenextraktion(xaml, task))
 
     #lib2_bausteine.a_get_text(xaml, #Angabe der tablerow, je nach Anzahl der Reihen)    
     for row in cursor:
