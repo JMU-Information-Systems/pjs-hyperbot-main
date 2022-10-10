@@ -184,7 +184,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
 
             #wie Kombinationsfeld, nur wenn ID vorhanden ist berücksichtigen. Identifikation über parentid
             elif u_type=="Gruppe":
-                lib2_bausteine.a_click_gruppe(xaml,a_applicationname, u_name, automationid)
+                lib2_bausteine.a_click_gruppe(xaml,a_applicationname, url, u_name, automationid)   
 
                     
             # Abfrage der Keystroke Aktivitäten im Browser
