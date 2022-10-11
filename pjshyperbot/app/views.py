@@ -118,6 +118,9 @@ def input(request):
 
     DataFrontend, a = db.getDataFrontend(filename)
     #print("Type" + str(type))
+
+    len = db.pathRequired(filename)
+
     assert isinstance(request, HttpRequest)
     DataFrontend = np.array(DataFrontend)
     i = 0
@@ -144,7 +147,7 @@ def input(request):
         {
             'title':'Hyperbot',
             'message': DataFrontend, #'Guten Tag!',
-            'a':a,
+            'len':len,
             'year':datetime.now().year,
             'variables': variables,
             'filename': filename,
