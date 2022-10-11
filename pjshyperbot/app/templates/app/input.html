@@ -529,10 +529,13 @@
 
 </head>
 <body>
-    <h2>{{ title }}.</h2>
-    <h5>To be able to start with the automation, we still need some information from you:</h5>
+
+    <div class="jumbotron">
+        <h1 class="title">{{ title }}</h1>
+        <p class="description">To be able to start with the automation, we still need some information from you:</p>
 
 
+    </div>
 
 
 
@@ -574,7 +577,7 @@
                     {% endfor %}
                 </table>
             </div>
-
+            <br />
             <!-- Wenn Excel oder Word verwendet wurde, dann nach dem Pfad fragen -->
             <div class="container">
                 {% if a == 1%}
@@ -584,6 +587,7 @@
                 {% endif %}
             </div>
 
+            <br />
             <legend style="color:white;">Did you use data scraping?</legend>
             <div class="container">
                 <fieldset>
@@ -605,7 +609,7 @@
             </select>
 
             <p></p>
-            <button type="submit" class="btn btn--green">Abschicken</button>
+            <button type="submit" class="btn btn--green">generate XAML</button>
         </div>
 
     </form>
