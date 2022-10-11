@@ -580,7 +580,7 @@
             <br />
             <!-- Wenn Excel oder Word verwendet wurde, dann nach dem Pfad fragen -->
             <div class="container">
-                {% if a == 1%}
+                {% if len > 0 %}
                 <legend style="color:white;">Please enter the path of the used file:</legend>
                 <input type="text" class="form-control" name="path" required placeholder="path of the used file" />
 
