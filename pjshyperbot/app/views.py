@@ -157,6 +157,11 @@ def nextSteps(request):
     myinput = request.POST.items()
     filename = request.POST.get("filename")
     task = request.POST.get("task")
+
+    dataScraping = request.POST.get("switch")
+
+    path = request.POST.get("path")
+
     #print("Typ" + str(type(input)))
     db.insertInput(myinput, filename)
 
