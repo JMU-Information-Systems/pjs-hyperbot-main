@@ -1,4 +1,4 @@
-#import xaml as xaml
+﻿#import xaml as xaml
 # coding=utf-8
 
 def activity(xaml):   #write header of UIPath XAML file
