@@ -524,30 +524,32 @@
 
 </head>
 <body>
-    <h2>{{ title }}.</h2>
-    <h5>To be able to start with the automation, we still need some information from you:</h5>
+    <div class="jumbotron">
+        <h1 class="title">{{ title }}</h1>
+        <p class="description">To be able to start with the automation, we still need some information from you:</p>
+
+
+    </div>
 
 
 
+        <form action="input/" method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="file">Choose file to upload</label>
+                <input type="file" accept=".sqlite3" id="file" name="file" required />
+                <br />
 
-    
+                <legend style="color:white;">Please enter the name of the task template:</legend>
+                <div class="container">
 
-    <form action="input/" method="post" enctype='multipart/form-data'>
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="file">Choose file to upload</label>
-            <input type="file" accept=".sqlite3" id="file" name="file" />
+                    <input type="text" class="form-control" name="useCase" required placeholder="use case" required />
+                </div>
+                <br />
 
-
-            <legend style="color:white;">Please enter the name of the task template:</legend>
-            <div class="container">
-
-                <input type="text" class="form-control" name="useCase" required placeholder="use case" required />
+                <button type="submit" class="btn btn--green">adapt data</button>
             </div>
-
-            <button type="submit" class="btn btn--green">Abschicken</button>
-        </div>
-    </form>
+        </form>
 </body>
 </html>
     {% endblock %}
