@@ -7,12 +7,8 @@ Command-line utility for administrative tasks.
 
 import os
 import sys
+from db_operations import databaseContact
 
-#from rpa_backend import *
-from rpa_prepare import databaseContact
-from HTML_Extraktion import HTMLExtraction
-
-#from xaml_adjust import xaml
     
 if __name__ == '__main__':
     #xaml = open("test","w", encoding="utf-8")
@@ -20,8 +16,6 @@ if __name__ == '__main__':
 
     db = databaseContact()
     #type = db.getType()
-
-    
 
     #myxaml = xaml()
     #myxaml.replaceVariables(variables)
