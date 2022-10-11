@@ -582,7 +582,7 @@
             <div class="container">
                 {% if a == 1%}
                 <legend style="color:white;">Please enter the path of the used file:</legend>
-                <input type="text" class="form-control" name=path required placeholder="path of the used file" required />
+                <input type="text" class="form-control" name="path" required placeholder="path of the used file" />
 
                 {% endif %}
             </div>
@@ -593,8 +593,8 @@
                 <fieldset>
 
                     <h1 class="btn-switch" ">
-                        <input type="radio" id="yes" name="switch" class="btn-switch__radio btn-switch__radio_yes" />
-                        <input type="radio" checked id="no" name="switch" class="btn-switch__radio btn-switch__radio_no" />
+                        <input type="radio" value="Yes" id="yes" name="switch" class="btn-switch__radio btn-switch__radio_yes" />
+                        <input type="radio" value="No" checked id="no" name="switch" class="btn-switch__radio btn-switch__radio_no" />
                         <label for="yes" class="btn-switch__label btn-switch__label_yes"><span class="btn-switch__txt">Yes</span></label>
                         <label for="no" class="btn-switch__label btn-switch__label_no"><span class="btn-switch__txt">No</span></label>
                     </h1>
