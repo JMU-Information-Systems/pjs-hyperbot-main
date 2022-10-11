@@ -45,6 +45,8 @@ def main(dbname,task):
     
     
     lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, ggf. sind Modifikationen notwendig")
+    lib_bausteine.a_maximise_window(xaml)
+    
     #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
     endknoten.append(lib2_bausteine.a_sequence_variablenextraktion(xaml, task))
 
@@ -111,7 +113,7 @@ def main(dbname,task):
                     endknoten.append(lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), "C:\\Program Files\\"+str(row[column['a_applicationname']])+"\\"+str(row[column['a_applicationname']])+".exe"))
 
 
-        aktionen(url, a_url, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), str(row[column['input_variables']]))
+        aktionen(url, a_url, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['elementclass']]), str(row[column['input_variables']]))
     cursor.close
 
     #baue alle noch offenen Endknoten vom Stack ab
@@ -125,11 +127,11 @@ def main(dbname,task):
 #Abfrage auf Applikationen
 
 #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
-def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle, input_variables):
+def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle,elementclass, input_variables):
     
     if a_applicationname == "msedge":
         #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
-        if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
+        if str.__contains__(u_name,elementclass (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
             lib_bausteine.a_comment_calendar_picker(xaml)
             
             #Schließen des aktuellen Fensters
@@ -139,8 +141,8 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
 
             #Abfrage auf Aktivitäten über Spalte Type:
 
-            #Ist ein Wert in der Spalte automationid vorhanden?
-            #größer 0, d.h. es wurde eine ID mit aufgezeichnet
+            
+        #Ist ein Wert in der Spalte automationid vorhanden? Wenn Länge größer 0, wurde eine ID mit aufgezeichnet
             
         if len(automationid)>0: 
             if u_type == "Schaltfläche" or u_type=="Link": #dann ist es eine Klickakitivität
@@ -149,24 +151,13 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
 
                 #Art des Klicks:Linksklick?
                 if u_eventtype == "Left-Down":
-                    #Starten der Sequenz
-                    lib2_bausteine.a_sequence_click_start(xaml, u_name)
-                        
-                    #Baustein Variante 1, über automationid, tag=Input, type=text
-                    lib2_bausteine.a_click_left_browser_schaltfläche_id(xaml, a_applicationname,url, u_name, automationid)
-                        
-                    # Baustein Variante 2, nur automationid 
+
+                    # Baustein nur automationid 
                     lib2_bausteine.a_click_left_browser_schaltfläche_id_var_2(xaml, a_applicationname, url, u_name, automationid)
-
-                    #Baustein Variante 3, mit aaname und parentid
-                    lib2_bausteine.a_click_left_browser_schaltfläche_id_var_3(xaml, a_applicationname, url, u_name, automationid)
-                        
-                    #Ende der Sequenz, alles zwischendrin wird ausprobiert
-                    lib2_bausteine.a_sequence_end(xaml)
-
-                    #Rechtsklick
+                    
+                #Rechtsklick
                 else:
-                    lib2_bausteine.a_click_right_browser_schaltfläche(xaml,a_applicationname,url, u_name, automationid)
+                    lib2_bausteine.a_click_right_browser_schaltfläche_id(xaml,a_applicationname,url, u_name, automationid)
             
             
                 #Abfrage auf andere Eventtypen im Browser                        
@@ -209,7 +200,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     lib2_bausteine.a_send_hotkey_strg_v_browser(xaml, a_applicationname,url, u_name, automationid)
 
                         
-        #dann gibt es keine ID
+        #dann gibt es keine ID, Identifikation der Elemente nicht immer gewährleistet, daher Varianten
         else:
             #Bedingung für Klickaktivität
             if u_type == "Schaltfläche" or u_type=="Link":
@@ -222,35 +213,35 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     lib2_bausteine.a_click_left_browser_schaltfläche_no_id(xaml,a_applicationname, url,u_name)
                         
                     #Baustein Variante 2, mit Tag+Type=Button in Kombination mit Abfrage nach Name (aaname) des Feldes 
-                    lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name)
+                    lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name, elementclass)
                         
-                    #Baustein Variante 3, Tag=Button, Type=Submit in Kombination mit Abfrage nach Name des Feldes (aaname)
-                    lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var3(xaml,a_applicationname,url,u_name)
-                        
-                    #Baustein Variante 4, aaname und Klasse
-                    #lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var4(xaml,a_applicationname,url,u_name,u_class)
-                        
-                    #Baustein Variante 5, mit aaname und Tag=Span 
-                    lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var5 (xaml,a_applicationname,url, u_name)
-
-                    #Variante 6, Baustein mit Name & Tag=Select
-                    lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var6(xaml,a_applicationname,url,u_name)
-                      
+                    #Ende der Sequenz
                     lib2_bausteine.a_sequence_end(xaml)
 
                 elif u_eventtype == "Right-down":
-                        lib2_bausteine.a_click_right_browser_schaltfläche(xaml,a_applicationname,url, u_name, automationid)
+                    #Starten der Sequenz
+                    lib2_bausteine.a_sequence_click_start(xaml, u_name)
+
+                    #Baustein Variante 1, nur über aaname
+                    lib2_bausteine.a_click_right_browser_schaltfläche_no_id(xaml,a_applicationname, url,u_name)
+                        
+                    #Baustein Variante 2, mit Tag+Type=Button in Kombination mit Abfrage nach Name (aaname) des Feldes 
+                    lib2_bausteine.a_click_right_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name, elementclass)
+                        
+                    #Ende der Sequenz
+                    lib2_bausteine.a_sequence_end(xaml)
+                    
 
                 elif u_type=="Kombinationsfeld":
-                    lib2_bausteine.a_click_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid)
+                    lib2_bausteine.a_click_kombinationsfeld_no_id(xaml, a_applicationname, url,u_name, elementclass)
 
                 elif u_type == "checkbox" or u_type=="Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
                     
                     #Start der Sequenz
                     lib2_bausteine.a_sequence_click_checkbox_start(xaml, u_name)
 
-                    #Variante mit name, tag=Input, type=checkbox
-                    lib2_bausteine.a_click_left_browser_checkbox_no_id (xaml, a_applicationname, url, u_name)
+                    #Variante mit name, tag=Input, type=checkbox, elementclass
+                    lib2_bausteine.a_click_left_browser_checkbox_no_id (xaml, a_applicationname, url, u_name, elementclass)
 
                     #Variante 2, über aaname, Tag=Input, type=checkbox
                     lib2_bausteine.a_click_left_browser_checkbox_no_id_var2(xaml, a_applicationname,url, u_name)
@@ -262,11 +253,11 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     #Starten der Sequenz
                     lib2_bausteine.a_sequence_click_optionsfeld_start(xaml,u_name)
                 
-                    #Variante 1, über aaname 
+                    #Variante 1, über aaname und Klasse
                     lib2_bausteine.a_click_left_browser_optionsfeld_no_id(xaml,a_applicationname, url, u_name)
                 
                     #Variante 2, nur über aaname und aria-role=option
-                    lib2_bausteine.a_click_left_browser_optionsfeld_var_no_id_var2(xaml,a_applicationname, url, u_name)
+                    lib2_bausteine.a_click_left_browser_optionsfeld_var_no_id_var2(xaml,a_applicationname, url, u_name, elementclass)
                     
                     #Ende der Sequenz
                     lib2_bausteine.a_sequence_end(xaml)
@@ -299,7 +290,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                         #Suche über Name und Tag=Input, Type=Text
                         lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, input_variables)
                         
-                        #Variante 3, keine ID, kein Name, nur Tag=Input, type =text
+                        #Variante 1, keine ID, Name, Tag=Input, type =text
                         lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, input_variables)
 
                         #Variante 4, keine ID, kein Name, nur Tag=Input
@@ -320,10 +311,8 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                         lib2_bausteine.a_send_hotkey_strg_c_browser_no_id(xaml, a_applicationname,url, u_name)
 
                         #Variante 2, keine ID, kein Name, nur Tag=Input, type =text
-                        lib2_bausteine.a_send_hotkey_strg_c_browser_no_id_var2(xaml, a_applicationname,url, u_name)
+                        lib2_bausteine.a_send_hotkey_strg_c_browser_no_id_var2(xaml, a_applicationname,url, u_name, elementclass)
 
-                        #Variante 3, keine ID, kein Name, nur Tag=Input
-                        lib2_bausteine.a_send_hotkey_strg_c_browser_no_id_var3(xaml, a_applicationname,url, u_name)
 
                         lib2_bausteine.a_sequence_end(xaml)
 
@@ -338,11 +327,8 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                         #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
                         lib2_bausteine.a_send_hotkey_strg_v_browser_no_id(xaml, a_applicationname,url, u_name)
 
-                        #Variante 2, keine ID, kein Name, nur Tag=Input, type =text
+                        #Variante 2, keine ID, kein Name, nur Tag=Input
                         lib2_bausteine.a_send_hotkey_strg_v_browser_no_id_var2(xaml, a_applicationname,url, u_name)
-
-                        #Variante 3, keine ID, kein Name, nur Tag=Input
-                        lib2_bausteine.a_send_hotkey_strg_v_browser_no_id_var3(xaml, a_applicationname,url, u_name)
 
                         lib2_bausteine.a_sequence_end(xaml) 
                            
@@ -500,7 +486,7 @@ def verbesserungsvorschlaege():
             
 
     #wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte
-    if scapring
+    if variable="Yes"
         #Start der Sequenz
         lib2_bausteine.a_sequence_data_scraping_start
         lib2_bausteine.a_comment_data_scraping (xaml):
