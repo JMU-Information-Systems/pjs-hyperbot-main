@@ -1180,8 +1180,8 @@ def a_write_cell(xaml, cell, sheet_name, text, workbook_path):
 
 # Excel Aktivitäten, müssen im Body der Excel Application Scope sein
 
-def a_read_range(xaml, outputtable_name, range, sheet_name, workbook_path):  # Bereich aus Excel Datei auslesen und in Outputtabelle_name speichern
-    xaml.write("    <ui:ReadRange AddHeaders=\"True\" DataTable=\""+outputtable_name+"\" DisplayName=\"Read Range\" Range=\""+range+"\" SheetName=\""+sheet_name+"\" WorkbookPath=\""+workbook_path+"\" />\n")
+def a_read_range(xaml, workbook_path):  # Bereich aus Excel Datei auslesen und in Outputtabelle_name speichern
+    xaml.write("    <ui:ReadRange AddHeaders=\"True\" DataTable=\"Name der Datenbank eintragen\" DisplayName=\"Read Range\" Range=\"gewünschten Bereich eintragen\" SheetName=\"Name des Datenblatts eintragen\" WorkbookPath=\""+workbook_path+"\" />\n")
 
 def a_comment_read_range (xaml):
     xaml.write("            <ui:Comment Text=\"Read Range: Im Prozessablauf wurde öfters per STRG+C etwas aus einer ExcelDatei kopiert. In diesem automatisch generierten XAML wird dies über die Aktivität 'Send Hotkey Strg+C' gelöst, sinnvoll wäre zur Optimierung auch eine 'read range' Aktivität, die den gewünschten Bereich einer Excel Tabelle ausliest und in einer neuen Datentabelle speichert, auf die in folgenden Aktivitäten zugegriffen werden kann. Die Aktivität wurde bereits eingefügt, hier muss noch die Variable manuell eingeben werden, in der die Datentabelle abgespeichert werden muss  \" />\n")
@@ -1220,7 +1220,7 @@ def a_for_each_row(xaml, outputtable_name):  # For Schleife, für jede Zeile bes
     xaml.write("            </ui:ForEachRow>\n")
 
 def a_write_range_excel (xaml, datatable, sheetname, workbookpath):
-    xaml.write("    <ui:WriteRange StartingCell=\"{x:Null}\" AddHeaders=\"False\" DataTable=\""[+datatable]+"\" DisplayName=\"Write Range\" sap:VirtualizedContainerService.HintSize=\"334,114.666666666667\" sap2010:WorkflowViewState.IdRef=\"WriteRange_1\" SheetName=\""+sheetname+"\" WorkbookPath=\""+workbookpath+"\" />\n")
+    xaml.write("    <ui:WriteRange StartingCell=\"{x:Null}\" AddHeaders=\"False\" DataTable=\"[Name der Datenbank]\" DisplayName=\"Write Range\"  SheetName=\"Bitte angeben\" WorkbookPath=\""+workbookpath+"\" />\n")
 
 
 def a_excel_auto_save(xaml):  # speichert excel automatisch, einfach immer einfügen
