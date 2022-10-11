@@ -124,7 +124,7 @@ def main(dbname,task):
         
 
 
-#Abfrage auf Applikationen
+#Abfrage auf Applikationen, ob Browser
 
 #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
 def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle,elementclass, input_variables):

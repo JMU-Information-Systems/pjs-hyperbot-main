@@ -871,7 +871,7 @@ def a_click_left_in_application_no_id(xaml, application_name, title, name, role)
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-
+#Rechtsklick
 
 def a_click_right_in_application(xaml, application_name, title, automationid, name, role):  # für alle Anwendungen außer Browser
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
