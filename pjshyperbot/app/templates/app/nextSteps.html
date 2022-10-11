@@ -529,14 +529,19 @@
 
 </head>
 <body>
-    <h2>
-        Thanks for your input!
-    </h2>
+
+    <div class="jumbotron">
+        <h1 class="title">{{ title }}</h1>
+        <p class="description">Thanks for your input!</p>
 
 
-    <p>Your XAML file was generated successfully. Open the XAML file in UI Path in File Explorer under the path ... and check the result.</p>
+    </div>
+
+
+
+    <p>Your XAML file was generated successfully. Open the XAML file in UI Path in File Explorer under the project path and check the result.</p>
     <p>Next steps:</p>
-    <p>Would you prefer to start again?</p>
+    <p>Would you prefer to start again?  <a href="{% url 'about' %}" class="btn btn--green">Get Started</a></p>
 </body>
 </html>
     {% endblock %}
