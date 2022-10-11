@@ -13,7 +13,7 @@ import Hauptprogramm
 from HTML_Extraktion import HTMLExtraction
 from pathlib import Path
 from tarfile import ENCODING
-from rpa_prepare import databaseContact
+from db_operations import databaseContact
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import numpy as np
