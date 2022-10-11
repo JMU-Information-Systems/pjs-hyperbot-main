@@ -1388,10 +1388,10 @@ def a_sequence_variablenextraktion (xaml, task):
     return(" <ui:CloseWindow TimeoutMS=\"{x:Null}\" UseWindow=\"{x:Null}\" DisplayName=\"Close Window 'msedge.exe Aufgabe:'\" Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n </Sequence>\n")
   
 
-def a_get_text (xaml, tablerow, vname):
+def a_get_text (xaml, v_id, vname):
     xaml.write("  <ui:GetValue DisplayName=\"Get Text\" >\n")
     xaml.write("    <ui:GetValue.Target>\n")
-    xaml.write("      <ui:Target Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;&lt;webctrl tag=\'IFRAME\' idx=\'2\' /&gt;&lt;webctrl tag=\'TABLE\' /&gt;&lt;webctrl tableCol=\'2\' tableRow=\'"+tablerow+"\' tag=\'TD\' /&gt;\">\n")
+    xaml.write("      <ui:Target Selector=\"&lt;html app=\'msedge.exe\' url=\'*http://132.187.226.138:8080/*\' /&gt;&lt;webctrl tag=\'IFRAME\' idx=\'2\' /&gt;&lt;webctrl tag=\'TABLE\' /&gt;&lt;webctrl tableCol=\'2\' tableRow=\'"+v_id+"\' tag=\'TD\' /&gt;\">\n")
     xaml.write("        <ui:Target.TimeoutMS>\n")
     xaml.write("          <InArgument x:TypeArguments=\"x:Int32\" />\n")
     xaml.write("        </ui:Target.TimeoutMS>\n")
