@@ -173,7 +173,7 @@ def nextSteps(request):
 
     dbname = Path(fpath + '\\' + filename)
     #myhauptprogramm = hauptprogramm()
-    Hauptprogramm.main(filename, task)
+    Hauptprogramm.main(filename, task, dataScraping, path)
 
 
     assert isinstance(request, HttpRequest)
