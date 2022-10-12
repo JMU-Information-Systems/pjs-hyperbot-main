@@ -78,6 +78,26 @@ class databaseContact():
         curs.close()
 
 
+    def pathRequired(self, filename):
+        fpath=os.path.dirname(__file__)
+        dfile=Path(fpath + '\\' + filename)
+
+        try:
+            #connect to sqlite3
+            cons=sqlite3.connect(dfile,check_same_thread=False)
+            curs=cons.cursor()
+        except sqlite3.Error as e:
+            print(e)
+            exit
+
+        sqlPath = '''SELECT * FROM logger WHERE a_applicationname="excel" OR a_applicationname="msword"'''
+        data = curs.execute(sqlPath).fetchall()
+        curs.close()
+
+
+        return(len(data))
+
+
     #In dieser Methode werden die mit Hilfe der HTML_Extraktion Klasse aus Weclapp extrahierten Werte in der Tabelle variables abgespeichert
     def insertInputWeclapp(self, variableName, filename):
         fpath=os.path.dirname(__file__)
