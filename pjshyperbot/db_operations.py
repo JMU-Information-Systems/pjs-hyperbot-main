@@ -63,8 +63,6 @@ class databaseContact():
         except sqlite3.Error as e:
             print(e)
             exit
-        sqlalter = '''ALTER TABLE logger ADD input_variables TEXT'''
-        curs.execute(sqlalter)
 
         for key, value in input:
             

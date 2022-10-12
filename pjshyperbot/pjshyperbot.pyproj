@@ -67,7 +67,7 @@
     <Compile Include="pjshyperbot\settings.py" />
     <Compile Include="pjshyperbot\urls.py" />
     <Compile Include="pjshyperbot\wsgi.py" />
-    <Compile Include="rpa_prepare.py" />
+    <Compile Include="db_operations.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\" />
@@ -93,6 +93,8 @@
     <Content Include="app\static\logo_transparent.jpg" />
     <Content Include="app\static\logo_transparent.png" />
     <Content Include="app\static\logo_transparent_schrift.jpg" />
+    <Content Include="app\templates\app\nextSteps.html" />
+    <Content Include="app\templates\app\register.html" />
     <Content Include="app\templates\app\static_files\logo_transparent.jpg" />
     <Content Include="app\templates\app\input.html" />
     <Content Include="requirements.txt" />
