@@ -131,7 +131,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
     
     if a_applicationname == "msedge":
         #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
-        if str.__contains__(u_name,elementclass (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
+        if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
             lib_bausteine.a_comment_calendar_picker(xaml)
             
             #Schließen des aktuellen Fensters
@@ -468,37 +468,35 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     lib2_bausteine.a_click_right_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
  
                     
-                
-    def verbesserungsvorschlaege(dataScraping, path):
-        #Verbesserungsvorschläge am Ende:
+'''                
+def verbesserungsvorschlaege(dataScraping, path):
+    #Verbesserungsvorschläge am Ende:
     
-        #Zählen wie oft etwas im Prozessverlauf aus Excel kopiert wird
-        #strg_c_excel= cursor.execute("SELECT COUNT (*) FROM logger where a_applicationname='excel' and u_eventtype='CTRL + C'")
-        #number_of_strg_c_excel= strg_c_excel.fetchone()[0]
+    #Zählen wie oft etwas im Prozessverlauf aus Excel kopiert wird
+    #strg_c_excel= cursor.execute("SELECT COUNT (*) FROM logger where a_applicationname='excel' and u_eventtype='CTRL + C'")
+    #number_of_strg_c_excel= strg_c_excel.fetchone()[0]
        
-        #lib2_bausteine.a_sequence_auskommentiert(xaml)
+    lib2_bausteine.a_sequence_auskommentiert(xaml)
   
-        #if number_of_strg_c_excel>=3:
-            #lib2_bausteine.a_sequence_read_range_start (xaml)
-            #lib2_bausteine.a_read_range(xaml,path)
-            #lib2_bausteine.a_comment_read_range (xaml)
-            #Ende der Sequenz
-            #lib2_bausteine.a_sequence_end(xaml)
+    #if number_of_strg_c_excel>=3:
+        #lib2_bausteine.a_sequence_read_range_start (xaml)
+        #lib2_bausteine.a_read_range(xaml,path)
+        #lib2_bausteine.a_comment_read_range (xaml)
+        #Ende der Sequenz
+        #lib2_bausteine.a_sequence_end(xaml)
             
 
-   # wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte
+# wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte
     
-        if dataScraping=="Yes":
-            #Start der Sequenz
-            lib2_bausteine.a_sequence_data_scraping_start
-            lib2_bausteine.a_comment_data_scraping (xaml)
-            lib2_bausteine.a_write_range_excel (xaml, path)
-            #Ende der Sequenz
-            lib2_bausteine.a_sequence_end(xaml)
-
-            lib2_bausteine.a_sequence_end(xaml)
-            lib2_bausteine.a_sequence_auskommentiert_end(xaml) #am Ende wenn alle Vorschläge gemacht wurden
-        
+    if dataScraping=="Yes":
+        #Start der Sequenz
+        lib2_bausteine.a_sequence_data_scraping_start
+        lib2_bausteine.a_comment_data_scraping (xaml)
+        lib2_bausteine.a_write_range_excel (xaml, path)
+        #Ende der Sequenz
+        lib2_bausteine.a_sequence_end(xaml)
+    lib2_bausteine.a_sequence_auskommentiert_end(xaml) #am Ende wenn alle Vorschläge gemacht wurden
+'''
 
 
 if __name__ == '__main__':
