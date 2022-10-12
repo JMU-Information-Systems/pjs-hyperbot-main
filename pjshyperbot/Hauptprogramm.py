@@ -45,7 +45,7 @@ def main(dbname,task, dataScraping, path):
     
     
     lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, ggf. sind Modifikationen notwendig")
-    lib_bausteine.a_maximise_window(xaml)
+    #lib2_bausteine.a_maximise_window(xaml)
     
     #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
     endknoten.append(lib2_bausteine.a_sequence_variablenextraktion(xaml, task))
