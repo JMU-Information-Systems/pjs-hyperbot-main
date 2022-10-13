@@ -156,7 +156,7 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                 if u_eventtype == "Left-Down":
 
                     # Baustein nur automationid 
-                    lib2_bausteine.a_click_left_browser_schaltfläche_id_var_2(xaml, a_applicationname, url, u_name, automationid)
+                    lib2_bausteine.a_click_left_browser_schaltfläche_id(xaml, a_applicationname, url, u_name, automationid)
                     
                 #Rechtsklick
                 else:
@@ -235,109 +235,103 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     lib2_bausteine.a_sequence_end(xaml)
                     
 
-                elif u_type=="Kombinationsfeld":
-                    lib2_bausteine.a_click_kombinationsfeld_no_id(xaml, a_applicationname, url,u_name, elementclass)
+            elif u_type=="Kombinationsfeld":
+                lib2_bausteine.a_click_kombinationsfeld_no_id(xaml, a_applicationname, url,u_name, elementclass)
 
-                elif u_type == "checkbox" or u_type=="Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
+            elif u_type == "checkbox" or u_type=="Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
+                #Start der Sequenz
+                lib2_bausteine.a_sequence_click_checkbox_start(xaml, u_name)
+
+                #Variante mit name, tag=Input, type=checkbox, elementclass
+                lib2_bausteine.a_click_left_browser_checkbox_no_id (xaml, a_applicationname, url, u_name, elementclass)
+
+                #Variante 2, über aaname, Tag=Input, type=checkbox
+                lib2_bausteine.a_click_left_browser_checkbox_no_id_var2(xaml, a_applicationname,url, u_name)
                     
-                    #Start der Sequenz
-                    lib2_bausteine.a_sequence_click_checkbox_start(xaml, u_name)
+                #Ende der Sequenz
+                lib2_bausteine.a_sequence_end(xaml)
 
-                    #Variante mit name, tag=Input, type=checkbox, elementclass
-                    lib2_bausteine.a_click_left_browser_checkbox_no_id (xaml, a_applicationname, url, u_name, elementclass)
-
-                    #Variante 2, über aaname, Tag=Input, type=checkbox
-                    lib2_bausteine.a_click_left_browser_checkbox_no_id_var2(xaml, a_applicationname,url, u_name)
-                    
-                    #Ende der Sequenz
-                    lib2_bausteine.a_sequence_end(xaml)
-
-                elif u_type== "Optionsfeld":
-                    #Starten der Sequenz
-                    lib2_bausteine.a_sequence_click_optionsfeld_start(xaml,u_name)
+            elif u_type== "Optionsfeld":
+                #Starten der Sequenz
+                lib2_bausteine.a_sequence_click_optionsfeld_start(xaml,u_name)
                 
-                    #Variante 1, über aaname und Klasse
-                    lib2_bausteine.a_click_left_browser_optionsfeld_no_id(xaml,a_applicationname, url, u_name)
+                #Variante 1, über aaname und Klasse
+                lib2_bausteine.a_click_left_browser_optionsfeld_no_id(xaml,a_applicationname, url, u_name)
                 
-                    #Variante 2, nur über aaname und aria-role=option
-                    lib2_bausteine.a_click_left_browser_optionsfeld_var_no_id_var2(xaml,a_applicationname, url, u_name, elementclass)
+                #Variante 2, nur über aaname und aria-role=option
+                lib2_bausteine.a_click_left_browser_optionsfeld_var_no_id_var2(xaml,a_applicationname, url, u_name, elementclass)
                     
-                    #Ende der Sequenz
-                    lib2_bausteine.a_sequence_end(xaml)
-                    #lib_bausteine.a_comment_optionsfeld(xaml)
+                #Ende der Sequenz
+                lib2_bausteine.a_sequence_end(xaml)
+                #lib_bausteine.a_comment_optionsfeld(xaml)
                 
                 #keine ID
-                elif u_type=="Text":
-                    #Start der Sequenz
-                    lib2_bausteine.a_sequence_click_start(xaml, u_name)
-                    #Variante 1, über aaname und tag=LABEL
-                    lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
+            elif u_type=="Text":
+                #Start der Sequenz
+                lib2_bausteine.a_sequence_click_start(xaml, u_name)
+                #Variante 1, über aaname und tag=LABEL
+                lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
 
-                    #Variante 2, nur über aaname
-                    lib2_bausteine.a_click_browser_text_var2(xaml,a_applicationname, url, u_name)
+                #Variante 2, nur über aaname
+                lib2_bausteine.a_click_browser_text_var2(xaml,a_applicationname, url, u_name)
 
-                    #Ende der Sequenz
-                    lib2_bausteine.a_sequence_end(xaml)
+                #Ende der Sequenz
+                lib2_bausteine.a_sequence_end(xaml)
 
 
                 #wenn Grafik angeklickt wird, keine id, über aaname und tag='IMG'
-                elif u_type=="Grafik":
-                    lib2_bausteine.a_click_left_browser_grafik (xaml, a_applicationname, url, u_name)
+            elif u_type=="Grafik":
+                lib2_bausteine.a_click_left_browser_grafik (xaml, a_applicationname, url, u_name)
                 
-                elif u_type == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
-                    if u_eventtype == "Left-Down":
-
-                        #Start der Sequenz
-                        lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
-                     
-                        #Suche über Name und Tag=Input, Type=Text
-                        lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, input_variables)
+            elif u_type == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
+                
+                if u_eventtype == "Left-Down":
+                    #Start der Sequenz
+                    lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
+                    
+                    #Suche über Name und Tag=Input, Type=Text
+                    lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, input_variables)
                         
-                        #Variante 1, keine ID, Name, Tag=Input, type =text
-                        lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, input_variables)
+                    #Variante 1, keine ID, Name, Tag=Input, type =text
+                    lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, input_variables)
 
-                        #Variante 4, keine ID, kein Name, nur Tag=Input
-                        lib2_bausteine.a_type_into_browser_no_id_var3 (xaml, a_applicationname,url, u_name, input_variables)
-
-                        #Ende der Sequenz, alles zwischendrin wird ausprobiert
-                        lib2_bausteine.a_sequence_end (xaml)
+                    #Ende der Sequenz, alles zwischendrin wird ausprobiert
+                    lib2_bausteine.a_sequence_end (xaml)
                        
                     
                     #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
                     
-                    elif u_eventtype == "CTRL + C":
-                        
-                        #Starten der Sequenz
-                        lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml, u_name)
+            elif u_eventtype == "CTRL + C":
+                #Starten der Sequenz
+                lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml, u_name)
+                
+                #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
+                lib2_bausteine.a_send_hotkey_strg_c_browser_no_id(xaml, a_applicationname,url, u_name)
 
-                        #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
-                        lib2_bausteine.a_send_hotkey_strg_c_browser_no_id(xaml, a_applicationname,url, u_name)
-
-                        #Variante 2, keine ID, kein Name, nur Tag=Input, type =text
-                        lib2_bausteine.a_send_hotkey_strg_c_browser_no_id_var2(xaml, a_applicationname,url, u_name, elementclass)
-
-
-                        lib2_bausteine.a_sequence_end(xaml)
+                #Variante 2, keine ID, kein Name, nur Tag=Input, type =text
+                lib2_bausteine.a_send_hotkey_strg_c_browser_no_id_var2(xaml, a_applicationname,url, u_name, elementclass)
+                
+                lib2_bausteine.a_sequence_end(xaml)
 
                     
-                    #es wird etwas eingefügt, Send Hotkey Strg+V
+            #es wird etwas eingefügt, Send Hotkey Strg+V
 
-                    elif u_eventtype == "CTRL + V":
-                        
-                        #Start der Sequenz     
-                        lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml, u_name)
+            elif u_eventtype == "CTRL + V":
+                
+                #Start der Sequenz
+                lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml, u_name)
 
-                        #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
-                        lib2_bausteine.a_send_hotkey_strg_v_browser_no_id(xaml, a_applicationname,url, u_name)
+                #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
+                lib2_bausteine.a_send_hotkey_strg_v_browser_no_id(xaml, a_applicationname,url, u_name)
 
-                        #Variante 2, keine ID, kein Name, nur Tag=Input
-                        lib2_bausteine.a_send_hotkey_strg_v_browser_no_id_var2(xaml, a_applicationname,url, u_name)
+                #Variante 2, keine ID, kein Name, nur Tag=Input
+                lib2_bausteine.a_send_hotkey_strg_v_browser_no_id_var2(xaml, a_applicationname,url, u_name)
 
-                        lib2_bausteine.a_sequence_end(xaml) 
+                lib2_bausteine.a_sequence_end(xaml) 
                            
-                    #Baustein für Enter 
-                    elif u_eventtype == "ENTER":
-                        lib2_bausteine.a_press_enter(xaml)
+              #Baustein für Enter 
+            elif u_eventtype == "ENTER":
+                lib2_bausteine.a_press_enter(xaml)
                
  
     elif a_applicationname=="explorer": 
