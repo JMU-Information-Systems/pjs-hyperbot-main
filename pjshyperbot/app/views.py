@@ -3,18 +3,14 @@ Definition of views.
 """
 
 from datetime import datetime
-from tabnanny import filename_only
 from django.shortcuts import render
 from django.http import HttpRequest
-from django.http import HttpResponse
 from datetime import datetime
 import os
 import Hauptprogramm
 from HTML_Extraktion import HTMLExtraction
 from pathlib import Path
-from tarfile import ENCODING
 from db_operations import databaseContact
-from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import numpy as np
 from django.core.files.storage import FileSystemStorage
@@ -23,16 +19,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 
 def register(request):
+    """Renders the register page."""
     form = UserCreationForm(request.POST or None)
     if form.is_valid():
         user_obj = form.save()
         return redirect('/login')
     context = {"form": form}
     return render(request, "app/register.html", context)
-#def getUType():
- #   db = databaseContact()
-  #  type = db.getType()
-   # return(type)
+
 
 
 def home(request):
@@ -61,25 +55,11 @@ def contact(request):
         }
     )
 
+#This page can only be reached if you are logged in.
 @login_required
 def about(request):
-    #extractor = HTMLExtraction()
-    #combined,variableName, value = extractor.getVariables()
-    #db.insertInputWeclapp(variableName)
+    """Renders the about page."""
 
-    #DataFrontend[0][3] = "test"
-
-    #print(type(DataFrontend))
-    
-         #urlparse(str(col)
-   
-    #data = db.getDataFrontend()
-    #db.getData(dfile)
-    #db.createTable(conp, curs, cons)
-    #relevantData = db.getRelevantDataFrontend(curs)
-    #print(relevantData)
-
-   
     assert isinstance(request, HttpRequest)
 
     return render(
@@ -92,16 +72,17 @@ def about(request):
     )
 
 def input(request):
-    #read json File f?r Extraktion der userid und intallationtime (f?r filename)
-    jfile="C:\\ProgramData\\RecorderService\\Settings\\applicationsettings.json"
-
+    #As soon as the values from the frontend are transferred from the Hyperbot page via POST, you can access the inputs via views.py.
     if request.method == 'POST':
+        #Access the uploaded file 
         uploaded_file = request.FILES['file']
         fs = FileSystemStorage()
 
-        #Wenn eine Datei mit gleichem Namen schon vorhanden ist, dann wird sie geloescht 
+        #If a file with the same name already exists, it will be deleted. 
         if fs.exists(uploaded_file.name):
             fs.delete(uploaded_file.name)
+
+        #Saving the uploaded database in the same folder as the programme
         fs.save(uploaded_file.name, uploaded_file)
 
 
@@ -110,43 +91,40 @@ def input(request):
     db = databaseContact()
     task = request.POST.get("useCase")
     extractor = HTMLExtraction()
+
+    #Extract the variables from the task template in Weclapp
     combined,variableName, value = extractor.getVariables(task)
 
+    #write the extracted variables from Weclapp into the database to display them in the dropdown.on the next page
     db.insertInputWeclapp(variableName, filename)
 
+    #Querying the variables in the database in order to be able to display them in the frontend in the drop-down menu.
     variables = db.getVariables(filename)
 
-    DataFrontend, a = db.getDataFrontend(filename)
-    #print("Type" + str(type))
+    #Extraction of the recording data from the database, to which the variables must be assigned in the frontend.
+    DataFrontend = db.getDataFrontend(filename)
 
+    #Read out the number of variables to know how many values to display in the drop-down menu.
     len = db.pathRequired(filename)
 
     assert isinstance(request, HttpRequest)
     DataFrontend = np.array(DataFrontend)
     i = 0
+
+    #The URL is cut for display in the frontend.
     for row in DataFrontend:
 
         DataFrontend[i][2] = str(urlparse(str(row[2])).hostname)
         i=i+1
    
-    #db = databaseContact()
 
-
-    #for key, value in input:
-        
-        #print('Key: %s' % (key) ) 
-    
-        #print('Value %s' % (value) )
-
-    #content = request.POST.get("vname")
-    #print(content)
     assert isinstance(request, HttpRequest)
     return render(
         request,
         'app/input.html',
         {
             'title':'Hyperbot',
-            'message': DataFrontend, #'Guten Tag!',
+            'message': DataFrontend, 
             'len':len,
             'year':datetime.now().year,
             'variables': variables,
@@ -156,7 +134,11 @@ def input(request):
     )
 
 def nextSteps(request):
+    """Renders the nextSteps page."""
+
     db = databaseContact()
+
+    #As soon as the input from the input page has been sent to the frontend, it can be accessed in views.py.
     myinput = request.POST.items()
     filename = request.POST.get("filename")
     task = request.POST.get("task")
@@ -165,14 +147,11 @@ def nextSteps(request):
 
     path = request.POST.get("path")
 
-    #print("Typ" + str(type(input)))
     db.insertInput(myinput, filename)
 
-    fpath=os.path.dirname(__file__)
     filename = request.POST.get("filename")
 
-    dbname = Path(fpath + '\\' + filename)
-    #myhauptprogramm = hauptprogramm()
+    #Generate the XAML
     Hauptprogramm.main(filename, task, dataScraping, path)
 
 
