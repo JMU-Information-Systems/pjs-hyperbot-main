@@ -16,6 +16,8 @@ import lib2_bausteine
 # argument is the name of the database as produced by the prepare plus additional table for input/output links
 def main(dbname,task, dataScraping, path):
     filename =  dbname[0:dbname.find(".")] + ".xaml"   # filename for XAML file like db with extension .xaml
+    mypath=path
+    mydataScraping=dataScraping
 
     #Connect to SQLite
     l_database = sqlite3.connect(dbname)
@@ -70,19 +72,25 @@ def main(dbname,task, dataScraping, path):
         return results
 
     column = matching(cursor)
-       
+     
+    #Initialisierung der Variablen der url_before, die zum Vergleich mit Vorgängersatz benötigt wird
+    url_before=None
+
     for row in cursor:         
         #Anpassen der URL, trimmen  einfügen von * sodass Selektor für alle Seiten dieser URL gilt        
         #bei der URL von WeClapp, funktioniert das Trimmen mit dem Modul urllib.parse nicht, deshalbt gesonderte Anpassung
         
+        
+        #Trimmen der URLS und Entfernen der Sonderzeichen
+        from urllib.parse import urlparse 
+        a_url = str(row[column['a_url']]).replace("&","&amp;")
+        a = urlparse(str(row[column['a_url']]))
+        website_name = str(a.hostname)
+        
+        #Hier gesondertes Trimmen, da urllib parse nicht greift
         if (str(row[column['a_url']])).__contains__("132.187.226.138:8080/"):
             url="*132.187.226.138:8080/*"
         else:
-            #Trimmen der URLS
-            from urllib.parse import urlparse 
-            a_url = str(row[column['a_url']]).replace("&","&amp;")
-            a = urlparse(str(row[column['a_url']]))
-            website_name = str(a.hostname)
             url = "*https://" + website_name + "/*"
 
         #Fehlerhandling, falls Sonderzeichen wie "&" in Spalte "name" vorhanden sind entfernen
@@ -115,14 +123,21 @@ def main(dbname,task, dataScraping, path):
                 else:
                     endknoten.append(lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), "C:\\Program Files\\"+str(row[column['a_applicationname']])+"\\"+str(row[column['a_applicationname']])+".exe"))
 
+        # url ist modifizierte Url auf Domain, die wir für den Selektor benötigen, 
+        # a_url die Original URL, die wir für das Öffnen des Browsers und beim Navigieren zu einer Seite benötigen
+        #url_before ist die modifizierte URL des Vorgängersatzes, die zum Vergleich mit aktueller URL dient und bei Wechsel den navigate Baustein aufruft
+        
+        aktionen(url, a_url,url_before, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['elementclass']]), str(row[column['input_variables']]))
+        
+        #Aktueller Wert wird zu Vorgängerwert
+        url_before=url
 
-        aktionen(url, a_url, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['elementclass']]), str(row[column['input_variables']]))
     cursor.close()
 
     #baue alle noch offenen Endknoten vom Stack ab
     while endknoten.__len__() > 0:
-        #if endknoten.__len__() ==1:
-            #verbesserungsvorschlaege()
+        if endknoten.__len__() ==1:
+           verbesserungsvorschlaege(xaml,dbname, mydataScraping)
         xaml.write(str(endknoten.pop()))       
         
 
@@ -130,9 +145,20 @@ def main(dbname,task, dataScraping, path):
 #Abfrage auf Applikationen, ob Browser
 
 #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
-def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle,elementclass, input_variables):
+def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle,elementclass, input_variables):
     
     if a_applicationname == "msedge":
+        
+        #Wenn sich Url ändert, soll zur nächsten Seite navigiert werden
+        if url_before is not None:
+            print(url_before +"   "+  url)
+            print(a_url)
+
+        if url!= url_before and url_before is not None:
+            lib_bausteine.a_navigate_to(xaml, a_url)
+
+        
+
         #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
         if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
             lib_bausteine.a_comment_calendar_picker(xaml)
@@ -465,33 +491,40 @@ def aktionen(url, a_url, xaml, automationid, u_name, u_type, u_eventtype, u_valu
                     lib2_bausteine.a_click_right_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
  
                     
-'''                
-def verbesserungsvorschlaege(dataScraping, path):
+            
+def verbesserungsvorschlaege(xaml, dbname, dataScraping):
+    '''
     #Verbesserungsvorschläge am Ende:
-    
+    l_database = sqlite3.connect(dbname)
+    cursor = l_database.cursor()
     #Zählen wie oft etwas im Prozessverlauf aus Excel kopiert wird
-    #strg_c_excel= cursor.execute("SELECT COUNT (*) FROM logger where a_applicationname='excel' and u_eventtype='CTRL + C'")
-    #number_of_strg_c_excel= strg_c_excel.fetchone()[0]
-       
+    strg_c_excel= cursor.execute("SELECT COUNT (*) FROM logger where a_applicationname='excel' and u_eventtype='CTRL + C'")
+    number_of_strg_c_excel= strg_c_excel.fetchone()[0]
+    
+    #Verbesserungsvorschläge sind auskommentiert, um den allgemeinen Ablauf nicht zu unterbrechen
     lib2_bausteine.a_sequence_auskommentiert(xaml)
-  
-    #if number_of_strg_c_excel>=3:
-        #lib2_bausteine.a_sequence_read_range_start (xaml)
-        #lib2_bausteine.a_read_range(xaml,path)
-        #lib2_bausteine.a_comment_read_range (xaml)
+
+    if number_of_strg_c_excel>=3:
+    
+        lib2_bausteine.a_sequence_read_range_start(xaml)
+        lib2_bausteine.a_read_range(xaml)
+        lib2_bausteine.a_comment_read_range (xaml)
         #Ende der Sequenz
-        #lib2_bausteine.a_sequence_end(xaml)
+        lib2_bausteine.a_sequence_end(xaml)
             
 
-# wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte
+    # wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte. Rückgabewerte sind Yes or No
     
     if dataScraping=="Yes":
         #Start der Sequenz
-        lib2_bausteine.a_sequence_data_scraping_start
+        lib2_bausteine.a_sequence_data_scraping_start(xaml)
         lib2_bausteine.a_comment_data_scraping (xaml)
-        lib2_bausteine.a_write_range_excel (xaml, path)
+        lib2_bausteine.a_write_range_excel (xaml)
         #Ende der Sequenz
         lib2_bausteine.a_sequence_end(xaml)
+
+    lib2_bausteine.a_sequence_end(xaml)
+    
     lib2_bausteine.a_sequence_auskommentiert_end(xaml) #am Ende wenn alle Vorschläge gemacht wurden
 '''
 

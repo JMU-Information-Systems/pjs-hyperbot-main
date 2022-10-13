@@ -1191,11 +1191,23 @@ def a_write_cell(xaml, cell, sheet_name, text, workbook_path):
 
 # Excel Aktivitäten, müssen im Body der Excel Application Scope sein
 
-def a_read_range(xaml, workbook_path):  # Bereich aus Excel Datei auslesen und in Outputtabelle_name speichern
-    xaml.write("    <ui:ReadRange AddHeaders=\"True\" DataTable=\"Name der Datenbank eintragen\" DisplayName=\"Read Range\" Range=\"gewünschten Bereich eintragen\" SheetName=\"Name des Datenblatts eintragen\" WorkbookPath=\""+workbook_path+"\" />\n")
+def a_read_range(xaml):  # Bereich aus Excel Datei auslesen und in Outputtabelle_name speichern
+    xaml.write("    <ui:ReadRange AddHeaders=\"True\" DataTable=\"Name der Datenbank eintragen\" DisplayName=\"Read Range\" Range=\"gewünschten Bereich eintragen\" SheetName=\"Name des Datenblatts eintragen\" WorkbookPath=\"Hier Pfad der gewünschten Datei eingeben\" />\n")
 
 def a_comment_read_range (xaml):
     xaml.write("            <ui:Comment Text=\"Read Range: Im Prozessablauf wurde öfters per STRG+C etwas aus einer ExcelDatei kopiert. In diesem automatisch generierten XAML wird dies über die Aktivität 'Send Hotkey Strg+C' gelöst, sinnvoll wäre zur Optimierung auch eine 'read range' Aktivität, die den gewünschten Bereich einer Excel Tabelle ausliest und in einer neuen Datentabelle speichert, auf die in folgenden Aktivitäten zugegriffen werden kann. Die Aktivität wurde bereits eingefügt, hier muss noch die Variable manuell eingeben werden, in der die Datentabelle abgespeichert werden muss  \" />\n")
+
+def a_sequence_read_range_start (xaml):
+    xaml.write("          <Sequence DisplayName=\"Read Range\" >\n")
+    xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("                <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsExpanded\">False</x:Boolean>\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsPinned\">False</x:Boolean>\n")
+    xaml.write("                </scg:Dictionary>\n")
+    xaml.write("              </sap:WorkflowViewStateService.ViewState>\n")
+
+
+
 
 def a_sequence_data_scraping_start (xaml):
     xaml.write("          <Sequence DisplayName=\"Data Scraping\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\" >\n")
@@ -1230,8 +1242,8 @@ def a_for_each_row(xaml, outputtable_name):  # For Schleife, für jede Zeile bes
     xaml.write("              </ui:ForEachRow.Body>\n")
     xaml.write("            </ui:ForEachRow>\n")
 
-def a_write_range_excel (xaml, datatable, sheetname, workbookpath):
-    xaml.write("    <ui:WriteRange StartingCell=\"{x:Null}\" AddHeaders=\"False\" DataTable=\"[Name der Datenbank]\" DisplayName=\"Write Range\"  SheetName=\"Bitte angeben\" WorkbookPath=\""+workbookpath+"\" />\n")
+def a_write_range_excel (xaml):
+    xaml.write("    <ui:WriteRange StartingCell=\"{x:Null}\" AddHeaders=\"False\" DataTable=\"[Name der Datenbank]\" DisplayName=\"Write Range\"  SheetName=\"Bitte angeben\" WorkbookPath=\"Hier Pfad der gewünschten Datei eingeben\" />\n")
 
 
 def a_excel_auto_save(xaml):  # speichert excel automatisch, einfach immer einfügen
@@ -1264,7 +1276,7 @@ def a_copy_file(xaml, workbook_path, destination_path):  # wenn Datei im explore
     xaml.write("    <ui:CopyFile ContinueOnError=\"True\" Destination=\""+destination_path+"\" DisplayName=\"Copy File\" Path=\""+workbook_path+"\" />\n")
 
 
-def a_maximise_window(xaml):  # sollte immmer eingebunden werden
+def a_maximise_window(xaml):  
     xaml.write("            <ui:MaximizeWindow Window=\"{x:Null}\" DisplayName=\"Maximize Window\"/>\n")
 
 
@@ -1326,21 +1338,15 @@ def a_try_catch_catch_end(xaml):
     xaml.write("        </Catch>\n")
 
 
-def a_sequence_auskommentiert_start (xaml):
-    xaml.write("    <ui:CommentOut DisplayName=\"Auskommentiert\" sap:VirtualizedContainerService.HintSize=\"454.666666666667,444.666666666667\" sap2010:WorkflowViewState.IdRef=\"CommentOut_1\">\n")
+def a_sequence_auskommentiert(xaml):
+    xaml.write("    <ui:CommentOut DisplayName=\"Auskommentiert\" sap:VirtualizedContainerService.HintSize=\"436.666666666667,274.666666666667\" sap2010:WorkflowViewState.IdRef=\"CommentOut_2\">\n")
     xaml.write("      <ui:CommentOut.Body>\n")
-    xaml.write("        <Sequence DisplayName=\"Auskommentierte Aktivitäten\" sap:VirtualizedContainerService.HintSize=\"418,366\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\">\n")
+    xaml.write("        <Sequence DisplayName=\"Ignorierte Aktivitäten\" sap:VirtualizedContainerService.HintSize=\"400,186\" sap2010:WorkflowViewState.IdRef=\"Sequence_4\">\n")
     xaml.write("          <sap:WorkflowViewStateService.ViewState>\n")
     xaml.write("            <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
     xaml.write("              <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
     xaml.write("            </scg:Dictionary>\n")
     xaml.write("          </sap:WorkflowViewStateService.ViewState>\n")
-    xaml.write("          <Sequence sap:VirtualizedContainerService.HintSize=\"376,274\" sap2010:WorkflowViewState.IdRef=\"Sequence_2\">\n")
-    xaml.write("            <sap:WorkflowViewStateService.ViewState>\n")
-    xaml.write("              <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
-    xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
-    xaml.write("              </scg:Dictionary>\n")
-    xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
 
 
 def a_sequence_auskommentiert_end (xaml):
