@@ -1,28 +1,19 @@
-# EXTRACT uilog from Logger DB
 # coding=utf-8
 from datetime import datetime
-import sys
 import sqlite3
-import shutil
 import os
 from pathlib import Path
-from tarfile import ENCODING
-import psycopg2 #Modul um eine Verbindung zum Datenbanksystem postgres herzustellen, gew?nschte Datenbank zu implementieren und SQL Befehle auszuf?hren
-import json
 import numpy as np
 
 
 class databaseContact():  
-    #def getType(self):
-     #   sqltype='''SELECT DISTINCT u_type FROM logger''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
-      #  u_type = databaseContact.curs.execute(sqltype).fetchall()
-       # return(u_type)
 
-
-    #Daten, die im Frontend angezeigt werden, werden in dieser Methode aus der Datenbank extrahiert
+    #Data that is displayed in the frontend is extracted from the database in this method
     def getDataFrontend(self, filename):
+
+        #Get the path of the database with the required information.
         fpath=os.path.dirname(__file__)
-        dfile=Path(fpath + '\\' + filename) #Aufzeichnungsdb in sqlite (Ziel)
+        dfile=Path(fpath + '\\' + filename) 
 
         try:
             #connect to sqlite3
@@ -31,14 +22,15 @@ class databaseContact():
         except sqlite3.Error as e:
             print(e)
             exit
-        #Pfad aus Frontend ?bergeben 
-        sqltype='''SELECT DISTINCT e_id, u_name,  a_url, a_applicationname, automationid, a_windowtitle FROM logger WHERE u_type="Bearbeiten" OR u_type="Suchfeld" OR u_type="Telefonnummer"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
+
+
+        #Query the data displayed in the frontend from the database. More detailed information is needed about the recorder records of the fields of type "Bearbeiten", "Suchfeld" and "Telefonnummer", as information is entered via the keyboard that is not recorded for data protection reasons. 
+        sqltype='''SELECT DISTINCT e_id, u_name,  a_url, a_applicationname, automationid, a_windowtitle FROM logger WHERE u_type="Bearbeiten" OR u_type="Suchfeld" OR u_type="Telefonnummer"''' 
         
-        #curs f?r "neue" DB aus Frontend anlegen
         
         data = curs.execute(sqltype).fetchall()
         
-        #Hier wird geschaut, ob ein Pfad abgefragt werden muss (wenn mit Excel oder Word gearbeitet wurde)
+        #Here it is checked whether a path must be queried (if Excel or Word was used).
         sqlneedpath = '''SELECT a_applicationname FROM logger WHERE a_applicationname="excel" OR a_applicationname="ms.word"'''
         needpath = len(curs.execute(sqlneedpath).fetchall())
         if needpath > 0:
@@ -49,8 +41,7 @@ class databaseContact():
         curs.close()
         return(data, a)
 
-    #In dieser Methode werden die Eingaben zu den Namen der Variaben aus dem Frontend in der Datenbank gespeichert. 
-    #Dafuer wird eine neue Spalte input_variables angelegt 
+    #In this method, the entries for the names of the variables from the frontend are saved in the database. 
     def insertInput(self, input, filename):
         fpath=os.path.dirname(__file__)
         
@@ -78,6 +69,7 @@ class databaseContact():
         curs.close()
 
 
+    #This method checks whether it is necessary to specify the path in the frontend. This is necessary when working with Excel or Word.
     def pathRequired(self, filename):
         fpath=os.path.dirname(__file__)
         dfile=Path(fpath + '\\' + filename)
@@ -98,7 +90,7 @@ class databaseContact():
         return(len(data))
 
 
-    #In dieser Methode werden die mit Hilfe der HTML_Extraktion Klasse aus Weclapp extrahierten Werte in der Tabelle variables abgespeichert
+    #In this method, the values extracted from Weclapp with the help of the HTML_Extraction class are stored in the variables table.
     def insertInputWeclapp(self, variableName, filename):
         fpath=os.path.dirname(__file__)
         dfile=Path(fpath + '\\' + filename)
@@ -111,9 +103,9 @@ class databaseContact():
             print(e)
             exit
 
-        #Zu Beginn muss die Tabelle leer sein 
+        #At the beginning the table must be empty 
         curs.execute("DELETE FROM variables")
-        #sqlupdate = '''INSERT INTO variables (v_id, vname, vtype, vinit) VALUES ('''
+
 
 
 
@@ -132,9 +124,7 @@ class databaseContact():
             vinit.append("")
             n = n+1
         curs.close()
-        combined = np.column_stack((v_id, variableName, vtype, vinit))
 
-        print(str(combined))
 
     #Abfrage der verschiedenen Variablen aus der Datenbank. 
     def getVariables(self, filename):
@@ -152,6 +142,7 @@ class databaseContact():
         data = curs.execute(sqlselect).fetchall()
         values = []
         i = 0
+        #Removing brackets, commas and quotes
         for a in data:
             a = str(a).replace("(","").replace(")","").replace("'","").replace(",","")
             values.append(a)
