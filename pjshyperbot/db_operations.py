@@ -30,16 +30,9 @@ class databaseContact():
         
         data = curs.execute(sqltype).fetchall()
         
-        #Here it is checked whether a path must be queried (if Excel or Word was used).
-        sqlneedpath = '''SELECT a_applicationname FROM logger WHERE a_applicationname="excel" OR a_applicationname="ms.word"'''
-        needpath = len(curs.execute(sqlneedpath).fetchall())
-        if needpath > 0:
-            a = 1
-        else:
-            a = 0
 
         curs.close()
-        return(data, a)
+        return(data)
 
     #In this method, the entries for the names of the variables from the frontend are saved in the database. 
     def insertInput(self, input, filename):
