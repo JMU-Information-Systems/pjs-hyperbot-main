@@ -32,7 +32,7 @@ class databaseContact():
             print(e)
             exit
         #Pfad aus Frontend ?bergeben 
-        sqltype='''SELECT DISTINCT e_id, u_type, u_name, a_url, a_applicationname, a_windowtitle FROM logger WHERE u_type="Bearbeiten" OR u_type="Suchfeld" OR u_type="Telefonnummer"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
+        sqltype='''SELECT DISTINCT e_id, u_name,  a_url, a_applicationname, automationid, a_windowtitle FROM logger WHERE u_type="Bearbeiten" OR u_type="Suchfeld" OR u_type="Telefonnummer"''' # + str("pjshyperbot." + databaseContact.filename + '.sqlite3')
         
         #curs f?r "neue" DB aus Frontend anlegen
         
