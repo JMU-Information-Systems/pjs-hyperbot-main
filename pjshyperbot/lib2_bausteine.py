@@ -1337,7 +1337,7 @@ def a_try_catch_catch_start(xaml):
 def a_try_catch_catch_end(xaml):
     xaml.write("        </Catch>\n")
 
-
+#danach folgt auskommentierte AKtivität
 def a_sequence_auskommentiert(xaml):
     xaml.write("    <ui:CommentOut DisplayName=\"Auskommentiert\" sap:VirtualizedContainerService.HintSize=\"436.666666666667,274.666666666667\" sap2010:WorkflowViewState.IdRef=\"CommentOut_2\">\n")
     xaml.write("      <ui:CommentOut.Body>\n")

@@ -81,7 +81,7 @@ def main(dbname,task, dataScraping, path):
         #bei der URL von WeClapp, funktioniert das Trimmen mit dem Modul urllib.parse nicht, deshalbt gesonderte Anpassung
         
         
-        #Trimmen der URLS und Entfernen der Sonderzeichen
+        #Trimmen der URLS mit urllib parse und Entfernen der Sonderzeichen
         from urllib.parse import urlparse 
         a_url = str(row[column['a_url']]).replace("&","&amp;")
         a = urlparse(str(row[column['a_url']]))
