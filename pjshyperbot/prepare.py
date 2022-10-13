@@ -11,7 +11,7 @@ import json
 
 
 def main():
-    #Lesen der Information zu einer Aufzeichnung (userid) aus postgres in einen cursor
+    #Reading the information about a record (userid) from postgres into a cursor
     sqlread='''WITH al AS (
            SELECT DISTINCT applog.id, applog.userid, applog.applicationname, applog.windowtitle, applog.url, applog.analysisid
            FROM processanalyzer.applog WHERE applog.applicationname IS NOT NULL AND applog.applicationname::text <> ''::text
@@ -30,29 +30,29 @@ def main():
     a_userid, a_applicationname, a_windowtitle, a_url) VALUES
     (''' 
 
-    #read json File f?r Extraktion der userid und intallationtime (fuer filename)
+    #read json file for extraction of userid and intallationtime (for filename)
     jfile="C:\\ProgramData\\RecorderService\\Settings\\applicationsettings.json"
 
-    #Auslesen der UserID und Installationtime
+    #Reading the UserID and installation time
     with open(jfile, "r") as json_datei:
         json_liste= json.load(json_datei)
         userid=(str(json_liste['AnonymousUserId']))
         filename=str(json_liste['InstallationTimeUtc']).replace('-','').replace(':','').replace('T','_')[:15]    
     sqlread = sqlread.replace('%s',userid)
     fpath=os.path.dirname(__file__)
-    sfile=Path(fpath + '\\' + 'rpatemplate.sqlite3') #templatedb in sqlite (Quelle)
-    dfile=Path(fpath + '\\' + filename + '.sqlite3') #Aufzeichnungsdb in sqlite (Ziel)
+    sfile=Path(fpath + '\\' + 'rpatemplate.sqlite3') #templatedb in sqlite (source)
+    dfile=Path(fpath + '\\' + filename + '.sqlite3') #Recordingdb in sqlite (target)
     shutil.copy(sfile,dfile)
 
     try:
         #Connect to postgres
         conp=psycopg2.connect(
             host="132.187.102.173", #Host-IP
-            database="processanalyzer", #Name der DB
+            database="processanalyzer", #name of DB
             user="postgres", #user
             password="postgres") #password
         cursor=conp.cursor()
-    except psycopg2.Error as error:  #Fehlerhandling
+    except psycopg2.Error as error:  #Error handling
         print("DB-Error ", error)
         exit
 
@@ -64,10 +64,10 @@ def main():
         print(e)
         exit
 
-    #Fuellen des cursors aus postgres fuer die Aufzeichnung
+    #Filling the cursor from postgres of the recording
     cursor.execute(sqlread) 
 
-    #Einfuegen der Zeilen aus dem cursor in die sqlitedb(Aufzeichnung)
+    #Inserting the rows from the cursor into the sqlitedb(record)
     row = cursor.fetchone() 
     while row:
         sqlcmd=sqlinsert
