@@ -42,20 +42,23 @@ def main(dbname,task, dataScraping, path):
     for row in cursor:
         lib_bausteine.variable(xaml, str(row[column['vname']]), str(row[column['vtype']]), str(row[column['vinit']]))
     xaml.write(str(endknoten.pop()))
+    cursor.close()
     
-    
+   
     lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, ggf. sind Modifikationen notwendig")
     #lib2_bausteine.a_maximise_window(xaml)
     
     #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
     endknoten.append(lib2_bausteine.a_sequence_variablenextraktion(xaml, task))
-
-    #lib2_bausteine.a_get_text(xaml, #Angabe der tablerow, je nach Anzahl der Reihen)    
+    
+    cursor = l_database.cursor()
+    cursor.execute("SELECT * FROM variables ORDER BY v_id")   
     for row in cursor:
         lib2_bausteine.a_get_text (xaml, str(row[column['v_id']]), str(row[column['vname']]))
     xaml.write(str(endknoten.pop()))
-    cursor.close
+    cursor.close()
 
+    cursor = l_database.cursor()
     cursor.execute("SELECT * FROM logger ORDER BY e_id")  #lese Logger Tabelle
     #Sodass nicht auf einzelne Spaltennummern zugegriffen werden muss, sondern der Zugriff über den Spaltennamen erfolgt
     def matching(cursor):
@@ -114,7 +117,7 @@ def main(dbname,task, dataScraping, path):
 
 
         aktionen(url, a_url, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['elementclass']]), str(row[column['input_variables']]))
-    cursor.close
+    cursor.close()
 
     #baue alle noch offenen Endknoten vom Stack ab
     while endknoten.__len__() > 0:
