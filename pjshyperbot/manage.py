@@ -11,14 +11,8 @@ from db_operations import databaseContact
 
     
 if __name__ == '__main__':
-    #xaml = open("test","w", encoding="utf-8")
-    #writehead(xaml)
+  
 
-    db = databaseContact()
-    #type = db.getType()
-
-    #myxaml = xaml()
-    #myxaml.replaceVariables(variables)
 
     os.environ.setdefault(
         'DJANGO_SETTINGS_MODULE',
