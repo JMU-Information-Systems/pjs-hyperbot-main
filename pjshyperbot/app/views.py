@@ -126,7 +126,7 @@ def input(request):
     i = 0
     for row in DataFrontend:
 
-        DataFrontend[i][3] = str(urlparse(str(row[3])).hostname)
+        DataFrontend[i][2] = str(urlparse(str(row[2])).hostname)
         i=i+1
    
     #db = databaseContact()
