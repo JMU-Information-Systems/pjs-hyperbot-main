@@ -228,14 +228,18 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
 
                     #Suche über ID, tag=Input, type=Text
                     lib2_bausteine.a_type_into_browser(xaml, a_applicationname,url, u_name, automationid, input_variables)
-                    
-                #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
-                    
+                 
+                #wenn in der Eingabe ein @Zeichen vorkommt, gibt der Logger folgenden Ausdruck zurück. Gleicher Type Into Baustein
+                elif u_eventtype=="CTRL + ALT + ALTGR + Q":
+                    lib2_bausteine.a_type_into_browser(xaml, a_applicationname,url, u_name, automationid, input_variables) 
+                
+                #Shortcutkombination kopieren, d.h. Baustein Send Hotkey Strg+C    
                 elif u_eventtype == "CTRL + C":
 
                     #ID, tag=Input, type=Text
                     lib2_bausteine.a_send_hotkey_strg_c_browser(xaml, a_applicationname,url, u_name, automationid)
 
+                #Einfügen Shortcutkombination
                 elif u_eventtype == "CTRL + V":
 
                     #ID, tag=Input, type=Text
@@ -336,39 +340,54 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
 
                     #Ende der Sequenz, alles zwischendrin wird ausprobiert
                     lib2_bausteine.a_sequence_end (xaml)
-                       
+
+
+                #wenn in der Eingabe ein @Zeichen vorkommt, gibt der Logger folgenden Ausdruck zurück. Gleicher Type Into Baustein
+                elif u_eventtype=="CTRL + ALT + ALTGR + Q":
+                    #Start der Sequenz
+                    lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
                     
-                    #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
+                    #Suche über Name und Tag=Input, Type=Text
+                    lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, input_variables)
+                        
+                    #Variante 1, keine ID, Name, Tag=Input, type =text
+                    lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, input_variables)
+
+                    #Ende der Sequenz, alles zwischendrin wird ausprobiert
+                    lib2_bausteine.a_sequence_end (xaml)
+   
                     
-            elif u_eventtype == "CTRL + C":
-                #Starten der Sequenz
-                lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml, u_name)
+                #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
+                    
+                elif u_eventtype == "CTRL + C":
+                    #Starten der Sequenz
+                    lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml, u_name)
                 
-                #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
-                lib2_bausteine.a_send_hotkey_strg_c_browser_no_id(xaml, a_applicationname,url, u_name)
+                    #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
+                    lib2_bausteine.a_send_hotkey_strg_c_browser_no_id(xaml, a_applicationname,url, u_name)
 
-                #Variante 2, keine ID, kein Name, nur Tag=Input, type =text
-                lib2_bausteine.a_send_hotkey_strg_c_browser_no_id_var2(xaml, a_applicationname,url, u_name, elementclass)
+                    #Variante 2, keine ID, kein Name, nur Tag=Input, type =text
+                    lib2_bausteine.a_send_hotkey_strg_c_browser_no_id_var2(xaml, a_applicationname,url, u_name, elementclass)
                 
-                lib2_bausteine.a_sequence_end(xaml)
+                    lib2_bausteine.a_sequence_end(xaml)
 
                     
-            #es wird etwas eingefügt, Send Hotkey Strg+V
+                #es wird etwas eingefügt, Send Hotkey Strg+V
 
-            elif u_eventtype == "CTRL + V":
+                elif u_eventtype == "CTRL + V":
                 
-                #Start der Sequenz
-                lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml, u_name)
+                    #Start der Sequenz
+                    lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml, u_name)
 
-                #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
-                lib2_bausteine.a_send_hotkey_strg_v_browser_no_id(xaml, a_applicationname,url, u_name)
+                    #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
+                    lib2_bausteine.a_send_hotkey_strg_v_browser_no_id(xaml, a_applicationname,url, u_name)
 
-                #Variante 2, keine ID, kein Name, nur Tag=Input
-                lib2_bausteine.a_send_hotkey_strg_v_browser_no_id_var2(xaml, a_applicationname,url, u_name)
+                    #Variante 2, keine ID, kein Name, nur Tag=Input
+                    lib2_bausteine.a_send_hotkey_strg_v_browser_no_id_var2(xaml, a_applicationname,url, u_name)
 
-                lib2_bausteine.a_sequence_end(xaml) 
+                    lib2_bausteine.a_sequence_end(xaml) 
                            
-              #Baustein für Enter 
+                #Baustein für Enter 
             elif u_eventtype == "ENTER":
                 lib2_bausteine.a_press_enter(xaml)
                
@@ -393,6 +412,10 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
             if u_eventtype == "Left-Down": #dann ist es eine Texteingabe
                    
                 #Variante 1, Abfrage auf automationid, name und role   
+                lib2_bausteine.a_type_into_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type, input_variables)
+
+                #wenn in der Eingabe ein @Zeichen vorkommt, gibt der Logger folgenden Ausdruck zurück. Gleicher Type Into Baustein
+            elif u_eventtype=="CTRL + ALT + ALTGR + Q":
                 lib2_bausteine.a_type_into_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type, input_variables)
                 
             elif u_eventtype == "CTRL + C":
@@ -428,16 +451,16 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         if any (x in check_upper_lower2 for x in test_datepicker):
             lib_bausteine.a_comment_calendar_picker(xaml)
 
-        #Automatisches SPeichern in jedem Durchlauf
-        if a_applicationname=="excel":
-            lib2_bausteine.a_excel_auto_save(xaml)
-
         #wird ID mit aufgezeichnet?
         if len(automationid)>0:
             if u_type == "Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer":
 
                 if u_eventtype == "Left-Down":
                     #Type Into mit automationid, name und role
+                    lib2_bausteine.a_type_into_application(xaml, a_applicationname, a_windowtitle, automationid,  u_name, u_type, input_variables)
+                                
+                #wenn in der Eingabe ein @Zeichen vorkommt, gibt der Logger folgenden Ausdruck zurück. Gleicher Type Into Baustein
+                elif u_eventtype=="CTRL + ALT + ALTGR + Q":
                     lib2_bausteine.a_type_into_application(xaml, a_applicationname, a_windowtitle, automationid,  u_name, u_type, input_variables)
 
                 elif u_eventtype == "CTRL + C":
@@ -464,8 +487,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 elif u_eventtype=="CTRL + V":
                     #Abfrage über automationid und role
                     lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, a_applicationname, a_windowtitle, automationid,u_name, u_type)
-                    
-                        
+                                       
                 elif u_eventtype == "ENTER":
                     lib2_bausteine.a_press_enter(xaml) 
                         
