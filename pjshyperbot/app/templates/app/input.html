@@ -541,9 +541,6 @@
     <form action="nextSteps/" method="post">
         {% csrf_token %}
         <div class="form-group">
-
-
-
             <legend style="color:white;">Please enter the name of the variable:</legend>
             <div class="container">
                 <table class="responsive-table">
@@ -565,8 +562,7 @@
                         {% endfor %}
                         <td class="col col-7" data-label="vname">
                             <select type="text" class="form-control" name={{row}} required>
-                                <!-- At this point, all variables from the database table variables (which is filled from the task template in WeClapp)
-                        are transferred and displayed in a dropdown menu. This is displayed in the additional column variable name. The designer must assign the variables to the recorded data here. -->
+                                <!-- At this point, all variables from the database table variables (which is filled from the task template in WeClapp) are transferred and displayed in a dropdown menu. This is displayed in the additional column variable name. The designer must assign the variables to the recorded data here. -->
                                 {% for value in variables %}
                                 <option value={{value}}>{{value}}</option>
                                 {% endfor %}
@@ -574,14 +570,14 @@
                             </select>
                         </td>
                     </tr>
-                    >
+         
 
                     {%endfor %}
                 </table>
             </div>
             <br />
             <!-- If Excel or Word was used, then ask for the path where the file was saved. -->
-            <div class="container">
+            <div class="container" ">
                 {% if len > 0 %}
                 <legend style="color:white;">Please enter the path of the used file:</legend>
                 <input type="text" class="form-control" name="path" required placeholder="path of the used file" />
