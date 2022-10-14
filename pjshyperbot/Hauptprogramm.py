@@ -92,7 +92,7 @@ def main(dbname,task, dataScraping, path):
         else:
             url = "*https://" + website_name + "/*"
 
-        #Fehlerhandling, falls Sonderzeichen wie "&" in Spalte "name" vorhanden sind entfernen
+        #Fehlerhandling, falls Sonderzeichen wie "&" in Spalte "name" vorhanden sind werden diese entfernt
         u_name= str(row[column['u_name']])
         if str(row[column['a_applicationname']]) == "notepad++":
             u_name=""

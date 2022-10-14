@@ -1173,7 +1173,7 @@ def a_open_application (xaml, application_name, windowtitle):
     return("          </Sequence>\n        </ActivityAction>\n      </ui:OpenApplication.Body>\n    </ui:OpenApplication>\n")
 
 def a_comment_open_application (xaml):
-    xaml.write("            <ui:Comment Text=\"Es wurde eine Anwendung geöffnet. Hierfür muss in der überliegenden Open Application Aktivität manuell noch der Installationspfad des Programms mit angegeben werden unter Filename\" />")
+    xaml.write("            <ui:Comment Text=\"Es wurde eine Anwendung geöffnet. Hierfür muss in der überliegenden Open Application Aktivität manuell der Installationspfad des Programms mit angegeben werden unter Filename\" />")
 
 def a_attach_application (xaml, application_name, windowtitle):
     xaml.write("    <ui:WindowScope DisplayName=\"Attach "+application_name+"\" Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;\">\n")
