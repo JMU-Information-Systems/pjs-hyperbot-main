@@ -74,14 +74,12 @@ def main(dbname,task, dataScraping, path):
     column = matching(cursor)
      
     #Initialisierung der Variablen der url_before, die zum Vergleich mit Vorgängersatz benötigt wird
-    url_before=None
+    url_before="Null"
+    
 
     for row in cursor:         
-        #Anpassen der URL, trimmen  einfügen von * sodass Selektor für alle Seiten dieser URL gilt        
-        #bei der URL von WeClapp, funktioniert das Trimmen mit dem Modul urllib.parse nicht, deshalbt gesonderte Anpassung
         
-        
-        #Trimmen der URLS mit urllib parse und Entfernen der Sonderzeichen
+        #Anpassen der URL. Trimmen der URLS mit urllib parse und Entfernen der Sonderzeichen, Setzen von * sodass Selektor für alle Seiten dieser URL gilt. 
         from urllib.parse import urlparse 
         a_url = str(row[column['a_url']]).replace("&","&amp;")
         a = urlparse(str(row[column['a_url']]))
@@ -147,19 +145,41 @@ def main(dbname,task, dataScraping, path):
 #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
 def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle,elementclass, input_variables):
     
+    #Initialiserung des Tests auf Datepicker, wenn ja, wird Kommentar mit Hinweis zum Umgang mit Datepickern gegeben 
+    #löst aus, wenn Wort in Spalte existiert (kann auch nur ein Substring sein), unabhängig von Groß und Kleinschreibung
+    test_datepicker=['kalender', 'calendar', 'calend', 'datepick','timepick']
+    check=u_name
+    check2=elementclass
+
+    #wandelt alle Großbuchstaben in Kleinbuchstaben um, um Prüfung insensitive zu machen
+    check_upper_lower=check.lower()
+    check_upper_lower2=check2.lower()
+
+    #Initialisierung des Tests auf Maximieren, Maximieren und Abbrechen, da dies nicht automatisiert werden soll
+    test_max_min=['minimieren', 'maximieren', 'abbrechen']
+
+   
+    #Abfrage auf Anwendung
     if a_applicationname == "msedge":
         
         #Wenn sich Url ändert, soll zur nächsten Seite navigiert werden
-        
-        if url!= url_before and url_before is not None:
+
+        if url!= url_before and url_before is not "Null":
             lib_bausteine.a_navigate_to(xaml, a_url)
 
         
-
         #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
-        #if str.__contains__(u_name,("Kalender", "Calendar", "Calend","datepick")):
-         #   lib_bausteine.a_comment_calendar_picker(xaml)
-            
+        #Prüfung auf Spalte u_name
+        if any (x in check_upper_lower for x in test_datepicker):
+            lib_bausteine.a_comment_calendar_picker(xaml)
+
+        #Prüfung auf Spalte elementclass
+        if any (x in check_upper_lower2 for x in test_datepicker):
+            lib_bausteine.a_comment_calendar_picker(xaml)
+
+         #Dies soll nicht automatisiert werden, daher Ausschluss
+        #if any (x in check_upper_lower for x in test_max_min):
+         #  pass 
 
 
         #Abfrage auf Aktivitäten über Spalte Type:
@@ -168,9 +188,8 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
             
         if len(automationid)>0: 
             if u_type == "Schaltfläche" or u_type=="Link": #dann ist es eine Klickakitivität
-                if str.__contains__(u_name, (("Minimieren") or ("Maximieren") or ("Abbrechen"))): #Ausschluss, dies wird nicht automatisiert
-                    pass
-
+                
+               
                 #Art des Klicks:Linksklick?
                 if u_eventtype == "Left-Down":
 
@@ -355,11 +374,19 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                
  
     elif a_applicationname=="explorer": 
+
+
+        #Test auf Datepicker, wenn ein Datepicker verwendet wird, wenn ein Hinweis zum entsprechenden Umgang gegeben
+        #Prüfung auf Spalte u_name
+        if any (x in check_upper_lower for x in test_datepicker):
+            lib_bausteine.a_comment_calendar_picker(xaml)
+  
+        #Prüfung auf Spalte elementclass
+        if any (x in check_upper_lower2 for x in test_datepicker):
+            lib_bausteine.a_comment_calendar_picker(xaml)
+
         #Im Explorer keine Unterscheidung ob ID oder ID notwendig, da Klickfelder über den name und die Rolle identifiziert, Keystrokefelder über die automationid name und role werden
         #da hier die Rolle mit den Logdaten übereinstimmt, kann diese direkt in den Selektor integriert werden
-
-        if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepick"))) or str.__contains__(elementclass, (("Kalender") or ("Calendar") or ("Calend") or ("datepick"))):
-            lib_bausteine.a_comment_calendar_picker(xaml)
         
         if u_type == "Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer": 
             
@@ -392,9 +419,16 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                  
     else: #dann ist es eine Applikation, gesonderte Bausteine. Da hier die Rolle mit den Logdaten übereinstimmt, kann diese direkt in den Selektor integriert werden
  
-        if str.__contains__(u_name, (("Kalender" or ("Calendar") or ("Calend") or ("datepick")))) or str.__contains__(elementclass, (("Kalender") or ("Calendar") or ("Calend") or ("datepick"))):
+        #Test auf Datepicker, wenn ein Datepicker verwendet wird, wenn ein Hinweis zum entsprechenden Umgang gegeben
+        #Prüfung auf Spalte u_name
+        if any (x in check_upper_lower for x in test_datepicker):
             lib_bausteine.a_comment_calendar_picker(xaml)
 
+        #Prüfung auf Spalte elementclass
+        if any (x in check_upper_lower2 for x in test_datepicker):
+            lib_bausteine.a_comment_calendar_picker(xaml)
+
+        #Automatisches SPeichern in jedem Durchlauf
         if a_applicationname=="excel":
             lib2_bausteine.a_excel_auto_save(xaml)
 

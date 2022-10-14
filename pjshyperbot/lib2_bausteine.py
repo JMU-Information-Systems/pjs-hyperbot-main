@@ -1449,7 +1449,7 @@ def a_sequence_variablenextraktion (xaml, task):
     xaml.write("            </scg:Dictionary>\n")
     xaml.write("          </sap:WorkflowViewStateService.ViewState>\n")
     xaml.write("        </ui:Click>\n")
-    xaml.write("        <ui:Click ClickType=\"CLICK_SINGLE\" DisplayName=\"Filter Dienstreise auswählen\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+    xaml.write("        <ui:Click ClickType=\"CLICK_SINGLE\" DisplayName=\"Filter auswählen\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("          <ui:Click.CursorPosition>\n")
     xaml.write("           <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("              <ui:CursorPosition.OffsetX>\n")
