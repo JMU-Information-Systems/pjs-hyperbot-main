@@ -1157,8 +1157,8 @@ def a_word_application_scope (xaml,workbook_path):
     xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
     return("          </Sequence>\n        </ActivityAction>\n      </p:WordApplicationScope.Body>\n    </p:WordApplicationScope>\n")
     
-def a_open_application (xaml, application_name, windowtitle, root):
-    xaml.write("    <ui:OpenApplication ApplicationWindow=\"{x:Null}\" Arguments=\"{x:Null}\" TimeoutMS=\"{x:Null}\" WorkingDirectory=\"{x:Null}\" DisplayName=\"Open "+application_name+"\" FileName=\'"+root+"\' Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;\" >\n")
+def a_open_application (xaml, application_name, windowtitle):
+    xaml.write("    <ui:OpenApplication ApplicationWindow=\"{x:Null}\" Arguments=\"{x:Null}\" TimeoutMS=\"{x:Null}\" WorkingDirectory=\"{x:Null}\" DisplayName=\"Open "+application_name+"\" FileName=\"Hier bitte Installationspfad des Programms angeben\" Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;\" >\n")
     xaml.write("      <ui:OpenApplication.Body>\n")
     xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
     xaml.write("          <ActivityAction.Argument>\n")
@@ -1171,6 +1171,9 @@ def a_open_application (xaml, application_name, windowtitle, root):
     xaml.write("              </scg:Dictionary>\n")
     xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
     return("          </Sequence>\n        </ActivityAction>\n      </ui:OpenApplication.Body>\n    </ui:OpenApplication>\n")
+
+def a_comment_open_application (xaml):
+    xaml.write("            <ui:Comment Text=\"Es wurde eine Anwendung geöffnet. Hierfür muss in der überliegenden Open Application Aktivität manuell noch der Installationspfad des Programms mit angegeben werden unter Filename\" />")
 
 def a_attach_application (xaml, application_name, windowtitle):
     xaml.write("    <ui:WindowScope DisplayName=\"Attach "+application_name+"\" Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;\">\n")
@@ -1192,10 +1195,10 @@ def a_write_cell(xaml, cell, sheet_name, text, workbook_path):
 # Excel Aktivitäten, müssen im Body der Excel Application Scope sein
 
 def a_read_range(xaml):  # Bereich aus Excel Datei auslesen und in Outputtabelle_name speichern
-    xaml.write("    <ui:ReadRange AddHeaders=\"True\" DataTable=\"Name der Datenbank eintragen\" DisplayName=\"Read Range\" Range=\"gewünschten Bereich eintragen\" SheetName=\"Name des Datenblatts eintragen\" WorkbookPath=\"Hier Pfad der gewünschten Datei eingeben\" />\n")
+    xaml.write("    <ui:ReadRange AddHeaders=\"True\" DisplayName=\"Read Range\" Range=\"gewünschten Bereich eintragen\" SheetName=\"Name des Datenblatts eintragen\" WorkbookPath=\"Hier Pfad der gewünschten Datei eingeben\" />\n")
 
 def a_comment_read_range (xaml):
-    xaml.write("            <ui:Comment Text=\"Read Range: Im Prozessablauf wurde öfters per STRG+C etwas aus einer ExcelDatei kopiert. In diesem automatisch generierten XAML wird dies über die Aktivität 'Send Hotkey Strg+C' gelöst, sinnvoll wäre zur Optimierung auch eine 'read range' Aktivität, die den gewünschten Bereich einer Excel Tabelle ausliest und in einer neuen Datentabelle speichert, auf die in folgenden Aktivitäten zugegriffen werden kann. Die Aktivität wurde bereits eingefügt, hier muss noch die Variable manuell eingeben werden, in der die Datentabelle abgespeichert werden muss  \" />\n")
+    xaml.write("            <ui:Comment Text=\"Read Range: Im Prozessablauf wurde öfters per STRG+C etwas aus einer ExcelDatei kopiert. In diesem automatisch generierten XAML wird dies über die Aktivität 'Send Hotkey Strg+C' gelöst, sinnvoll wäre zur Optimierung auch eine 'read range' Aktivität, die den gewünschten Bereich einer Excel Tabelle ausliest und in einer neuen Datentabelle speichert, auf die in folgenden Aktivitäten zugegriffen werden kann. Die Aktivität wurde bereits eingefügt, hier müssen noch entsprechende Anpassungen vorgenommen und die Variable manuell eingeben werden, in der die Datentabelle abgespeichert werden muss  \" />\n")
 
 def a_sequence_read_range_start (xaml):
     xaml.write("          <Sequence DisplayName=\"Read Range\" >\n")

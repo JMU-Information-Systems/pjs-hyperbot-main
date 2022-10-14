@@ -2,6 +2,7 @@
 # coding=utf-8
 from aifc import Error
 from ast import Not
+from asyncio.windows_events import NULL
 from distutils.errors import LibError
 from pickle import NONE
 import sys
@@ -74,7 +75,7 @@ def main(dbname,task, dataScraping, path):
     column = matching(cursor)
      
     #Initialisierung der Variablen der url_before, die zum Vergleich mit Vorgängersatz benötigt wird
-    url_before="Null"
+    url_before=None
     
 
     for row in cursor:         
@@ -119,7 +120,8 @@ def main(dbname,task, dataScraping, path):
                 elif str(row[column['a_applicationname']]) == "word":
                         endknoten.append(lib2_bausteine.a_word_application_scope(xaml, path))
                 else:
-                    endknoten.append(lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]), "C:\\Program Files\\"+str(row[column['a_applicationname']])+"\\"+str(row[column['a_applicationname']])+".exe"))
+                    endknoten.append(lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']])))
+                    lib2_bausteine.a_comment_open_application (xaml)
 
         # url ist modifizierte Url auf Domain, die wir für den Selektor benötigen, 
         # a_url die Original URL, die wir für das Öffnen des Browsers und beim Navigieren zu einer Seite benötigen
@@ -128,7 +130,8 @@ def main(dbname,task, dataScraping, path):
         aktionen(url, a_url,url_before, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['elementclass']]), str(row[column['input_variables']]))
         
         #Aktueller Wert wird zu Vorgängerwert
-        url_before=url
+        if url is not None:
+            url_before=url
 
     cursor.close()
 
@@ -164,7 +167,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         
         #Wenn sich Url ändert, soll zur nächsten Seite navigiert werden
 
-        if url != url_before and url_before is not "Null":
+        if url != url_before and url_before is not None:
             lib_bausteine.a_navigate_to(xaml, a_url)
 
         
@@ -525,7 +528,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
             elif u_type=="Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer":
                     
                 if u_eventtype=="Left-Down" or u_eventtype=="Right-Down":
-                    lib2_bausteine.a_type_into_application(xaml, )
+                    lib2_bausteine.a_type_into_application(xaml,a_applicationname, a_windowtitle,u_name,u_type, input_variables)
                                 
                 elif u_eventtype=="CTRL + C":
                     lib2_bausteine.a_send_hotkey_strg_c_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
@@ -559,8 +562,8 @@ def verbesserungsvorschlaege(xaml, dbname, dataScraping):
     if number_of_strg_c_excel>=3:
     
         lib2_bausteine.a_sequence_read_range_start(xaml)
-        lib2_bausteine.a_read_range(xaml)
         lib2_bausteine.a_comment_read_range (xaml)
+        lib2_bausteine.a_read_range(xaml)
         #Ende der Sequenz
         lib2_bausteine.a_sequence_end(xaml)
             
