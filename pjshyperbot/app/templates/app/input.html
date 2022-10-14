@@ -1,6 +1,7 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+<!-- Page for input of additional data from the designer -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -540,9 +541,6 @@
     <form action="nextSteps/" method="post">
         {% csrf_token %}
         <div class="form-group">
-
-
-
             <legend style="color:white;">Please enter the name of the variable:</legend>
             <div class="container">
                 <table class="responsive-table">
@@ -555,28 +553,31 @@
                         <th class="col col-6">window</th>
                         <th class="col col-7">variable name</th>
                     </tr>
-
+                    <!-- Run through each row of data from the SQL query to display it as a row in the table in the frontend. -->
                     {% for row in message %}
                     <tr class="table-row">
+                        <!-- Run through each column of a row from the SQL query to display it in the table in the frontend. -->
                         {% for col in row %}
                         <td class="col">{{col}}</td>
                         {% endfor %}
                         <td class="col col-7" data-label="vname">
                             <select type="text" class="form-control" name={{row}} required>
+                                <!-- At this point, all variables from the database table variables (which is filled from the task template in WeClapp) are transferred and displayed in a dropdown menu. This is displayed in the additional column variable name. The designer must assign the variables to the recorded data here. -->
                                 {% for value in variables %}
                                 <option value={{value}}>{{value}}</option>
                                 {% endfor %}
                                 <option value="bitte manuell anpassen">keine der genannten Optionen</option>
                             </select>
                         </td>
-                        <!-- <td class="col col-7" data-label="vname"><input type="text" class="form-control" name={{row}} required /></td>-->
                     </tr>
-                    {% endfor %}
+         
+
+                    {%endfor %}
                 </table>
             </div>
             <br />
-            <!-- Wenn Excel oder Word verwendet wurde, dann nach dem Pfad fragen -->
-            <div class="container">
+            <!-- If Excel or Word was used, then ask for the path where the file was saved. -->
+            <div class="container" ">
                 {% if len > 0 %}
                 <legend style="color:white;">Please enter the path of the used file:</legend>
                 <input type="text" class="form-control" name="path" required placeholder="path of the used file" />
@@ -585,10 +586,11 @@
             </div>
 
             <br />
+            <!-- For the improvement proposals, ask whether data scraping was used. -->
             <legend style="color:white;">Did you use data scraping?</legend>
             <div class="container">
                 <fieldset>
-                    <h1 class="btn-switch" ">
+                    <h1 class="btn-switch" >
                         <input type="radio" value="Yes" id="yes" name="switch" class="btn-switch__radio btn-switch__radio_yes" />
                         <input type="radio" value="No" checked id="no" name="switch" class="btn-switch__radio btn-switch__radio_no" />
                         <label for="yes" class="btn-switch__label btn-switch__label_yes"><span class="btn-switch__txt">Yes</span></label>
@@ -597,6 +599,7 @@
                 </fieldset>
 
             </div>
+            <!-- To be able to access the filename and the Task Name also in the views.py of the nextSteps method Workaround via invisible HTML element in the frontend of input.html  -->
             <select style="visibility:hidden" type="text" class="form-control" name="filename" required>
                 <option value={{filename}}>{{filename}}</option>
             </select>

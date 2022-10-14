@@ -1,6 +1,7 @@
 {% extends "app/layout.html" %}
 {% block content %}
 
+<!-- HTML page for the introduction of the team -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -270,7 +271,6 @@
 
         .card__heading-span {
             padding: 1rem 1.5rem;
-            -webkit-box-decoration-break: clone;
             box-decoration-break: clone;
         }
 
@@ -359,16 +359,15 @@
             color: #fff;
             width: 75%;
         }
-        
-        .foto{
+
+        .foto {
             margin-top: 10px;
         }
-        
     </style>
 </head>
 <body>
 
-    <section class="section-plans" id="section-plans" >
+    <section class="section-plans" id="section-plans">
         <div class="u-center-text u-margin-bottom-big">
             <h2 class="heading-secondary">
                 Members of the Team
@@ -382,7 +381,8 @@
                         {% load staticfiles %}
                         <center>
                             <a class="foto">
-                                <img src="/static/Bild_Leonie.jpg" alt="Leonie" style="margin-top: 20px;" height="200">                            </a>
+                                <img src="/static/Bild_Leonie.jpg" alt="Leonie" style="margin-top: 20px;" height="200">
+                            </a>
                         </center>
                         <div class="card__title card__title--1">
 
@@ -409,7 +409,7 @@
                             </div>
                             {% load staticfiles %}
                             <a class="email" href="mailto:leonie.gerkens@stud-mail.uni-wuerzburg.de">
-                                <img src="{% static 'Briefumschlag.png' %}" alt="E-Mail" width="50"/>
+                                <img src="{% static 'Briefumschlag.png' %}" alt="E-Mail" width="50" />
                             </a>
                         </div>
                     </div>
@@ -426,7 +426,7 @@
                             </a>
                         </center>
                         <div class="card__title card__title--2">
-                            
+
                             <h4 class="card__heading">Tristan Hermann</h4>
                         </div>
 
@@ -445,7 +445,7 @@
                             </div>
                             {% load staticfiles %}
                             <a class="email" href="mailto:tristan.hermann@stud-mail.uni-wuerzburg.de">
-                                <img src="{% static 'Briefumschlag.png' %}" alt="E-Mail" width="50"/>
+                                <img src="{% static 'Briefumschlag.png' %}" alt="E-Mail" width="50" />
                             </a>
 
                         </div>
@@ -463,7 +463,7 @@
                             </a>
                         </center>
                         <div class="card__title card__title--3">
-                    
+
                             <h4 class="card__heading">Christine Nausch</h4>
                         </div>
 
@@ -482,7 +482,7 @@
                             </div>
                             {% load staticfiles %}
                             <a class="email" href="mailto:christine.nausch@stud-mail.uni-wuerzburg.de">
-                                <img src="{% static 'Briefumschlag.png' %}" alt="E-Mail" width="50"/>
+                                <img src="{% static 'Briefumschlag.png' %}" alt="E-Mail" width="50" />
                             </a>
 
                         </div>
@@ -491,11 +491,11 @@
             </div>
         </div>
 
-        
+
     </section>
 
 
-   
+
 </body>
 </html>
 {% endblock %}
