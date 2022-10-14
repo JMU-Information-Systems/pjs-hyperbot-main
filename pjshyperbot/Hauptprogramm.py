@@ -106,7 +106,7 @@ def main(dbname,task, dataScraping, path):
                 xaml.write(endknoten.pop())
             akt_name = str(row[column['a_applicationname']])
             
-            #if a_applicationname in open applicaions attach else open browser
+            #if a_applicationname in open applications attach else open browser
             if str(row[column['a_applicationname']]) in offene_apps:
                 if str(row[column['a_applicationname']]) == "msedge":
                         endknoten.append(lib2_bausteine.a_edge_browser_attach(xaml, url))
@@ -157,8 +157,8 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         
 
         #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
-        if str.__contains__(u_name,(("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))) or str.__contains__(elementclass, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
-            lib_bausteine.a_comment_calendar_picker(xaml)
+        #if str.__contains__(u_name,("Kalender", "Calendar", "Calend","datepick")):
+         #   lib_bausteine.a_comment_calendar_picker(xaml)
             
 
 
@@ -358,7 +358,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         #Im Explorer keine Unterscheidung ob ID oder ID notwendig, da Klickfelder über den name und die Rolle identifiziert, Keystrokefelder über die automationid name und role werden
         #da hier die Rolle mit den Logdaten übereinstimmt, kann diese direkt in den Selektor integriert werden
 
-        if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))) or str.__contains__(elementclass, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
+        if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepick"))) or str.__contains__(elementclass, (("Kalender") or ("Calendar") or ("Calend") or ("datepick"))):
             lib_bausteine.a_comment_calendar_picker(xaml)
         
         if u_type == "Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer": 
@@ -384,15 +384,15 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                     
             if u_eventtype=="Left-Down":
                 #Linksklick, Name und Role
-                lib2_bausteine.a_click_left_in_explorer(xaml, a_applicationname, a_windowtitle, u_type)
+                lib2_bausteine.a_click_left_in_explorer(xaml, a_applicationname, a_windowtitle,u_name, u_type)
                   
             else: #Rechtsklick, Name und Role
-                lib2_bausteine.a_click_right_in_explorer(xaml, a_applicationname, a_windowtitle, u_type)
+                lib2_bausteine.a_click_right_in_explorer(xaml, a_applicationname, a_windowtitle, u_name, u_type)
                     
                  
     else: #dann ist es eine Applikation, gesonderte Bausteine. Da hier die Rolle mit den Logdaten übereinstimmt, kann diese direkt in den Selektor integriert werden
  
-        if str.__contains__(u_name, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))) or str.__contains__(elementclass, (("Kalender") or ("Calendar") or ("Calend") or ("datepicker"))):
+        if str.__contains__(u_name, (("Kalender" or ("Calendar") or ("Calend") or ("datepick")))) or str.__contains__(elementclass, (("Kalender") or ("Calendar") or ("Calend") or ("datepick"))):
             lib_bausteine.a_comment_calendar_picker(xaml)
 
         if a_applicationname=="excel":
