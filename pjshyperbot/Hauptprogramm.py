@@ -79,7 +79,6 @@ def main(dbname,task, dataScraping, path):
     
 
     for row in cursor:         
-        
         #Anpassen der URL. Trimmen der URLS mit urllib parse und Entfernen der Sonderzeichen, Setzen von * sodass Selektor für alle Seiten dieser URL gilt. 
         from urllib.parse import urlparse 
         a_url = str(row[column['a_url']]).replace("&","&amp;")
@@ -89,9 +88,10 @@ def main(dbname,task, dataScraping, path):
         #Hier gesondertes Trimmen, da urllib parse nicht greift
         if (str(row[column['a_url']])).__contains__("132.187.226.138:8080/"):
             url="*132.187.226.138:8080/*"
-        else:
+        elif str(row[column['a_applicationname']]) == "msedge":
             url = "*https://" + website_name + "/*"
-
+        else:
+            url=a_url
         #Fehlerhandling, falls Sonderzeichen wie "&" in Spalte "name" vorhanden sind werden diese entfernt
         u_name= str(row[column['u_name']])
         if str(row[column['a_applicationname']]) == "notepad++":
@@ -130,7 +130,7 @@ def main(dbname,task, dataScraping, path):
         aktionen(url, a_url,url_before, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['elementclass']]), str(row[column['input_variables']]))
         
         #Aktueller Wert wird zu Vorgängerwert
-        if url is not None:
+        if url != 'None':
             url_before=url
 
     cursor.close()
