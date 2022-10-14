@@ -134,7 +134,7 @@ def main(dbname,task, dataScraping, path):
 
     #baue alle noch offenen Endknoten vom Stack ab
     while endknoten.__len__() > 0:
-        if endknoten.__len__() ==1:
+        if endknoten.__len__() ==2:
            verbesserungsvorschlaege(xaml,dbname, mydataScraping)
         xaml.write(str(endknoten.pop()))       
         
@@ -164,7 +164,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         
         #Wenn sich Url ändert, soll zur nächsten Seite navigiert werden
 
-        if url!= url_before and url_before is not "Null":
+        if url != url_before and url_before is not "Null":
             lib_bausteine.a_navigate_to(xaml, a_url)
 
         
@@ -546,7 +546,6 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                     
             
 def verbesserungsvorschlaege(xaml, dbname, dataScraping):
-    '''
     #Verbesserungsvorschläge am Ende:
     l_database = sqlite3.connect(dbname)
     cursor = l_database.cursor()
@@ -575,11 +574,8 @@ def verbesserungsvorschlaege(xaml, dbname, dataScraping):
         lib2_bausteine.a_write_range_excel (xaml)
         #Ende der Sequenz
         lib2_bausteine.a_sequence_end(xaml)
-
-    lib2_bausteine.a_sequence_end(xaml)
     
     lib2_bausteine.a_sequence_auskommentiert_end(xaml) #am Ende wenn alle Vorschläge gemacht wurden
-'''
 
 
 if __name__ == '__main__':
