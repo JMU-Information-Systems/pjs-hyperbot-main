@@ -1,6 +1,7 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+<!-- HTML page of the hyperbot. Uploading the database and specifying the task -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,6 +107,7 @@
             background: linear-gradient(to right, #000033, #CCCCFF);
             color: #fff;
         }
+
         .u-center-text {
             text-align: center !important;
         }
@@ -129,6 +131,7 @@
             color: #fff;
             background: #000;
         }
+
         .heading-primary {
             color: #fff;
             text-transform: uppercase;
@@ -162,6 +165,7 @@
             -webkit-animation: moveInRight 1s ease-out;
             animation: moveInRight 1s ease-out;
         }
+
         .heading-secondary {
             font-size: 3.5rem;
             text-transform: uppercase;
@@ -223,6 +227,7 @@
             background: linear-gradient(to right, #000033, #CCCCFF);
             color: #fff;
         }
+
             .btn--green::after {
                 background-color: #55c57a;
             }
@@ -273,6 +278,7 @@
             -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
             box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
         }
+
         .card__side--front {
             background-color: #fff;
         }
@@ -305,6 +311,7 @@
         .card__side--back-3 {
             background: linear-gradient(-45deg, #CCCCCC, #333366);
         }
+
         .card:hover .card__side--front-1,
         .card:hover .card__side--front-2,
         .card:hover .card__side--front-3 {
@@ -358,7 +365,6 @@
 
         .card__heading-span {
             padding: 1rem 1.5rem;
-            -webkit-box-decoration-break: clone;
             box-decoration-break: clone;
         }
 
@@ -371,6 +377,7 @@
                 width: 80%;
                 margin: 0 auto;
             }
+
                 .card__details ul li {
                     text-align: center;
                     font-size: 1.5rem;
@@ -434,6 +441,7 @@
             .row .col-1-of-3 {
                 width: calc((100% - 2 * 6rem) / 3);
             }
+
         .jumbotron {
             background: linear-gradient(to right, #000033, #CCCCFF);
         }
@@ -445,6 +453,7 @@
             color: #fff;
             width: 75%;
         }
+
         .foto {
             margin-top: 10px;
         }
@@ -456,7 +465,6 @@
         .responsive-table tr {
             border-radius: 3px;
             padding: 25px 30px;
-            #display: flex;
             justify-content: space-between;
             margin-bottom: 25px;
             border: 5px solid black;
@@ -475,7 +483,6 @@
             background: linear-gradient(-45deg, #CCCCCC, #000033);
             font-size: 14px;
             text-transform: uppercase;
-            #letter-spacing: 0.03em;
         }
 
         .responsive-table .table-row {
@@ -487,16 +494,13 @@
         @media all and (max-width: 767px) {
             .table-header {
                 display: none;
-                
             }
 
             .table-row {
             }
 
             tr {
-                
                 display: block;
-                
             }
 
             .col {
@@ -519,7 +523,6 @@
         .responsive-table tr:last-child td:last-child {
             border-bottom-right-radius: 15px;
         }
-        
     </style>
 
 </head>
@@ -533,23 +536,23 @@
 
 
 
-        <form action="input/" method="post" enctype='multipart/form-data'>
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="file">Choose file to upload</label>
-                <input type="file" accept=".sqlite3" id="file" name="file" required />
-                <br />
+    <form action="input/" method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="file">Choose file to upload</label>
+            <input type="file" accept=".sqlite3" id="file" name="file" required />
+            <br />
 
-                <legend style="color:white;">Please enter the name of the task template:</legend>
-                <div class="container">
+            <legend style="color:white;">Please enter the name of the task template:</legend>
+            <div class="container">
 
-                    <input type="text" class="form-control" name="useCase" required placeholder="use case" required />
-                </div>
-                <br />
-
-                <button type="submit" class="btn btn--green">adapt data</button>
+                <input type="text" class="form-control" name="useCase" required placeholder="use case"  />
             </div>
-        </form>
+            <br />
+
+            <button type="submit" class="btn btn--green">adapt data</button>
+        </div>
+    </form>
 </body>
 </html>
     {% endblock %}
