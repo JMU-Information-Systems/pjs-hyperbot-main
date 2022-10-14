@@ -2,7 +2,7 @@
 
 {% block content %}
 
-
+<!-- Landing page when the XAML has been successfully generated with the option to start the hyperbot again from the beginning. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -272,7 +272,6 @@
 
         .card__heading-span {
             padding: 1rem 1.5rem;
-            -webkit-box-decoration-break: clone;
             box-decoration-break: clone;
         }
 
@@ -327,31 +326,33 @@
             margin: 0 auto;
         }
 
-        .row:not(:last-child) {
-            margin-bottom: 5rem;
-            margin-top: 5rem;
-        }
-
-        .row::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        .row [class^="col-"] {
-            float: left;
-        }
-
-            .row [class^="col-"]:not(:last-child) {
-                margin-right: 6rem;
+            .row:not(:last-child) {
+                margin-bottom: 5rem;
+                margin-top: 5rem;
             }
 
-        .row .col-1-of-3 {
-            width: calc((100% - 2 * 6rem) / 3);
-        }
+            .row::after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            .row [class^="col-"] {
+                float: left;
+            }
+
+                .row [class^="col-"]:not(:last-child) {
+                    margin-right: 6rem;
+                }
+
+            .row .col-1-of-3 {
+                width: calc((100% - 2 * 6rem) / 3);
+            }
+
         .jumbotron {
             background: linear-gradient(to right, #000033, #CCCCFF);
         }
+
         .title {
             font-size: 4rem;
             font-weight: 300;
@@ -359,7 +360,6 @@
             color: #fff;
             width: 75%;
         }
-        
     </style>
 </head>
 <body>
@@ -387,7 +387,7 @@
                         <div class="card__details">
                             <ul>
                                 <li>Create a database based on the paxray recorder</li>
-                                
+
                             </ul>
                         </div>
                     </div>
