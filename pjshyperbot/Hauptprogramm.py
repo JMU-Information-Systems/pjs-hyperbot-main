@@ -169,15 +169,12 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
     #Initialiserung des Tests auf Datepicker, wenn ja, wird Kommentar mit Hinweis zum Umgang mit Datepickern gegeben 
     #löst aus, wenn Wort in Spalte existiert (kann auch nur ein Substring sein), unabhängig von Groß und Kleinschreibung
     test_datepicker=['kalender', 'calendar', 'calend', 'datepick','timepick']
-    check=u_name
-    check2=elementclass
+    
+    # Check if word from list test_datepicker occurs in these columns
+    check = (u_name + " " + elementclass + " " + automationid)
 
     #wandelt alle Großbuchstaben in Kleinbuchstaben um, um Prüfung insensitive zu machen
     check_upper_lower=check.lower()
-    check_upper_lower2=check2.lower()
-
-    #Initialisierung des Tests auf Maximieren, Maximieren und Abbrechen, da dies nicht automatisiert werden soll
-    test_max_min=['minimieren', 'maximieren', 'abbrechen']
 
    
     #Abfrage auf Anwendung
@@ -193,14 +190,6 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         #Prüfung auf Spalte u_name
         if any (x in check_upper_lower for x in test_datepicker):
             lib_bausteine.a_comment_calendar_picker(xaml)
-
-        #Prüfung auf Spalte elementclass
-        if any (x in check_upper_lower2 for x in test_datepicker):
-            lib_bausteine.a_comment_calendar_picker(xaml)
-
-         #Dies soll nicht automatisiert werden, daher Ausschluss
-        #if any (x in check_upper_lower for x in test_max_min):
-         #  pass 
 
 
         #Abfrage auf Aktivitäten über Spalte Type:
