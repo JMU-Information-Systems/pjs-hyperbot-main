@@ -1385,7 +1385,7 @@ def a_sequence_comment_out_end (xaml):
     xaml.write("      </ui:CommentOut.Body>\n")
     xaml.write("    </ui:CommentOut>\n")
 
-
+#Baustein für Variablenextraktion
 def a_sequence_variablenextraktion (xaml, task):
     xaml.write("  <Sequence DisplayName=\"Extraktion\">\n")
     xaml.write("    <sap:WorkflowViewStateService.ViewState>\n")
