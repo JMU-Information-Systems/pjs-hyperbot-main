@@ -122,7 +122,7 @@ def main(dbname,task, dataScraping, path):
                         endknoten.append(lib2_bausteine.a_edge_browser_start(xaml, a_url))
                 elif str(row[column['a_applicationname']]) == "excel":
                         endknoten.append(lib2_bausteine.a_excel_application_scope(xaml, path))
-                elif str(row[column['a_applicationname']]) == "word":
+                elif str(row[column['a_applicationname']]) == "winword":
                         endknoten.append(lib2_bausteine.a_word_application_scope(xaml, path))
                 else:
                     endknoten.append(lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']])))
