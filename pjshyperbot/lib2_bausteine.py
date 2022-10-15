@@ -1,5 +1,10 @@
 # coding=utf-8
 
+#Library of created blocks, which are called from the main program in case of appropriate matching
+
+#Many activity modules were not used in the later course because they could not be assigned and were already created before the initial data basis
+#There are blocks with several variants, which should increase the chance to generate a valid selector. Due to workarounds not all of them are used
+
 def a_sequence_click_start(xaml, name):
     xaml.write("          <Sequence DisplayName=\"Click auf "+name+"\" sap:VirtualizedContainerService.HintSize=\"418,728\" sap2010:WorkflowViewState.IdRef=\"Sequence_3\" >\n")
     xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
@@ -809,28 +814,51 @@ def a_type_into_browser(xaml, application_name, url, name, id, input_variable):
 
 # wenn keine automationID, dann tag=Input, Type=Text
 def a_type_into_browser_no_id(xaml, application_name, url, name, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
-    xaml.write("              <ui:TypeInto.Target>\n")
-    xaml.write("               <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+name+"\' tag=\'INPUT\' type=\'text\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("            <ui:Target.WaitForReady>\n")
-    xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("            </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:TypeInto.Target>\n")
-    xaml.write("            </ui:TypeInto>\n")
 
+    if input_variable=="bitte manuell anpassen":
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"bitte manuell anpassen\">\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+name+"\' tag=\'INPUT\' type=\'text\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
+    else:
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\" >\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+name+"\' tag=\'INPUT\' type=\'text\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
 
 # wenn weder automationID noch Name, nur Tag=Input
 def a_type_into_browser_no_id_var2(xaml, application_name, url, name, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
-    xaml.write("              <ui:TypeInto.Target>\n")
-    xaml.write("               <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag=\'INPUT\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("            <ui:Target.WaitForReady>\n")
-    xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("            </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:TypeInto.Target>\n")
-    xaml.write("            </ui:TypeInto>\n")
+
+    if input_variable=="bitte manuell anpassen":
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"bitte manuell anpassen\">\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+name+"\' tag=\'INPUT\' type=\'text\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
+    else:
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl tag=\'INPUT\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -950,28 +978,54 @@ def a_click_right_in_application_var2(xaml, application_name, title, name, role)
 
 
 def a_type_into_application(xaml, application_name, title, id, name, role, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
-    xaml.write("              <ui:TypeInto.Target>\n")
-    xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt; &lt;uia automationid=\'"+id+"\' name=\'"+name+"\'  role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("            <ui:Target.WaitForReady>\n")
-    xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("            </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:TypeInto.Target>\n")
-    xaml.write("            </ui:TypeInto>\n")
+
+    if input_variable=="bitte manuell anpassen":
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"bitte manuell anpassen\">\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt; &lt;uia automationid=\'"+id+"\' name=\'"+name+"\'  role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
+
+    else:
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt; &lt;uia automationid=\'"+id+"\' name=\'"+name+"\'  role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
 
 
 # Abfrage über name und role
 def a_type_into_application_no_id(xaml, application_name, title, name, role, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
-    xaml.write("              <ui:TypeInto.Target>\n")
-    xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt; &lt;uia name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("            <ui:Target.WaitForReady>\n")
-    xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("            </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:TypeInto.Target>\n")
-    xaml.write("            </ui:TypeInto>\n")
+
+    if input_variable=="bitte manuell anpassen":
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"bitte manuell anpassen\" >\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt; &lt;uia name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
+
+    else:
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt; &lt;uia name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
 
 
 
@@ -1078,17 +1132,28 @@ def a_click_right_in_explorer(xaml, application_name, title, name, role):
 
 # über ID, name und role, uia Selektor
 def a_type_into_explorer(xaml, application_name, title, id, name, role, input_variable):
-    xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
-    xaml.write("              <ui:TypeInto.Target>\n")
-    xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt; &lt;uia automationid=\'"+id+"\' name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("            <ui:Target.WaitForReady>\n")
-    xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("            </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:TypeInto.Target>\n")
-    xaml.write("            </ui:TypeInto>\n")
 
+    if input_variable=="bitte manuell anpassen":
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"bitte manuell anpassen\" >\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt; &lt;uia automationid=\'"+id+"\' name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
 
+    else:
+        xaml.write("            <ui:TypeInto DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Type Into "+name+"\" EmptyField=\"True\" Text=\"["+input_variable+"]\">\n")
+        xaml.write("              <ui:TypeInto.Target>\n")
+        xaml.write("               <ui:Target Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+title+"\' /&gt; &lt;uia automationid=\'"+id+"\' name=\'"+name+"\' role=\'"+role+"\' /&gt;\" TimeoutMS=\"1000\">\n")
+        xaml.write("            <ui:Target.WaitForReady>\n")
+        xaml.write("              <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+        xaml.write("            </ui:Target.WaitForReady>\n")
+        xaml.write("                </ui:Target>\n")
+        xaml.write("              </ui:TypeInto.Target>\n")
+        xaml.write("            </ui:TypeInto>\n")
 
 def a_send_hotkey_strg_c_in_explorer(xaml, application_name, title, name, id, role):
     xaml.write("      <ui:SendHotkey DelayBefore=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SpecialKey=\"{x:Null}\" Activate=\"True\" ClickBeforeTyping=\"True\" ContinueOnError=\"True\" DisplayName=\"Send Hotkey STRG+C in "+name+"\" EmptyField=\"True\" Key=\"c\" KeyModifiers=\"Ctrl\">\n")
@@ -1200,6 +1265,10 @@ def a_read_range(xaml):  # Bereich aus Excel Datei auslesen und in Outputtabelle
 def a_comment_read_range (xaml):
     xaml.write("            <ui:Comment Text=\"Read Range: Im Prozessablauf wurde öfters per STRG+C etwas aus einer ExcelDatei kopiert. In diesem automatisch generierten XAML wird dies über die Aktivität 'Send Hotkey Strg+C' gelöst, sinnvoll wäre zur Optimierung auch eine 'read range' Aktivität, die den gewünschten Bereich einer Excel Tabelle ausliest und in einer neuen Datentabelle speichert, auf die in folgenden Aktivitäten zugegriffen werden kann. Die Aktivität wurde bereits eingefügt, hier müssen noch entsprechende Anpassungen vorgenommen und die Variable manuell eingeben werden, in der die Datentabelle abgespeichert werden muss  \" />\n")
 
+def a_comment_write_range (xaml):
+    xaml.write("            <ui:Comment Text=\"Write Range: Im Prozessablauf wurde öfters per STRG+V in eine ExcelDatei eingefügt. In diesem automatisch generierten XAML wird dies über die Aktivität 'Send Hotkey Strg+V' gelöst, sinnvoll wäre zur Optimierung auch eine 'write range' Aktivität, die eine Datentabelle (möglicherweise bereits durch read range erstellt) in den gewünschten Bereich einer Exceldatei schreibt. Die Aktivität wurde bereits eingefügt, hier müssen noch entsprechende Anpassungen vorgenommen werden. Wurde zusätzlich im Frontend ausgewählt, dass Data Scraping gemacht wurde, ist dieser Baustein in diesem Zusammenhang auch im Vorschlag Data Scraping eingefügt. Dann bitte prüfen, ob beide Aktivitätsbausteine notwendig sind \" />\n")
+
+
 def a_sequence_read_range_start (xaml):
     xaml.write("          <Sequence DisplayName=\"Read Range\" >\n")
     xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
@@ -1209,6 +1278,14 @@ def a_sequence_read_range_start (xaml):
     xaml.write("                </scg:Dictionary>\n")
     xaml.write("              </sap:WorkflowViewStateService.ViewState>\n")
 
+def a_sequence_write_range_start (xaml):
+    xaml.write("          <Sequence DisplayName=\"Write Range\" >\n")
+    xaml.write("              <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("                <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsExpanded\">False</x:Boolean>\n")
+    xaml.write("                  <x:Boolean x:Key=\"IsPinned\">False</x:Boolean>\n")
+    xaml.write("                </scg:Dictionary>\n")
+    xaml.write("              </sap:WorkflowViewStateService.ViewState>\n")
 
 
 
@@ -1223,7 +1300,7 @@ def a_sequence_data_scraping_start (xaml):
 
 
 def a_comment_data_scraping (xaml): #Abfrage über Frontend
-    xaml.write("            <ui:Comment Text=\"Data Scraping: Im Prozessablauf sollen Daten aus dem Browser gescrapet und in eine andere Applikation (z.B. Excel) übertragen werden. Hierzu bietet UiPath die Option 'Tabellenextraktion' die in der oberen Menüleiste ausgewählt werden kann. In einer Schritt für Schritt Anleitung werden die zu scrapteten Elemente direkt mit UiPath ausgewählt und die Ergebnisse in einer separaten Datentabelle abgespeichert. Diese können anschließend mittels der Aktivität 'Write Range' in Excel übertragen werden. Diese Aktivität wurde ebenfalls automatisiert hinzugefügt'\" />\n")
+    xaml.write("            <ui:Comment Text=\"Data Scraping: Im Prozessablauf sollen Daten gescrapet und in eine andere Applikation übertragen werden. Hierzu bietet UiPath die Option 'Tabellenextraktion'/'Datenextraktion' die in der oberen Menüleiste ausgewählt werden kann. In einer Schritt für Schritt Anleitung werden die zu scrapteten Elemente direkt mit UiPath ausgewählt und die Ergebnisse in einer separaten Datentabelle abgespeichert. Diese können anschließend mittels der Aktivität 'Write Range' in Excel übertragen werden. Diese Aktivität wurde ebenfalls automatisiert hinzugefügt'\" />\n")
 
 
 
@@ -1341,7 +1418,7 @@ def a_try_catch_catch_end(xaml):
     xaml.write("        </Catch>\n")
 
 #danach folgt auskommentierte AKtivität
-def a_sequence_auskommentiert(xaml):
+def a_sequence_comment_out (xaml):
     xaml.write("    <ui:CommentOut DisplayName=\"Auskommentiert\" sap:VirtualizedContainerService.HintSize=\"436.666666666667,274.666666666667\" sap2010:WorkflowViewState.IdRef=\"CommentOut_2\">\n")
     xaml.write("      <ui:CommentOut.Body>\n")
     xaml.write("        <Sequence DisplayName=\"Ignorierte Aktivitäten\" sap:VirtualizedContainerService.HintSize=\"400,186\" sap2010:WorkflowViewState.IdRef=\"Sequence_4\">\n")
@@ -1352,7 +1429,7 @@ def a_sequence_auskommentiert(xaml):
     xaml.write("          </sap:WorkflowViewStateService.ViewState>\n")
 
 
-def a_sequence_auskommentiert_end (xaml):
+def a_sequence_comment_out_end (xaml):
     xaml.write("        </Sequence>\n")
     xaml.write("      </ui:CommentOut.Body>\n")
     xaml.write("    </ui:CommentOut>\n")

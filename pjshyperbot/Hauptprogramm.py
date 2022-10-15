@@ -78,8 +78,9 @@ def main(dbname,task, dataScraping, path):
     url_before=None
     
 
-    for row in cursor:         
-        #Anpassen der URL. Trimmen der URLS mit urllib parse und Entfernen der Sonderzeichen, Setzen von * sodass Selektor für alle Seiten dieser URL gilt. 
+    for row in cursor:    
+        
+        #Customizing the URL. Trimming the URLS with urllib parse and removing the special characters, setting * so that selector is valid for all pages of this URL. 
         from urllib.parse import urlparse 
         a_url = str(row[column['a_url']]).replace("&","&amp;")
         a = urlparse(str(row[column['a_url']]))
@@ -88,12 +89,16 @@ def main(dbname,task, dataScraping, path):
         #Hier gesondertes Trimmen, da urllib parse nicht greift
         if (str(row[column['a_url']])).__contains__("132.187.226.138:8080/"):
             url="*132.187.226.138:8080/*"
+        
         elif str(row[column['a_applicationname']]) == "msedge":
             url = "*https://" + website_name + "/*"
+        
         else:
             url=a_url
+
         #Fehlerhandling, falls Sonderzeichen wie "&" in Spalte "name" vorhanden sind werden diese entfernt
         u_name= str(row[column['u_name']])
+
         if str(row[column['a_applicationname']]) == "notepad++":
             u_name=""
         else:
@@ -127,9 +132,11 @@ def main(dbname,task, dataScraping, path):
         # a_url die Original URL, die wir für das Öffnen des Browsers und beim Navigieren zu einer Seite benötigen
         #url_before ist die modifizierte URL des Vorgängersatzes, die zum Vergleich mit aktueller URL dient und bei Wechsel den navigate Baustein aufruft
         
+        #Calling the actions function
         aktionen(url, a_url,url_before, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['elementclass']]), str(row[column['input_variables']]))
         
-        #Aktueller Wert wird zu Vorgängerwert
+        
+        #Current value becomes predecessor value if it is not None. If activity has no url, no url should be taken over
         if url != 'None':
             url_before=url
 
@@ -187,7 +194,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
 
         #Abfrage auf Aktivitäten über Spalte Type:
             
-        #Ist ein Wert in der Spalte automationid vorhanden? Wenn Länge größer 0, wurde eine ID mit aufgezeichnet
+        #Check if the activity has a value assigned in the automationid column. If the length is greater than 0, an ID has been recorded. 
             
         if len(automationid)>0: 
             if u_type == "Schaltfläche" or u_type=="Link": #dann ist es eine Klickakitivität
@@ -549,36 +556,73 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                     
             
 def verbesserungsvorschlaege(xaml, dbname, dataScraping):
-    #Verbesserungsvorschläge am Ende:
+
+    #Suggestions for improvement at the end
     l_database = sqlite3.connect(dbname)
+    #two cursors are required 
     cursor = l_database.cursor()
-    #Zählen wie oft etwas im Prozessverlauf aus Excel kopiert wird
+    cursor2= l_database.cursor()
+
+    #Count how many times something was copied or inserted from/in Excel during the process using shortcut combination CTRL+C to detect corresponding action
     strg_c_excel= cursor.execute("SELECT COUNT (*) FROM logger where a_applicationname='excel' and u_eventtype='CTRL + C'")
+    strg_v_excel= cursor2.execute("SELECT COUNT (*) FROM logger where a_applicationname='excel' and u_eventtype='CTRL + V'")
+    
+    #Capture all results that meet the SQL statement 
     number_of_strg_c_excel= strg_c_excel.fetchone()[0]
+    number_of_strg_v_excel=strg_v_excel.fetchone()[0]
     
-    #Verbesserungsvorschläge sind auskommentiert, um den allgemeinen Ablauf nicht zu unterbrechen
-    lib2_bausteine.a_sequence_auskommentiert(xaml)
+    #Start of the suggestions for improvement: These are commented out in order not to interrupt the general flow 
+    lib2_bausteine.a_sequence_comment_out(xaml)
 
+    #Check for number of shortcut combinations in Excel to suggest intelligent activity module and insert comment with note
     if number_of_strg_c_excel>=3:
-    
-        lib2_bausteine.a_sequence_read_range_start(xaml)
-        lib2_bausteine.a_comment_read_range (xaml)
-        lib2_bausteine.a_read_range(xaml)
-        #Ende der Sequenz
-        lib2_bausteine.a_sequence_end(xaml)
-            
 
-    # wenn Nutzer im Frontend auswählt, dass er Data Scraping machen möchte. Rückgabewerte sind Yes or No
-    
+        #Sequence around proposal
+        lib2_bausteine.a_sequence_read_range_start(xaml)
+
+        #Insert comment
+        lib2_bausteine.a_comment_read_range (xaml)
+        
+        #Insertion of the intelligent block read range, which needs to be manually post-processed
+        lib2_bausteine.a_read_range(xaml)
+
+        #End of sequence
+        lib2_bausteine.a_sequence_end(xaml)
+
+    #Check for number of shortcut combinations in Excel to suggest intelligent activity module and insert comment with note
+    if number_of_strg_v_excel>=3:
+
+        #Sequence around proposal
+        lib2_bausteine.a_sequence_write_range_start(xaml)
+
+        #Insert comment
+        lib2_bausteine.a_comment_write_range(xaml)
+        
+        #Insertion of the intelligent block read range, which needs to be manually post-processed
+        lib2_bausteine.a_write_range_excel (xaml)
+ 
+        #End of sequence
+        lib2_bausteine.a_sequence_end(xaml)
+
+          
+
+    # when user selects in frontend that he wants to do data scraping. Return values are Yes or No. Data scraping using the Data Scraping Wizard must be performed directly within UiPath
+     
     if dataScraping=="Yes":
-        #Start der Sequenz
+
+        #Start of sequence
         lib2_bausteine.a_sequence_data_scraping_start(xaml)
+
+        #DaInserting a comment that gives hints on the necessary steps to be taken to do Data Scraping and connection activity to write extracted data from data scraping
         lib2_bausteine.a_comment_data_scraping (xaml)
         lib2_bausteine.a_write_range_excel (xaml)
-        #Ende der Sequenz
+
+        #End of sequence block
         lib2_bausteine.a_sequence_end(xaml)
     
-    lib2_bausteine.a_sequence_auskommentiert_end(xaml) #am Ende wenn alle Vorschläge gemacht wurden
+    #End of the commented out block
+    lib2_bausteine.a_sequence_comment_out_end(xaml) 
+
 
 
 if __name__ == '__main__':

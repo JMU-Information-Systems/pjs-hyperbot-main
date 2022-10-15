@@ -1,6 +1,8 @@
 ﻿#import xaml as xaml
 # coding=utf-8
 
+#Library of created blocks, which are called from the main program in case of appropriate matching
+
 def activity(xaml):   #write header of UIPath XAML file
     xaml.write("<Activity mc:Ignorable=\"sap sap2010\" x:Class=\"Main\" mva:VisualBasic.Settings=\"{x:Null}\" sap:VirtualizedContainerService.HintSize=\"968,2533\" sap2010:WorkflowViewState.IdRef=\"ActivityBuilder_1\" ")
     xaml.write("xmlns=\"http://schemas.microsoft.com/netfx/2009/xaml/activities\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" ")
