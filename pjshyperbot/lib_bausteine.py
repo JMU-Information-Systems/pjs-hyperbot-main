@@ -5,7 +5,7 @@
 
 def activity(xaml):   #write header of UIPath XAML file
     xaml.write("<Activity mc:Ignorable=\"sap sap2010\" x:Class=\"Main\" mva:VisualBasic.Settings=\"{x:Null}\" sap:VirtualizedContainerService.HintSize=\"968,2533\" sap2010:WorkflowViewState.IdRef=\"ActivityBuilder_1\" ")
-    xaml.write("xmlns=\"http://schemas.microsoft.com/netfx/2009/xaml/activities\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" ")
+    xaml.write("xmlns=\"http://schemas.microsoft.com/netfx/2009/xaml/activities\" xmlns:p=\"http://schemas.uipath.com/workflow/activities/word\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" ")
     xaml.write("xmlns:mva=\"clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities\" xmlns:sap=\"http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation\" ")
     xaml.write("xmlns:ui=\"http://schemas.uipath.com/workflow/activities\" ")
     xaml.write("xmlns:sap2010=\"http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation\" xmlns:scg=\"clr-namespace:System.Collections.Generic;assembly=mscorlib\" ")
@@ -25,14 +25,14 @@ def activity(xaml):   #write header of UIPath XAML file
     xaml.write("      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>\n      <AssemblyReference>mscorlib</AssemblyReference>\n      <AssemblyReference>System.Data</AssemblyReference>\n")
     xaml.write("      <AssemblyReference>System</AssemblyReference>\n      <AssemblyReference>System.Drawing</AssemblyReference>\n      <AssemblyReference>System.Core</AssemblyReference>\n")
     xaml.write("      <AssemblyReference>System.Xml</AssemblyReference>\n      <AssemblyReference>System.Xml.Linq</AssemblyReference>\n      <AssemblyReference>PresentationFramework</AssemblyReference>\n")
-    xaml.write("      <AssemblyReference>WindowsBase</AssemblyReference>\n      <AssemblyReference>PresentationCore</AssemblyReference>\n      <AssemblyReference>System.Xaml</AssemblyReference>\n")
+    xaml.write("      <AssemblyReference>WindowsBase</AssemblyReference>\n   <AssemblyReference>UiPath.Word</AssemblyReference>\n   <AssemblyReference>PresentationCore</AssemblyReference>\n      <AssemblyReference>System.Xaml</AssemblyReference>\n")
     xaml.write("      <AssemblyReference>UiPath.System.Activities</AssemblyReference>\n      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>\n      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>\n")
     xaml.write("      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>\n      <AssemblyReference>UiPath.OrchestratorClient</AssemblyReference>\n      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>\n")
     xaml.write("      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>\n      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>\n      <AssemblyReference>UiPath.Platform</AssemblyReference>\n")
-    xaml.write("      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>\n      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>\n      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>\n")
+    xaml.write("      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>\n <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>\n <AssemblyReference>UiPath.Word.Activities</AssemblyReference>\n     <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>\n      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>\n")
     xaml.write("      <AssemblyReference>System.ServiceModel</AssemblyReference>\n      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>\n      <AssemblyReference>System.ValueTuple</AssemblyReference>\n")
     xaml.write("      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>\n      <AssemblyReference>System.Memory</AssemblyReference>\n      <AssemblyReference>NPOI</AssemblyReference>\n")
-    xaml.write("      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>\n    </sco:Collection>\n  </TextExpression.ReferencesForImplementation>\n")
+    xaml.write("      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>\n  <AssemblyReference>UiPath.Excel</AssemblyReference>\n   </sco:Collection>\n  </TextExpression.ReferencesForImplementation>\n")
     return ("</Activity>")
 
 def sequence(xaml): #write sequence header of UiPath XAML file

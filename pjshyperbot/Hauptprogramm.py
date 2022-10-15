@@ -78,7 +78,7 @@ def main(dbname,task, dataScraping, path):
     url_before=None
     
 
-    for row in cursor:    
+    for row in cursor:   
         
         #Customizing the URL. Trimming the URLS with urllib parse and removing the special characters, setting * so that selector is valid for all pages of this URL. 
         from urllib.parse import urlparse 
@@ -124,6 +124,8 @@ def main(dbname,task, dataScraping, path):
                         endknoten.append(lib2_bausteine.a_excel_application_scope(xaml, path))
                 elif str(row[column['a_applicationname']]) == "winword":
                         endknoten.append(lib2_bausteine.a_word_application_scope(xaml, path))
+                elif str(row[column['a_applicationname']]) == "explorer":
+                        endknoten.append(lib2_bausteine.a_open_explorer(xaml, str(row[column['a_windowtitle']])))
                 else:
                     endknoten.append(lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']])))
                     lib2_bausteine.a_comment_open_application (xaml)
@@ -135,10 +137,10 @@ def main(dbname,task, dataScraping, path):
         #Calling the actions function
         aktionen(url, a_url,url_before, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['elementclass']]), str(row[column['input_variables']]))
         
-        
         #Current value becomes predecessor value if it is not None. If activity has no url, no url should be taken over
         if url != 'None':
             url_before=url
+
 
     cursor.close()
 
@@ -154,6 +156,13 @@ def main(dbname,task, dataScraping, path):
 
 #Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
 def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle,elementclass, input_variables):
+    
+    #Abfrage des Eventtypes um in den Aktivitäten nicht zwischen Links und Rechtsklicks unterscheiden zu müssen. Wert kann nicht direkt übernommen werden, daher Anpassung
+    if u_eventtype=="Left-Down":
+        u_eventtype="BTN_LEFT"
+
+    if u_eventtype=="Right-Down":
+        u_eventtype="BTN_RIGHT"
     
     #Initialiserung des Tests auf Datepicker, wenn ja, wird Kommentar mit Hinweis zum Umgang mit Datepickern gegeben 
     #löst aus, wenn Wort in Spalte existiert (kann auch nur ein Substring sein), unabhängig von Groß und Kleinschreibung
@@ -198,35 +207,25 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
             
         if len(automationid)>0: 
             if u_type == "Schaltfläche" or u_type=="Link": #dann ist es eine Klickakitivität
-                
-               
-                #Art des Klicks:Linksklick?
-                if u_eventtype == "Left-Down":
-
-                    # Baustein nur automationid 
-                    lib2_bausteine.a_click_left_browser_schaltfläche_id(xaml, a_applicationname, url, u_name, automationid)
-                    
-                #Rechtsklick
-                else:
-                    lib2_bausteine.a_click_right_browser_schaltfläche_id(xaml,a_applicationname,url, u_name, automationid)
+                 
+                lib2_bausteine.a_click_browser_schaltfläche_id(xaml, a_applicationname, url, u_name, automationid, u_eventtype)
             
-            
-                #Abfrage auf andere Eventtypen im Browser                        
+            #Abfrage auf andere Eventtypen im Browser                        
 
             elif u_type == "Kombinationsfeld":
-                lib2_bausteine.a_click_left_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid)        
+                lib2_bausteine.a_click_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid, u_eventtype)        
             
             elif u_type == "checkbox" or (u_type) == "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
                 #Variante über ID
-                lib2_bausteine.a_click_left_browser_checkbox(xaml, a_applicationname,url,u_name, automationid)
+                lib2_bausteine.a_click_browser_checkbox(xaml, a_applicationname,url,u_name, automationid, u_eventtype)
       
             elif u_type== "Optionsfeld":
                 #Variante 1, nur über ID
-                lib2_bausteine.a_click_left_browser_optionsfeld(xaml,a_applicationname, url, u_name,automationid)
+                lib2_bausteine.a_click_browser_optionsfeld(xaml,a_applicationname, url, u_name,automationid, u_eventtype)
 
             #wie Kombinationsfeld, nur wenn ID vorhanden ist berücksichtigen. Identifikation über parentid
             elif u_type=="Gruppe":
-                lib2_bausteine.a_click_gruppe(xaml,a_applicationname, url, u_name, automationid)   
+                lib2_bausteine.a_click_gruppe(xaml,a_applicationname, url, u_name, automationid, u_eventtype)  
 
                     
             # Abfrage der Keystroke Aktivitäten im Browser
@@ -234,7 +233,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
             #diese Typen sind Felder, wo Text eingegeben wird, d.h. Keystroke Aktivitäten
             elif u_type == "Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer": 
                 #Bedingung für Texteingabe
-                if u_eventtype == "Left-Down":       
+                if u_eventtype == "BTN_LEFT" or u_eventtype=="BTN_RIGHT":      
 
                     #Suche über ID, tag=Input, type=Text
                     lib2_bausteine.a_type_into_browser(xaml, a_applicationname,url, u_name, automationid, input_variables)
@@ -260,46 +259,31 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         else:
             #Bedingung für Klickaktivität
             if u_type == "Schaltfläche" or u_type=="Link":
-                #Linksklick
-                if u_eventtype == "Left-Down":
-                    #Starten der Sequenz
-                    lib2_bausteine.a_sequence_click_start(xaml, u_name)
+                #Starten der Sequenz
+                lib2_bausteine.a_sequence_click_start(xaml, u_name)
 
-                    #Baustein Variante 1, nur über aaname
-                    lib2_bausteine.a_click_left_browser_schaltfläche_no_id(xaml,a_applicationname, url,u_name)
+                #Baustein Variante 1, nur über aaname
+                lib2_bausteine.a_click_browser_schaltfläche_no_id(xaml,a_applicationname, url,u_name, u_eventtype)
                         
-                    #Baustein Variante 2, mit Tag+Type=Button in Kombination mit Abfrage nach Name (aaname) des Feldes 
-                    lib2_bausteine.a_click_left_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name, elementclass)
+                #Baustein Variante 2, mit Tag+Type=Button in Kombination mit Abfrage nach Name (aaname) des Feldes 
+                lib2_bausteine.a_click_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name, elementclass, u_eventtype)
                         
-                    #Ende der Sequenz
-                    lib2_bausteine.a_sequence_end(xaml)
-
-                elif u_eventtype == "Right-Down":
-                    #Starten der Sequenz
-                    lib2_bausteine.a_sequence_click_start(xaml, u_name)
-
-                    #Baustein Variante 1, nur über aaname
-                    lib2_bausteine.a_click_right_browser_schaltfläche_no_id(xaml,a_applicationname, url,u_name)
-                        
-                    #Baustein Variante 2, mit Tag+Type=Button in Kombination mit Abfrage nach Name (aaname) des Feldes 
-                    lib2_bausteine.a_click_right_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name, elementclass)
-                        
-                    #Ende der Sequenz
-                    lib2_bausteine.a_sequence_end(xaml)
-                    
+                #Ende der Sequenz
+                lib2_bausteine.a_sequence_end(xaml)
+  
 
             elif u_type=="Kombinationsfeld":
-                lib2_bausteine.a_click_kombinationsfeld_no_id(xaml, a_applicationname, url,u_name, elementclass)
+                lib2_bausteine.a_click_kombinationsfeld_no_id(xaml, a_applicationname, url,u_name, elementclass, u_eventtype)
 
             elif u_type == "checkbox" or u_type=="Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
                 #Start der Sequenz
                 lib2_bausteine.a_sequence_click_checkbox_start(xaml, u_name)
 
                 #Variante mit name, tag=Input, type=checkbox, elementclass
-                lib2_bausteine.a_click_left_browser_checkbox_no_id (xaml, a_applicationname, url, u_name, elementclass)
+                lib2_bausteine.a_click_browser_checkbox_no_id (xaml, a_applicationname, url, u_name, elementclass, u_eventtype)
 
                 #Variante 2, über aaname, Tag=Input, type=checkbox
-                lib2_bausteine.a_click_left_browser_checkbox_no_id_var2(xaml, a_applicationname,url, u_name)
+                lib2_bausteine.a_click_left_browser_checkbox_no_id_var2(xaml, a_applicationname,url, u_name, u_eventtype)
                     
                 #Ende der Sequenz
                 lib2_bausteine.a_sequence_end(xaml)
@@ -309,10 +293,10 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 lib2_bausteine.a_sequence_click_optionsfeld_start(xaml,u_name)
                 
                 #Variante 1, über aaname und Klasse
-                lib2_bausteine.a_click_left_browser_optionsfeld_no_id(xaml,a_applicationname, url, u_name)
+                lib2_bausteine.a_click_browser_optionsfeld_no_id(xaml,a_applicationname, url, u_name, u_eventtype)
                 
                 #Variante 2, nur über aaname und aria-role=option
-                lib2_bausteine.a_click_left_browser_optionsfeld_var_no_id_var2(xaml,a_applicationname, url, u_name, elementclass)
+                lib2_bausteine.a_click_browser_optionsfeld_var_no_id_var2(xaml,a_applicationname, url, u_name, elementclass, u_eventtype)
                     
                 #Ende der Sequenz
                 lib2_bausteine.a_sequence_end(xaml)
@@ -323,10 +307,10 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 #Start der Sequenz
                 lib2_bausteine.a_sequence_click_start(xaml, u_name)
                 #Variante 1, über aaname und tag=LABEL
-                lib2_bausteine.a_click_left_browser_text(xaml,a_applicationname, url, u_name)
+                lib2_bausteine.a_click_browser_text(xaml,a_applicationname, url, u_name, u_eventtype)
 
                 #Variante 2, nur über aaname
-                lib2_bausteine.a_click_browser_text_var2(xaml,a_applicationname, url, u_name)
+                lib2_bausteine.a_click_browser_text_var2(xaml,a_applicationname, url, u_name, u_eventtype)
 
                 #Ende der Sequenz
                 lib2_bausteine.a_sequence_end(xaml)
@@ -334,11 +318,11 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
 
                 #wenn Grafik angeklickt wird, keine id, über aaname und tag='IMG'
             elif u_type=="Grafik":
-                lib2_bausteine.a_click_left_browser_grafik (xaml, a_applicationname, url, u_name)
+                lib2_bausteine.a_click_browser_grafik (xaml, a_applicationname, url, u_name, u_eventtype)
                 
             elif u_type == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
                 
-                if u_eventtype == "Left-Down":
+                if u_eventtype == "BTN_LEFT" or u_eventtype=="BTN_RIGHT":
                     #Start der Sequenz
                     lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
                     
@@ -419,7 +403,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         
         if u_type == "Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer": 
             
-            if u_eventtype == "Left-Down": #dann ist es eine Texteingabe
+            if u_eventtype == "BTN_LEFT" or u_eventtype=="BTN_RIGHT": #dann ist es eine Texteingabe
                    
                 #Variante 1, Abfrage auf automationid, name und role   
                 lib2_bausteine.a_type_into_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type, input_variables)
@@ -442,7 +426,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 
         else: #dann immer Klickaktivität, keine weitere Unterscheidung nach Typ notwendig, da dieser immer mitgeliefert wird und mit Logger übereinstimmt
                     
-            if u_eventtype=="Left-Down":
+            if u_eventtype=="BTN_LEFT":
                 #Linksklick, Name und Role
                 lib2_bausteine.a_click_left_in_explorer(xaml, a_applicationname, a_windowtitle,u_name, u_type)
                   
@@ -465,7 +449,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         if len(automationid)>0:
             if u_type == "Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer":
 
-                if u_eventtype == "Left-Down":
+                if u_eventtype == "BTN_LEFT" or u_eventtype=="BTN_RIGHT":
                     #Type Into mit automationid, name und role
                     lib2_bausteine.a_type_into_application(xaml, a_applicationname, a_windowtitle, automationid,  u_name, u_type, input_variables)
                                 
@@ -487,7 +471,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
 
             if u_type=="Element":
                     
-                if u_eventtype=="Left-Down" or u_eventtype=="Right-Down":
+                if u_eventtype=="BTN_LEFT" or u_eventtype=="BTN_RIGHT":
                     pass #dann wird zB nur eine Excel Zeile angeklickt, bekommen wir schon über die nachfolgende Aktion
                                 
                 elif u_eventtype=="CTRL + C":
@@ -506,7 +490,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
             #um alle Klickaktivitäten abzudecken
             else:
                         
-                if u_eventtype == "Left-Down":
+                if u_eventtype == "BTN_LEFT":
            
                     #über automationid, name und role
                     lib2_bausteine.a_click_left_in_application (xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type)
@@ -518,7 +502,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         else: 
             if u_type=="Element":
                     
-                if u_eventtype=="Left-Down" or u_eventtype=="Right-Down":
+                if u_eventtype=="BTN_LEFT" or u_eventtype=="BTN_RIGHT":
                     pass #dann wird zB nur eine Excel Zeile angeklickt, bekommen wir schon über die nachfolgende Aktion
                                 
                 elif u_eventtype=="CTRL + C":
@@ -534,7 +518,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                     
             elif u_type=="Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer":
                     
-                if u_eventtype=="Left-Down" or u_eventtype=="Right-Down":
+                if u_eventtype=="BTN_LEFT" or u_eventtype=="BTN_RIGHT":
                     lib2_bausteine.a_type_into_application(xaml,a_applicationname, a_windowtitle,u_name,u_type, input_variables)
                                 
                 elif u_eventtype=="CTRL + C":
@@ -548,7 +532,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                     
             #um Klickaktivitäten abzudecken
             else: 
-                if u_eventtype == "Left-Down":
+                if u_eventtype == "BTN_LEFT":
                     lib2_bausteine.a_click_left_in_application_no_id(xaml,a_applicationname, a_windowtitle, u_name, u_type)
                 else:
                     lib2_bausteine.a_click_right_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)

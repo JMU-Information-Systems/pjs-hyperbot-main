@@ -97,8 +97,8 @@ def a_edge_browser_attach(xaml, url):
 
 # Standard Baustein mit Test auf AutomationID
 
-def a_click_left_browser_schaltfläche_id(xaml, application_name, url, aaname, id):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_browser_schaltfläche_id(xaml, application_name, url, aaname, id, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -120,7 +120,7 @@ def a_click_left_browser_schaltfläche_id(xaml, application_name, url, aaname, i
 
 
 #nicht benötigt im späteren Verlauf
-def a_click_left_browser_schaltfläche_id_var_2 (xaml, application_name, url, aaname, id):
+def a_click_browser_schaltfläche_id_var_2 (xaml, application_name, url, aaname, id):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -175,8 +175,8 @@ def a_click_left_browser_schaltfläche_id_var_3(xaml, application_name, url, aan
 
 #nur aaname
 
-def a_click_left_browser_schaltfläche_no_id (xaml, application_name, url, aaname):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_browser_schaltfläche_no_id (xaml, application_name, url, aaname, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -198,8 +198,8 @@ def a_click_left_browser_schaltfläche_no_id (xaml, application_name, url, aanam
 
 #über name und elementclass
 
-def a_click_left_browser_schaltfläche_no_id_var2 (xaml, application_name, url, aaname, elementclass):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_browser_schaltfläche_no_id_var2 (xaml, application_name, url, aaname, elementclass, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -221,7 +221,7 @@ def a_click_left_browser_schaltfläche_no_id_var2 (xaml, application_name, url, 
 
 #keine Verwendung im späteren Verlauf
 
-def a_click_left_browser_schaltfläche_no_id_var3(xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var3(xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -245,7 +245,7 @@ def a_click_left_browser_schaltfläche_no_id_var3(xaml, application_name, url, a
 
 #keine Verwendung im späteren Verlauf
 
-def a_click_left_browser_schaltfläche_no_id_var4(xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var4(xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -270,7 +270,7 @@ def a_click_left_browser_schaltfläche_no_id_var4(xaml, application_name, url, a
 #keine Verwendung im späteren Verlauf
 # Variante 3 mit Tag=Button & Type=Submit + Name des Feldes
 
-def a_click_left_browser_schaltfläche_no_id_var5 (xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var5 (xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -295,7 +295,7 @@ def a_click_left_browser_schaltfläche_no_id_var5 (xaml, application_name, url, 
 #keine Verwendung im späteren Verlauf
 #Variante 5, aaname und tag=SPAN
 
-def a_click_left_browser_schaltfläche_no_id_var5 (xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var5 (xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -320,7 +320,7 @@ def a_click_left_browser_schaltfläche_no_id_var5 (xaml, application_name, url, 
 #keine Verwendung im späteren Verlauf
 #Variante 6, aaname und tag=Select
 
-def a_click_left_browser_schaltfläche_no_id_var6 (xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var6 (xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -343,95 +343,10 @@ def a_click_left_browser_schaltfläche_no_id_var6 (xaml, application_name, url, 
 
 
 
-def a_click_right_browser_schaltfläche_id(xaml, application_name, url, aaname, id):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
-    xaml.write("              <ui:Click.CursorPosition>\n")
-    xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
-    xaml.write("                  <ui:CursorPosition.OffsetX>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
-    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetY>\n")
-    xaml.write("                </ui:CursorPosition>\n")
-    xaml.write("              </ui:Click.CursorPosition>\n")
-    xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl id=\'"+id+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("                  <ui:Target.WaitForReady>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("                  </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:Click.Target>\n")
-    xaml.write("            </ui:Click>\n")
-
-
-def a_click_right_browser_schaltfläche_no_id(xaml, application_name, url, aaname):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
-    xaml.write("              <ui:Click.CursorPosition>\n")
-    xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
-    xaml.write("                  <ui:CursorPosition.OffsetX>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
-    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetY>\n")
-    xaml.write("                </ui:CursorPosition>\n")
-    xaml.write("              </ui:Click.CursorPosition>\n")
-    xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+aaname+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("                  <ui:Target.WaitForReady>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("                  </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:Click.Target>\n")
-    xaml.write("            </ui:Click>\n")
-
-
-def a_click_right_browser_schaltfläche_no_id_var2(xaml, application_name, url, aaname, elementclass):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
-    xaml.write("              <ui:Click.CursorPosition>\n")
-    xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
-    xaml.write("                  <ui:CursorPosition.OffsetX>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
-    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetY>\n")
-    xaml.write("                </ui:CursorPosition>\n")
-    xaml.write("              </ui:Click.CursorPosition>\n")
-    xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+aaname+"\' class=\'"+elementclass+"\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("                  <ui:Target.WaitForReady>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("                  </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:Click.Target>\n")
-    xaml.write("            </ui:Click>\n")
 
 # über id, heißt in der Tabelle "Kontrollkästchen"
-def a_click_left_browser_checkbox(xaml, application_name, url, aaname, id):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
-    xaml.write("              <ui:Click.CursorPosition>\n")
-    xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
-    xaml.write("                  <ui:CursorPosition.OffsetX>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
-    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
-    xaml.write("                  </ui:CursorPosition.OffsetY>\n")
-    xaml.write("                </ui:CursorPosition>\n")
-    xaml.write("              </ui:Click.CursorPosition>\n")
-    xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl id=\'"+id+"\' tag=\'INPUT\' type=\'checkbox\' /&gt;\" TimeoutMS=\"1000\">\n")
-    xaml.write("                  <ui:Target.WaitForReady>\n")
-    xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
-    xaml.write("                  </ui:Target.WaitForReady>\n")
-    xaml.write("                </ui:Target>\n")
-    xaml.write("              </ui:Click.Target>\n")
-    xaml.write("            </ui:Click>\n")
-
-def a_click_right_browser_checkbox(xaml, application_name, url, aaname, id):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
+def a_click_browser_checkbox(xaml, application_name, url, aaname, id, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\'>\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -452,11 +367,10 @@ def a_click_right_browser_checkbox(xaml, application_name, url, aaname, id):
     xaml.write("            </ui:Click>\n")
     
 
-
  #wenn keine ID, über aaname
 
-def a_click_left_browser_checkbox_no_id(xaml, application_name, url, name, elementclass):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox "+name+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
+def a_click_browser_checkbox_no_id(xaml, application_name, url, name, elementclass, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox "+name+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -477,8 +391,8 @@ def a_click_left_browser_checkbox_no_id(xaml, application_name, url, name, eleme
     xaml.write("            </ui:Click>\n")
 
 
-def a_click_left_browser_checkbox_no_id_var2(xaml, application_name, url, aaname):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_RIGHT\">\n")
+def a_click_left_browser_checkbox_no_id_var2(xaml, application_name, url, aaname, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Checkbox "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -498,8 +412,8 @@ def a_click_left_browser_checkbox_no_id_var2(xaml, application_name, url, aaname
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-def a_click_left_browser_optionsfeld (xaml, application_name, url, aaname, id):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Optionsfeld "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_browser_optionsfeld (xaml, application_name, url, aaname, id, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Optionsfeld "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -519,8 +433,8 @@ def a_click_left_browser_optionsfeld (xaml, application_name, url, aaname, id):
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-def a_click_left_browser_optionsfeld_no_id (xaml, application_name, url, aaname):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Optionsfeld "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_browser_optionsfeld_no_id (xaml, application_name, url, aaname, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Optionsfeld "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -540,8 +454,8 @@ def a_click_left_browser_optionsfeld_no_id (xaml, application_name, url, aaname)
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-def a_click_left_browser_optionsfeld_var_no_id_var2 (xaml, application_name, url, aaname, elementclass):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Optionsfeld "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_browser_optionsfeld_var_no_id_var2 (xaml, application_name, url, aaname, elementclass, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click Optionsfeld "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\'>\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -562,8 +476,8 @@ def a_click_left_browser_optionsfeld_var_no_id_var2 (xaml, application_name, url
     xaml.write("            </ui:Click>\n")
 
 
-def a_click_left_kombinationsfeld(xaml, application_name, url, aaname, id):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_kombinationsfeld(xaml, application_name, url, aaname, id, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -583,8 +497,8 @@ def a_click_left_kombinationsfeld(xaml, application_name, url, aaname, id):
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-def a_click_kombinationsfeld_no_id (xaml, application_name, url, aaname, elementclass):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_kombinationsfeld_no_id (xaml, application_name, url, aaname, elementclass, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -604,8 +518,8 @@ def a_click_kombinationsfeld_no_id (xaml, application_name, url, aaname, element
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-def a_click_left_browser_text (xaml, application_name, url, aaname):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_browser_text (xaml, application_name, url, aaname, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -625,8 +539,8 @@ def a_click_left_browser_text (xaml, application_name, url, aaname):
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-def a_click_browser_text_var2 (xaml, application_name, url, aaname):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_browser_text_var2 (xaml, application_name, url, aaname, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -646,8 +560,8 @@ def a_click_browser_text_var2 (xaml, application_name, url, aaname):
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-def a_click_gruppe(xaml, application_name, url,aaname, id):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf " +aaname+ "\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_gruppe(xaml, application_name, url,aaname, id, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf " +aaname+ "\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -669,8 +583,8 @@ def a_click_gruppe(xaml, application_name, url,aaname, id):
 
 #tag ist IMG
 
-def a_click_left_browser_grafik (xaml, application_name, url, aaname):
-    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
+def a_click_browser_grafik (xaml, application_name, url, aaname, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
     xaml.write("                  <ui:CursorPosition.OffsetX>\n")
@@ -1228,7 +1142,7 @@ def a_excel_application_scope(xaml, workbook_path):  # Excel öffnen
 
 
 def a_word_application_scope (xaml,workbook_path):
-    xaml.write("    <p:WordApplicationScope FilePath=\"{x:Null}\" DisplayName=\"Word öffnen\" sap:VirtualizedContainerService.HintSize=\"434,193.333333333333\" sap2010:WorkflowViewState.IdRef=\"WordApplicationScope_1\">\n")
+    xaml.write("    <p:WordApplicationScope FilePath=\""+workbook_path+"\" DisplayName=\"Word öffnen\" sap:VirtualizedContainerService.HintSize=\"434,193.333333333333\" sap2010:WorkflowViewState.IdRef=\"WordApplicationScope_1\">\n")
     xaml.write("      <p:WordApplicationScope.Body>\n")
     xaml.write("        <ActivityAction x:TypeArguments=\"ui:WordDocument\">\n")
     xaml.write("          <ActivityAction.Argument>\n")
@@ -1244,6 +1158,21 @@ def a_word_application_scope (xaml,workbook_path):
     
 def a_open_application (xaml, application_name, windowtitle):
     xaml.write("    <ui:OpenApplication ApplicationWindow=\"{x:Null}\" Arguments=\"{x:Null}\" TimeoutMS=\"{x:Null}\" WorkingDirectory=\"{x:Null}\" DisplayName=\"Open "+application_name+"\" FileName=\"Hier bitte Installationspfad des Programms angeben\" Selector=\"&lt;wnd app=\'"+application_name+".exe\' title=\'"+windowtitle+"\' /&gt;\" >\n")
+    xaml.write("      <ui:OpenApplication.Body>\n")
+    xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
+    xaml.write("          <ActivityAction.Argument>\n")
+    xaml.write("            <DelegateInArgument x:TypeArguments=\"x:Object\" Name=\"ContextTarget\" />\n")
+    xaml.write("          </ActivityAction.Argument>\n")
+    xaml.write("          <Sequence DisplayName=\"Do\" sap:VirtualizedContainerService.HintSize=\"200,84.6666666666667\" sap2010:WorkflowViewState.IdRef=\"Sequence_21\">\n")
+    xaml.write("            <sap:WorkflowViewStateService.ViewState>\n")
+    xaml.write("              <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n")
+    xaml.write("                <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n")
+    xaml.write("              </scg:Dictionary>\n")
+    xaml.write("            </sap:WorkflowViewStateService.ViewState>\n")
+    return("          </Sequence>\n        </ActivityAction>\n      </ui:OpenApplication.Body>\n    </ui:OpenApplication>\n")
+
+def a_open_explorer (xaml, windowtitle):
+    xaml.write("    <ui:OpenApplication ApplicationWindow=\"{x:Null}\" Arguments=\"{x:Null}\" TimeoutMS=\"{x:Null}\" WorkingDirectory=\"{x:Null}\" DisplayName=\"Open Explorer\" FileName=\"C:\Windows\explorer.exe\" Selector=\"&lt;wnd app=\'explorer.exe\' title=\'"+windowtitle+"\' /&gt;\" >\n")
     xaml.write("      <ui:OpenApplication.Body>\n")
     xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
     xaml.write("          <ActivityAction.Argument>\n")
