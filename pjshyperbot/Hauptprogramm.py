@@ -214,7 +214,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 #Abfrage auf andere Eventtypen im Browser                        
 
             elif u_type == "Kombinationsfeld":
-                lib2_bausteine.a_click_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid)        
+                lib2_bausteine.a_click_left_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid)        
             
             elif u_type == "checkbox" or (u_type) == "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
                 #Variante über ID
@@ -274,7 +274,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                     #Ende der Sequenz
                     lib2_bausteine.a_sequence_end(xaml)
 
-                elif u_eventtype == "Right-down":
+                elif u_eventtype == "Right-Down":
                     #Starten der Sequenz
                     lib2_bausteine.a_sequence_click_start(xaml, u_name)
 

@@ -75,7 +75,7 @@ class databaseContact():
             print(e)
             exit
 
-        sqlPath = '''SELECT * FROM logger WHERE a_applicationname="excel" OR a_applicationname="msword"'''
+        sqlPath = '''SELECT * FROM logger WHERE a_applicationname="excel" OR a_applicationname="winword"'''
         data = curs.execute(sqlPath).fetchall()
         curs.close()
 
