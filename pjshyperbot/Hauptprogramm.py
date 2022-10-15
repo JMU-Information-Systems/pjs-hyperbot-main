@@ -20,19 +20,19 @@ def main(dbname,task, dataScraping, path):
     mypath=path
     mydataScraping=dataScraping
 
-    #Connect to SQLite
+    # connect to SQLite
     l_database = sqlite3.connect(dbname)
     cursor = l_database.cursor()
 
     xaml = open(filename,"w", encoding="utf-8")
-    endknoten = deque() # stack, um Endknotenhierarchie aufzuheben
+    endknoten = deque() # stack for closing end node hierarchy
     akt_name = NONE
-    offene_apps = deque() #Liste, welche Applikationsnamen der bereits offenen Anwendungen enthält
+    offene_apps = deque() # list with open applications
 
-    endknoten.append(lib_bausteine.activity(xaml)) #schreibe Activity Header und nimm den return Wert (Endknoten) in den Stapel auf
-    endknoten.append(lib_bausteine.sequence(xaml)) #schreibe Sequence Header und nimm den return Wert (Endknoten) in den Stapel auf
-    endknoten.append(lib_bausteine.s_varaibles(xaml))#schreibe Variables Header und nimm return Wert (Endknoten) in den Stapel auf
-    cursor.execute("SELECT * FROM variables ORDER BY v_id")  #lese Variable Tabelle
+    endknoten.append(lib_bausteine.activity(xaml)) # write sequence header and add the return value (Endknoten) into the stack
+    endknoten.append(lib_bausteine.sequence(xaml)) # write sequence header and add the return value (Endknoten) into the stack
+    endknoten.append(lib_bausteine.s_varaibles(xaml))# write variables header and add the return value (Endknoten) into the stack
+    cursor.execute("SELECT * FROM variables ORDER BY v_id")  #read variable table
     def matching(cursor):
         results = {}
         column = 0
@@ -54,6 +54,7 @@ def main(dbname,task, dataScraping, path):
     #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
     endknoten.append(lib2_bausteine.a_sequence_variablenextraktion(xaml, task))
     
+    # write get text for all variables
     cursor = l_database.cursor()
     cursor.execute("SELECT * FROM variables ORDER BY v_id")   
     for row in cursor:
@@ -62,7 +63,7 @@ def main(dbname,task, dataScraping, path):
     cursor.close()
 
     cursor = l_database.cursor()
-    cursor.execute("SELECT * FROM logger ORDER BY e_id")  #lese Logger Tabelle
+    cursor.execute("SELECT * FROM logger ORDER BY e_id")  #read loger table
     #Sodass nicht auf einzelne Spaltennummern zugegriffen werden muss, sondern der Zugriff über den Spaltennamen erfolgt
     def matching(cursor):
         results = {}
@@ -104,7 +105,7 @@ def main(dbname,task, dataScraping, path):
         else:
             u_name=str(row[column['u_name']]).replace("<","&lt;").replace(">","&gt;").replace("&", "&amp;amp;").replace("\'","&apos;").replace("\"","&quot;")
 
-        #Prüfe, ob sich der Applikationsname ändert, um Bodys zu bilden
+        # check if the application name is changed to form container
         if akt_name != str(row[column['a_applicationname']]):
             if akt_name != NONE:
                 xaml.write(endknoten.pop())
