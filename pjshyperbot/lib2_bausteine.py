@@ -1309,11 +1309,11 @@ def a_maximise_window(xaml):
     xaml.write("            <ui:MaximizeWindow Window=\"{x:Null}\" DisplayName=\"Maximize Window\"/>\n")
 
 
-def a_close_window_neu(xaml, application_name):
+def a_close_window(xaml, application_name):
     if application_name=="msedge":
         xaml.write("    <ui:CloseWindow DisplayName=\"Close Window "+application_name+"\" Selector=\"&lt;html app=\'msedge.exe\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n")
     else:
-        xaml.write("    <ui:CloseWindow DisplayName=\"Close Window "+application_name+"\" Selector=\"&lt;wnd app=\'msedge.exe\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n")
+        xaml.write("    <ui:CloseWindow DisplayName=\"Close Window "+application_name+"\" Selector=\"&lt;wnd app=\'"+application_name+".exe\' /&gt;\" WaitForReady=\"INTERACTIVE\" />\n")
 
 def a_end_activity(xaml):
     xaml.write("  </Sequence>\n</Activity>\n")
