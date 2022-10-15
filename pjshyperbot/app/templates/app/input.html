@@ -579,8 +579,8 @@
             <!-- If Excel or Word was used, then ask for the path where the file was saved. -->
             <div class="container" ">
                 {% if len > 0 %}
-                <legend style="color:white;">Please enter the path of the used file:</legend>
-                <input type="text" class="form-control" name="path" required placeholder="path of the used file" />
+                <legend style="color:white;">Please enter the path of the used file (e.g. C:\Users\HP\Documents), do not use quotes:</legend>
+                <input type="url" class="form-control" name="path" required placeholder="path of the used file" />
 
                 {% endif %}
             </div>
