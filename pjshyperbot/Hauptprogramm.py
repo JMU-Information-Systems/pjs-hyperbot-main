@@ -141,13 +141,14 @@ def main(dbname,task, dataScraping, path):
         if url != 'None':
             url_before=url
 
-
     cursor.close()
-
+    
     #baue alle noch offenen Endknoten vom Stack ab
     while endknoten.__len__() > 0:
         if endknoten.__len__() ==2:
-           verbesserungsvorschlaege(xaml,dbname, mydataScraping)
+            for app in offene_apps:
+                lib2_bausteine.a_close_window(xaml, app)
+            verbesserungsvorschlaege(xaml,dbname, mydataScraping)
         xaml.write(str(endknoten.pop()))       
         
 
@@ -606,6 +607,8 @@ def verbesserungsvorschlaege(xaml, dbname, dataScraping):
     
     #End of the commented out block
     lib2_bausteine.a_sequence_comment_out_end(xaml) 
+    cursor.close()
+    cursor2.close()
 
 
 
