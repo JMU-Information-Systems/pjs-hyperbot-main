@@ -25,7 +25,7 @@ class databaseContact():
 
 
         #Query the data displayed in the frontend from the database. More detailed information is needed about the recorder records of the fields of type "Bearbeiten", "Suchfeld" and "Telefonnummer", as information is entered via the keyboard that is not recorded for data protection reasons. 
-        sqltype='''SELECT DISTINCT e_id, u_name,  a_url, a_applicationname, automationid, a_windowtitle FROM logger WHERE u_type="Bearbeiten" OR u_type="Suchfeld" OR u_type="Telefonnummer"''' 
+        sqltype='''SELECT DISTINCT e_id, u_name,  a_url, a_applicationname, automationid, a_windowtitle FROM logger WHERE u_type="Bearbeiten" OR u_type="Suchfeld" OR u_type="Telefonnummer" OR u_type="Element"''' 
         
         
         data = curs.execute(sqltype).fetchall()
