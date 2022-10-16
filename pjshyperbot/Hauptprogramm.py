@@ -1,5 +1,6 @@
 # Generate UIPath XAML from Logger DB
 # coding=utf-8
+
 from aifc import Error
 from ast import Not
 from asyncio.windows_events import NULL
@@ -115,7 +116,7 @@ def main(dbname,task, dataScraping, path):
                 xaml.write(endknoten.pop())
             akt_name = str(row[column['a_applicationname']])
             
-            #if a_applicationname in open applications attach else open browser
+            #if a_applicationname is in open applications attach the application or Browser else open the application or Browser
             if str(row[column['a_applicationname']]) in offene_apps:
                 if str(row[column['a_applicationname']]) == "msedge":
                         endknoten.append(lib2_bausteine.a_edge_browser_attach(xaml, url))
@@ -649,4 +650,4 @@ def verbesserungsvorschlaege(xaml, dbname, dataScraping):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1]) #um Datein als eigenständiges Programm zu nutzen und Elemente importierbar zu machen
+    main(sys.argv[1]) 

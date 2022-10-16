@@ -5,7 +5,6 @@ from array import array
 chrome_options=Options()
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-from urllib.request import urlopen
 import numpy as np
 import re
 from selenium.webdriver import ActionChains

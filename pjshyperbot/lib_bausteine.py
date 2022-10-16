@@ -1,4 +1,4 @@
-﻿#import xaml as xaml
+﻿# Library of created blocks, which are called from the main program in case of appropriate matching
 # coding=utf-8
 
 #Library of created blocks, which are called from the main program in case of appropriate matching
@@ -40,23 +40,23 @@ def sequence(xaml): #write sequence header of UiPath XAML file
     xaml.write("      <scg:Dictionary x:TypeArguments=\"x:String, x:Object\">\n        <x:Boolean x:Key=\"IsExpanded\">True</x:Boolean>\n      </scg:Dictionary>\n    </sap:WorkflowViewStateService.ViewState>\n")
     return("  </Sequence>\n")
 
-def s_varaibles(xaml):
+def s_varaibles(xaml): #write variables start
     xaml.write("	  <Sequence.Variables>\n")
     return("	  </Sequence.Variables>\n")    
 
-def variable(xaml, vname, vtype, vinit):
+def variable(xaml, vname, vtype, vinit): #write each variable
     xaml.write("		<Variable x:TypeArguments=\"x:" + vtype + "\" Name=\"" + vname + "\">\n")
     xaml.write("		  <Variable.Default>\n			<Literal x:TypeArguments=\"x:" + vtype + "\">" + vinit + "</Literal>\n		  </Variable.Default>\n")
     xaml.write("		</Variable>")
 
-def a_comment(xaml,id,txt): #kommentar
+def a_comment(xaml,id,txt): #write comment
     xaml.write("    <ui:Comment sap2010:WorkflowViewState.IdRef=\"Comment_" + id + "\" Text=\"" + txt + "\" />\n")
 
 def a_comment_calendar_picker (xaml):
     xaml.write("            <ui:Comment Text=\"Kalender Picker: Es wurde im Prozessablauf ein Datepicker verwendet. Bitte pruefen, ob Datum hier manuell eingegeben werden kann. Wenn ja, dann ganz normal mit Type Into. Ansonsten bitte Klickaktivität manuell einbauen mit dynamischem Selektor, der entsprechend das gewünschte Datum auswählen kann. &#xD;&#xA;&#xD;&#xA;Wichtig: Es kann sein, dass der Monat mit dem gewünschten Datum nicht direkt angezeigt wird, wenn der Kalender geöffnet ist. &#xD;&#xA;&#xD;&#xA;Dann so vorgehen:&#xD;&#xA;&#xD;&#xA;Try Catch Aktivität einbauen, innerhalb einer while Schleife:&#xD;&#xA;&#xD;&#xA;while Schleife: Bedingung&#xD;&#xA;&#xD;&#xA;im Try: &#xD;&#xA;Klickaktivit?t mit gewünschtem Datum, versucht Feld zu finden&#xD;&#xA;dann: while schleifen Bedingung auf True setzen&#xD;&#xA;&#xD;&#xA;im except: Klickaktivität auf &quot;Weiter&quot;, bis gewünschter Monat angezeigt wird&#xD;&#xA;&#xD;&#xA;While Schleife: Läuft solange bis Try Aktivität erfolgreich durchgeführt wurde\" />")
 
 
-def a_navigate_to (xaml, url, url_before): #muss im selben browser sein
+def a_navigate_to (xaml, url, url_before): #for navigation in the same browser
     xaml.write("    <ui:BrowserScope BrowserType=\"[BrowserType.Edge]\" DisplayName=\"Attach Browser\"  Selector=\"&lt;html app=\'msedge.exe\' url=\'"+url_before+"\' /&gt;\">\n")
     xaml.write("      <ui:BrowserScope.Body>\n")
     xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
