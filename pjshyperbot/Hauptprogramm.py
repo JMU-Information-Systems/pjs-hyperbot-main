@@ -20,19 +20,19 @@ def main(dbname,task, dataScraping, path):
     mypath=path
     mydataScraping=dataScraping
 
-    #Connect to SQLite
+    # connect to SQLite
     l_database = sqlite3.connect(dbname)
     cursor = l_database.cursor()
 
     xaml = open(filename,"w", encoding="utf-8")
-    endknoten = deque() # stack, um Endknotenhierarchie aufzuheben
+    endknoten = deque() # stack for closing end node hierarchy
     akt_name = NONE
-    offene_apps = deque() #Liste, welche Applikationsnamen der bereits offenen Anwendungen enthält
+    offene_apps = deque() # list with open applications
 
-    endknoten.append(lib_bausteine.activity(xaml)) #schreibe Activity Header und nimm den return Wert (Endknoten) in den Stapel auf
-    endknoten.append(lib_bausteine.sequence(xaml)) #schreibe Sequence Header und nimm den return Wert (Endknoten) in den Stapel auf
-    endknoten.append(lib_bausteine.s_varaibles(xaml))#schreibe Variables Header und nimm return Wert (Endknoten) in den Stapel auf
-    cursor.execute("SELECT * FROM variables ORDER BY v_id")  #lese Variable Tabelle
+    endknoten.append(lib_bausteine.activity(xaml)) # write sequence header and add the return value (Endknoten) into the stack
+    endknoten.append(lib_bausteine.sequence(xaml)) # write sequence header and add the return value (Endknoten) into the stack
+    endknoten.append(lib_bausteine.s_varaibles(xaml))# write variables header and add the return value (Endknoten) into the stack
+    cursor.execute("SELECT * FROM variables ORDER BY v_id")  #read variable table
     def matching(cursor):
         results = {}
         column = 0
@@ -54,6 +54,7 @@ def main(dbname,task, dataScraping, path):
     #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
     endknoten.append(lib2_bausteine.a_sequence_variablenextraktion(xaml, task))
     
+    # write get text for all variables
     cursor = l_database.cursor()
     cursor.execute("SELECT * FROM variables ORDER BY v_id")   
     for row in cursor:
@@ -62,7 +63,7 @@ def main(dbname,task, dataScraping, path):
     cursor.close()
 
     cursor = l_database.cursor()
-    cursor.execute("SELECT * FROM logger ORDER BY e_id")  #lese Logger Tabelle
+    cursor.execute("SELECT * FROM logger ORDER BY e_id")  #read loger table
     #Sodass nicht auf einzelne Spaltennummern zugegriffen werden muss, sondern der Zugriff über den Spaltennamen erfolgt
     def matching(cursor):
         results = {}
@@ -104,7 +105,7 @@ def main(dbname,task, dataScraping, path):
         else:
             u_name=str(row[column['u_name']]).replace("<","&lt;").replace(">","&gt;").replace("&", "&amp;amp;").replace("\'","&apos;").replace("\"","&quot;")
 
-        #Prüfe, ob sich der Applikationsname ändert, um Bodys zu bilden
+        # check if the application name is changed to form container
         if akt_name != str(row[column['a_applicationname']]):
             if akt_name != NONE:
                 xaml.write(endknoten.pop())
@@ -141,13 +142,14 @@ def main(dbname,task, dataScraping, path):
         if url != 'None':
             url_before=url
 
-
     cursor.close()
-
+    
     #baue alle noch offenen Endknoten vom Stack ab
     while endknoten.__len__() > 0:
         if endknoten.__len__() ==2:
-           verbesserungsvorschlaege(xaml,dbname, mydataScraping)
+            for app in offene_apps:
+                lib2_bausteine.a_close_window(xaml, app)
+            verbesserungsvorschlaege(xaml,dbname, mydataScraping)
         xaml.write(str(endknoten.pop()))       
         
 
@@ -167,15 +169,12 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
     #Initialiserung des Tests auf Datepicker, wenn ja, wird Kommentar mit Hinweis zum Umgang mit Datepickern gegeben 
     #löst aus, wenn Wort in Spalte existiert (kann auch nur ein Substring sein), unabhängig von Groß und Kleinschreibung
     test_datepicker=['kalender', 'calendar', 'calend', 'datepick','timepick']
-    check=u_name
-    check2=elementclass
+    
+    # Check if word from list test_datepicker occurs in these columns
+    check = (u_name + " " + elementclass + " " + automationid)
 
     #wandelt alle Großbuchstaben in Kleinbuchstaben um, um Prüfung insensitive zu machen
     check_upper_lower=check.lower()
-    check_upper_lower2=check2.lower()
-
-    #Initialisierung des Tests auf Maximieren, Maximieren und Abbrechen, da dies nicht automatisiert werden soll
-    test_max_min=['minimieren', 'maximieren', 'abbrechen']
 
    
     #Abfrage auf Anwendung
@@ -191,14 +190,6 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         #Prüfung auf Spalte u_name
         if any (x in check_upper_lower for x in test_datepicker):
             lib_bausteine.a_comment_calendar_picker(xaml)
-
-        #Prüfung auf Spalte elementclass
-        if any (x in check_upper_lower2 for x in test_datepicker):
-            lib_bausteine.a_comment_calendar_picker(xaml)
-
-         #Dies soll nicht automatisiert werden, daher Ausschluss
-        #if any (x in check_upper_lower for x in test_max_min):
-         #  pass 
 
 
         #Abfrage auf Aktivitäten über Spalte Type:
@@ -606,6 +597,8 @@ def verbesserungsvorschlaege(xaml, dbname, dataScraping):
     
     #End of the commented out block
     lib2_bausteine.a_sequence_comment_out_end(xaml) 
+    cursor.close()
+    cursor2.close()
 
 
 
