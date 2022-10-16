@@ -195,7 +195,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
         #If url changes to the predecessor, navigate to the next page
 
         if url != url_before and url_before is not None:
-            lib_bausteine.a_navigate_to(xaml, a_url, url_before)
+            lib_bausteine.a_navigate_to(xaml, a_url)
 
         
         #Is a calendar picker used? Automations are difficult, therefore comment and note to the post-processor
