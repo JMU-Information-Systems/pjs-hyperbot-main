@@ -1,4 +1,4 @@
-# EXTRACT uilog from Logger DB
+# EXTRACT data from Logger DB
 # coding=utf-8
 from datetime import datetime
 import sqlite3
