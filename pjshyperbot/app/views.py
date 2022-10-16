@@ -2,6 +2,7 @@
 Definition of views.
 """
 
+from ast import Try
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -27,7 +28,15 @@ def register(request):
     context = {"form": form}
     return render(request, "app/register.html", context)
 
-
+def error(request, error, message):
+    return render(
+        request,
+        'app/error.html',
+        {
+            'error':error,
+            'message':message,
+        }
+    )
 
 def home(request):
     """Renders the home page."""
@@ -93,10 +102,23 @@ def input(request):
     extractor = HTMLExtraction()
 
     #Extract the variables from the task template in Weclapp
-    combined,variableName, value = extractor.getVariables(task)
+    try:
+        combined,variableName, value = extractor.getVariables(task)
+    except Exception as e:
+        massage="The Chromedriver is not working correctly. Check the following points and try again: Do you have the Chrome browser installed? Have you installed Chromedriver and placed the .exe file in the following folder C:\Program Files (x86)\chromedriver.exe? Is your VPN connection set up? Have you created the right task template in WeClapp and specified the variables in table form? Did you enter the correct name of the task template in the frontend? If these hints have been taken into account, increase the time.sleep"
+        #print()
+        return error(request, e, massage)
+
+
 
     #write the extracted variables from Weclapp into the database to display them in the dropdown.on the next page
-    db.insertInputWeclapp(variableName, filename)
+    try:
+        db.insertInputWeclapp(variableName, filename)
+    except Exception as e:
+        massage="The Chromedriver is not working correctly. Check the following points and try again: Do you have the Chrome browser installed? Have you installed Chromedriver and placed the .exe file in the following folder C:\Program Files (x86)\chromedriver.exe? Is your VPN connection set up? Have you created the right task template in WeClapp and specified the variables in table form? Did you enter the correct name of the task template in the frontend? If these hints have been taken into account, increase the time.sleep"
+        #print()
+        return error(request, e, massage)
+
 
     #Querying the variables in the database in order to be able to display them in the frontend in the drop-down menu.
     variables = db.getVariables(filename)
@@ -165,3 +187,4 @@ def nextSteps(request):
             'year':datetime.now().year,
         }
     )
+
