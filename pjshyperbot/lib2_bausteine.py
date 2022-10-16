@@ -552,7 +552,7 @@ def a_click_browser_text_var2 (xaml, application_name, url, aaname, eventtype):
     xaml.write("                </ui:CursorPosition>\n")
     xaml.write("              </ui:Click.CursorPosition>\n")
     xaml.write("              <ui:Click.Target>\n")
-    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+aaname+"\'tag=\'LABEL\' /&gt;\" TimeoutMS=\"1000\">\n")
+    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl aaname=\'"+aaname+"\' tag=\'LABEL\' /&gt;\" TimeoutMS=\"1000\">\n")
     xaml.write("                  <ui:Target.WaitForReady>\n")
     xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
     xaml.write("                  </ui:Target.WaitForReady>\n")
