@@ -56,5 +56,13 @@ def a_comment_calendar_picker (xaml):
     xaml.write("            <ui:Comment Text=\"Kalender Picker: Es wurde im Prozessablauf ein Datepicker verwendet. Bitte pruefen, ob Datum hier manuell eingegeben werden kann. Wenn ja, dann ganz normal mit Type Into. Ansonsten bitte Klickaktivität manuell einbauen mit dynamischem Selektor, der entsprechend das gewünschte Datum auswählen kann. &#xD;&#xA;&#xD;&#xA;Wichtig: Es kann sein, dass der Monat mit dem gewünschten Datum nicht direkt angezeigt wird, wenn der Kalender geöffnet ist. &#xD;&#xA;&#xD;&#xA;Dann so vorgehen:&#xD;&#xA;&#xD;&#xA;Try Catch Aktivität einbauen, innerhalb einer while Schleife:&#xD;&#xA;&#xD;&#xA;while Schleife: Bedingung&#xD;&#xA;&#xD;&#xA;im Try: &#xD;&#xA;Klickaktivit?t mit gewünschtem Datum, versucht Feld zu finden&#xD;&#xA;dann: while schleifen Bedingung auf True setzen&#xD;&#xA;&#xD;&#xA;im except: Klickaktivität auf &quot;Weiter&quot;, bis gewünschter Monat angezeigt wird&#xD;&#xA;&#xD;&#xA;While Schleife: Läuft solange bis Try Aktivität erfolgreich durchgeführt wurde\" />")
 
 
-def a_navigate_to (xaml, url): #muss im selben browser sein
-    xaml.write("            <ui:NavigateTo Browser=\"{x:Null}\" DisplayName=\"Navigate To\" Url=\""+url+"\" />\n")
+def a_navigate_to (xaml, url, url_before): #muss im selben browser sein
+    xaml.write("    <ui:BrowserScope BrowserType=\"[BrowserType.Edge]\" DisplayName=\"Attach Browser\"  Selector=\"&lt;html app=\'msedge.exe\' url=\'"+url_before+"\' /&gt;\">\n")
+    xaml.write("      <ui:BrowserScope.Body>\n")
+    xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
+    xaml.write("          <Sequence DisplayName=\"Do\">\n")
+    xaml.write("            <ui:NavigateTo Browser=\"{x:Null}\" DisplayName=\"Navigate To\" sap:VirtualizedContainerService.HintSize=\"358,68.6666666666667\" sap2010:WorkflowViewState.IdRef=\"NavigateTo_1\" Url=\""+url+"\" />\n")
+    xaml.write("                  </Sequence>\n")  
+    xaml.write("                </ActivityAction>\n")
+    xaml.write("              </ui:BrowserScope.Body>\n")
+    xaml.write("            </ui:BrowserScope>\n")

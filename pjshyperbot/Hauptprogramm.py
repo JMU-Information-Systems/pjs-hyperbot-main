@@ -33,6 +33,8 @@ def main(dbname,task, dataScraping, path):
     endknoten.append(lib_bausteine.sequence(xaml)) # write sequence header and add the return value (Endknoten) into the stack
     endknoten.append(lib_bausteine.s_varaibles(xaml))# write variables header and add the return value (Endknoten) into the stack
     cursor.execute("SELECT * FROM variables ORDER BY v_id")  #read variable table
+    
+    #Initialize that columns can be queried by column name
     def matching(cursor):
         results = {}
         column = 0
@@ -47,14 +49,14 @@ def main(dbname,task, dataScraping, path):
     xaml.write(str(endknoten.pop()))
     cursor.close()
     
-   
-    lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, ggf. sind Modifikationen notwendig")
-    #lib2_bausteine.a_maximise_window(xaml)
+    #Calling the module a_comment and insert comment at the beginning
+    lib_bausteine.a_comment(xaml,"2", "Für den aufgezeichneten Prozess wurde automatische eine xaml Datei erzeugt, bitte manuelle Nachbearbeitung über Debug Mode vornehmen")
     
-    #Baustein manuell für Variablenextraktion aus WeClapp, hierzu muss Name der Vorlage mitgegeben werden=task
+    
+    #Module manually for variable extraction from WeClapp, for this the name of the template must be given=task
     endknoten.append(lib2_bausteine.a_sequence_variablenextraktion(xaml, task))
     
-    # write get text for all variables
+    # write get text for all variables to be extracted 
     cursor = l_database.cursor()
     cursor.execute("SELECT * FROM variables ORDER BY v_id")   
     for row in cursor:
@@ -62,9 +64,11 @@ def main(dbname,task, dataScraping, path):
     xaml.write(str(endknoten.pop()))
     cursor.close()
 
+    #Initialize the cursor and start the connection to the database
     cursor = l_database.cursor()
-    cursor.execute("SELECT * FROM logger ORDER BY e_id")  #read loger table
-    #Sodass nicht auf einzelne Spaltennummern zugegriffen werden muss, sondern der Zugriff über den Spaltennamen erfolgt
+    cursor.execute("SELECT * FROM logger ORDER BY e_id")  #read logger table
+
+    #Initialize that columns can be queried by column name, so that it is not necessary to access individual column numbers
     def matching(cursor):
         results = {}
         column = 0
@@ -75,7 +79,7 @@ def main(dbname,task, dataScraping, path):
 
     column = matching(cursor)
      
-    #Initialisierung der Variablen der url_before, die zum Vergleich mit Vorgängersatz benötigt wird
+    ##initialization of the url_before variable needed for comparison with previous set
     url_before=None
     
 
@@ -87,7 +91,7 @@ def main(dbname,task, dataScraping, path):
         a = urlparse(str(row[column['a_url']]))
         website_name = str(a.hostname)
         
-        #Hier gesondertes Trimmen, da urllib parse nicht greift
+        #Here separate trimming, since urllib parse does not take effect
         if (str(row[column['a_url']])).__contains__("132.187.226.138:8080/"):
             url="*132.187.226.138:8080/*"
         
@@ -97,7 +101,7 @@ def main(dbname,task, dataScraping, path):
         else:
             url=a_url
 
-        #Fehlerhandling, falls Sonderzeichen wie "&" in Spalte "name" vorhanden sind werden diese entfernt
+        #Error handling, if special characters like "&" are present in column "name" they are removed
         u_name= str(row[column['u_name']])
 
         if str(row[column['a_applicationname']]) == "notepad++":
@@ -131,9 +135,9 @@ def main(dbname,task, dataScraping, path):
                     endknoten.append(lib2_bausteine.a_open_application(xaml, str(row[column['a_applicationname']]), str(row[column['a_windowtitle']])))
                     lib2_bausteine.a_comment_open_application (xaml)
 
-        # url ist modifizierte Url auf Domain, die wir für den Selektor benötigen, 
-        # a_url die Original URL, die wir für das Öffnen des Browsers und beim Navigieren zu einer Seite benötigen
-        #url_before ist die modifizierte URL des Vorgängersatzes, die zum Vergleich mit aktueller URL dient und bei Wechsel den navigate Baustein aufruft
+        # url is modified url on domain which we need for selector, 
+        # a_url is the original URL, which we need for opening the browser and navigating to a page.
+        #url_before is the modified URL of the previous set, which is used for comparison with the current URL and calls the navigate module if it changes
         
         #Calling the actions function
         aktionen(url, a_url,url_before, xaml, str(row[column['automationid']]), u_name, str(row[column['u_type']]), str(row[column['u_eventtype']]), str(row[column['u_value']]), str(row[column['a_applicationname']]), str(row[column['a_windowtitle']]),str(row[column['elementclass']]), str(row[column['input_variables']]))
@@ -144,7 +148,7 @@ def main(dbname,task, dataScraping, path):
 
     cursor.close()
     
-    #baue alle noch offenen Endknoten vom Stack ab
+    #remove all open end nodes from the stack
     while endknoten.__len__() > 0:
         if endknoten.__len__() ==2:
             for app in offene_apps:
@@ -154,323 +158,365 @@ def main(dbname,task, dataScraping, path):
         
 
 
-#Abfrage auf Applikationen, ob Browser
+#Query on applications by looping through the row, Matching criteria between log data and blocks, calling blocks and passing the variables to generate the selectors
 
-#Browser: Wenn der a_applicationname "Edge"  ist, handelt es sich um Browseraktivitäten in MS Edge
+
 def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventtype, u_value, a_applicationname, a_windowtitle,elementclass, input_variables):
     
-    #Abfrage des Eventtypes um in den Aktivitäten nicht zwischen Links und Rechtsklicks unterscheiden zu müssen. Wert kann nicht direkt übernommen werden, daher Anpassung
+    #Query of the event type in order not to have to distinguish between left and right clicks in the browser activities
+    #Value can not be taken over directly because log data differ, therefore adjustment
     if u_eventtype=="Left-Down":
         u_eventtype="BTN_LEFT"
 
     if u_eventtype=="Right-Down":
         u_eventtype="BTN_RIGHT"
     
-    #Initialiserung des Tests auf Datepicker, wenn ja, wird Kommentar mit Hinweis zum Umgang mit Datepickern gegeben 
-    #löst aus, wenn Wort in Spalte existiert (kann auch nur ein Substring sein), unabhängig von Groß und Kleinschreibung
+    #initialize test list on datepicker, if yes, comment is given with hint on how to handle datepickers 
+    #triggers if word exists in column (can also be just a substring), case insensitive
     test_datepicker=['kalender', 'calendar', 'calend', 'datepick','timepick']
     
     # Check if word from list test_datepicker occurs in these columns
     check = (u_name + " " + elementclass + " " + automationid)
 
-    #wandelt alle Großbuchstaben in Kleinbuchstaben um, um Prüfung insensitive zu machen
+    #converts all uppercase letters to lowercase to make check insensitive
     check_upper_lower=check.lower()
 
-   
-    #Abfrage auf Anwendung
+    #Query on activities
     if a_applicationname == "msedge":
+
+        #Windowtitle must be trimmed for using the selectors in the browser, because data from logger does not match exactly at the end. 
+        #Therefore trim after the first word and generate a dynamic selector with*
+
+        trim=a_windowtitle
+        trim_windowtitle=trim.split(' ',2)
+        trimmed_windowtitle=trim_windowtitle[0]+"*"
         
-        #Wenn sich Url ändert, soll zur nächsten Seite navigiert werden
+        #If url changes to the predecessor, navigate to the next page
 
         if url != url_before and url_before is not None:
-            lib_bausteine.a_navigate_to(xaml, a_url)
+            lib_bausteine.a_navigate_to(xaml, a_url, url_before)
 
         
-        #Wird ein Kalenderpicker verwendet? Dann Kommentar mit Hinweis
-        #Prüfung auf Spalte u_name
+        #Is a calendar picker used? Automations are difficult, therefore comment and note to the post-processor
         if any (x in check_upper_lower for x in test_datepicker):
             lib_bausteine.a_comment_calendar_picker(xaml)
 
+        
 
-        #Abfrage auf Aktivitäten über Spalte Type:
+        #Query on activities via column Type:
             
-        #Check if the activity has a value assigned in the automationid column. If the length is greater than 0, an ID has been recorded. 
+        #Check if the activity has a value assigned in the automationid column. If the length is greater than 0, an ID has been recorded.
+        #Then only one module variant is necessary 
             
         if len(automationid)>0: 
-            if u_type == "Schaltfläche" or u_type=="Link": #dann ist es eine Klickakitivität
+            if u_type == "Schaltfläche" or u_type=="Link": #click acitivity
                  
                 lib2_bausteine.a_click_browser_schaltfläche_id(xaml, a_applicationname, url, u_name, automationid, u_eventtype)
             
-            #Abfrage auf andere Eventtypen im Browser                        
+            #query on other event types in the browser and call the blocks, pass the variables                        
 
             elif u_type == "Kombinationsfeld":
                 lib2_bausteine.a_click_kombinationsfeld(xaml,a_applicationname,url, u_name, automationid, u_eventtype)        
             
-            elif u_type == "checkbox" or (u_type) == "Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
-                #Variante über ID
+            elif u_type == "checkbox" or (u_type) == "Kontrollkästchen":
+                #Using the ID of the UI element
                 lib2_bausteine.a_click_browser_checkbox(xaml, a_applicationname,url,u_name, automationid, u_eventtype)
       
             elif u_type== "Optionsfeld":
-                #Variante 1, nur über ID
+                #Using the ID of the UI element
                 lib2_bausteine.a_click_browser_optionsfeld(xaml,a_applicationname, url, u_name,automationid, u_eventtype)
 
-            #wie Kombinationsfeld, nur wenn ID vorhanden ist berücksichtigen. Identifikation über parentid
+            #like combo box, only consider if ID is present
             elif u_type=="Gruppe":
                 lib2_bausteine.a_click_gruppe(xaml,a_applicationname, url, u_name, automationid, u_eventtype)  
 
                     
-            # Abfrage der Keystroke Aktivitäten im Browser
+            # Query the keystroke activities in the browser
 
-            #diese Typen sind Felder, wo Text eingegeben wird, d.h. Keystroke Aktivitäten
+            #these types are fields where text is entered, i.e. keystroke activities
             elif u_type == "Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer": 
                 #Bedingung für Texteingabe
                 if u_eventtype == "BTN_LEFT" or u_eventtype=="BTN_RIGHT":      
 
-                    #Suche über ID, tag=Input, type=Text
+                    #Using ID and tag=Input
                     lib2_bausteine.a_type_into_browser(xaml, a_applicationname,url, u_name, automationid, input_variables)
                  
-                #wenn in der Eingabe ein @Zeichen vorkommt, gibt der Logger folgenden Ausdruck zurück. Gleicher Type Into Baustein
+                #if there is an @character in the input, the logger returns the following expression. Same Type Into block
                 elif u_eventtype=="CTRL + ALT + ALTGR + Q":
                     lib2_bausteine.a_type_into_browser(xaml, a_applicationname,url, u_name, automationid, input_variables) 
                 
-                #Shortcutkombination kopieren, d.h. Baustein Send Hotkey Strg+C    
+                #Copy shortcut combination, i.e. block Send Hotkey Ctrl+C     
                 elif u_eventtype == "CTRL + C":
 
-                    #ID, tag=Input, type=Text
+                    #ID, tag=Input
                     lib2_bausteine.a_send_hotkey_strg_c_browser(xaml, a_applicationname,url, u_name, automationid)
 
-                #Einfügen Shortcutkombination
+                #Insert shortcut combination, i.e. block Send Hotkey Ctrl+V
                 elif u_eventtype == "CTRL + V":
 
-                    #ID, tag=Input, type=Text
+                    #ID, tag=Input
                     lib2_bausteine.a_send_hotkey_strg_v_browser(xaml, a_applicationname,url, u_name, automationid)
 
                         
-        #dann gibt es keine ID, Identifikation der Elemente nicht immer gewährleistet, daher Varianten
-        else:
-            #Bedingung für Klickaktivität
-            if u_type == "Schaltfläche" or u_type=="Link":
-                #Starten der Sequenz
-                lib2_bausteine.a_sequence_click_start(xaml, u_name)
+        #Else Block: then there is no ID, identification of elements not always guaranteed, therefore using variants for same activity
+        #The variants are within a sequence to keep the clarity in the postprocessing
+        #Therefore, each variant block starts with a start sequence, then the variants and finally the closing of the variant block.
 
-                #Baustein Variante 1, nur über aaname
-                lib2_bausteine.a_click_browser_schaltfläche_no_id(xaml,a_applicationname, url,u_name, u_eventtype)
+        else:
+            #Click activity condition
+            if u_type == "Schaltfläche":
+                #Starting the sequence
+                lib2_bausteine.a_sequence_start_schaltflaeche (xaml, u_name)
+
+                #Module variant 1, with wnd tag, attriute name and role, role push button
+                lib2_bausteine.a_click_browser_schaltfläche_no_id (xaml,a_applicationname, trimmed_windowtitle, u_name, u_eventtype)
                         
-                #Baustein Variante 2, mit Tag+Type=Button in Kombination mit Abfrage nach Name (aaname) des Feldes 
-                lib2_bausteine.a_click_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name, elementclass, u_eventtype)
+                #Module variant 2, with html tag and attribute aaname
+                lib2_bausteine.a_click_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name, u_eventtype)
                         
-                #Ende der Sequenz
+                #End of sequence
                 lib2_bausteine.a_sequence_end(xaml)
-  
+
+            elif u_type=="Link":
+                #Start of Sequence
+                lib2_bausteine.a_sequence_click_start(xaml, u_name)
+                
+                #Module variant 1, with wnd tag, attriute name and role, role link
+                lib2_bausteine.a_click_browser_link_no_id(xaml, a_applicationname, trimmed_windowtitle, u_name, u_eventtype)
+                
+                ##Module variant 2, with html tag and attribute aaname und elementclass
+                lib2_bausteine.a_click_browser_link_no_id_var2(xaml,a_applicationname, url, u_name, elementclass, u_eventtype)
+
+                lib2_bausteine.a_sequence_end(xaml)
 
             elif u_type=="Kombinationsfeld":
-                lib2_bausteine.a_click_kombinationsfeld_no_id(xaml, a_applicationname, url,u_name, elementclass, u_eventtype)
+                
+                #Starting the sequence
+                lib2_bausteine.a_sequence_click_kombinationsfeld_start(xaml)
+
+                #Module variant 1, with wnd tag, attriute name and role. Role combo-box
+                lib2_bausteine.a_click_kombinationsfeld_no_id(xaml, a_applicationname, trimmed_windowtitle, u_name, u_eventtype)
+
+                #Baustein 2, Module 2, with html tag and attribute aaname 
+                lib2_bausteine.a_click_kombinationsfeld_no_id_var2(xaml, a_applicationname, url,u_name, u_eventtype)
+
+                #End of sequence
+                lib2_bausteine.a_sequence_end(xaml)
+
+
 
             elif u_type == "checkbox" or u_type=="Kontrollkästchen": #manchmal auf deutsch, manchmal englisch vom Logger
-                #Start der Sequenz
+                
+                #Starting the sequence
                 lib2_bausteine.a_sequence_click_checkbox_start(xaml, u_name)
 
-                #Variante mit name, tag=Input, type=checkbox, elementclass
-                lib2_bausteine.a_click_browser_checkbox_no_id (xaml, a_applicationname, url, u_name, elementclass, u_eventtype)
+                #Module variant 1, with wnd tag, attriute name and role. Role check box
+                lib2_bausteine.a_click_browser_checkbox_no_id (xaml, a_applicationname, trimmed_windowtitle, u_name, u_eventtype)
 
-                #Variante 2, über aaname, Tag=Input, type=checkbox
+                #Module variant 2, Variante 2, html tag und Attribut aaname
                 lib2_bausteine.a_click_left_browser_checkbox_no_id_var2(xaml, a_applicationname,url, u_name, u_eventtype)
                     
-                #Ende der Sequenz
+                #End of sequence
                 lib2_bausteine.a_sequence_end(xaml)
+
 
             elif u_type== "Optionsfeld":
-                #Starten der Sequenz
+                #Starting the sequence
                 lib2_bausteine.a_sequence_click_optionsfeld_start(xaml,u_name)
                 
-                #Variante 1, über aaname und Klasse
-                lib2_bausteine.a_click_browser_optionsfeld_no_id(xaml,a_applicationname, url, u_name, u_eventtype)
+                #Module variant 1, wnd tag and attribute name and role. role radio button
+                lib2_bausteine.a_click_browser_optionsfeld_no_id(xaml,a_applicationname, trimmed_windowtitle, u_name, u_eventtype)
                 
-                #Variante 2, nur über aaname und aria-role=option
+                #Modul variant 2, html Tag, Attribut aaname 
                 lib2_bausteine.a_click_browser_optionsfeld_var_no_id_var2(xaml,a_applicationname, url, u_name, elementclass, u_eventtype)
                     
-                #Ende der Sequenz
+                #End of sequence
                 lib2_bausteine.a_sequence_end(xaml)
-                #lib_bausteine.a_comment_optionsfeld(xaml)
+               
                 
-                #keine ID
+            #does not exist with id, therefore only here query  
             elif u_type=="Text":
-                #Start der Sequenz
-                lib2_bausteine.a_sequence_click_start(xaml, u_name)
-                #Variante 1, über aaname und tag=LABEL
-                lib2_bausteine.a_click_browser_text(xaml,a_applicationname, url, u_name, u_eventtype)
 
-                #Variante 2, nur über aaname
+                #Sequence start
+                lib2_bausteine.a_sequence_click_start(xaml, u_name)
+
+                #Module variant 1, wnd tag and attribute name and role. role editable text
+                lib2_bausteine.a_click_browser_text(xaml,a_applicationname, trimmed_windowtitle, u_name, u_eventtype)
+
+                #Modul variant 2, html Tag, Attribut aaname 
                 lib2_bausteine.a_click_browser_text_var2(xaml,a_applicationname, url, u_name, u_eventtype)
 
-                #Ende der Sequenz
+                #End of sequence
                 lib2_bausteine.a_sequence_end(xaml)
 
 
-                #wenn Grafik angeklickt wird, keine id, über aaname und tag='IMG'
+              
             elif u_type=="Grafik":
-                lib2_bausteine.a_click_browser_grafik (xaml, a_applicationname, url, u_name, u_eventtype)
-                
-            elif u_type == "Bearbeiten":  # d.h. es ist eine Keystroke Aktivität, bzw. Texteingabe
+
+                #Sequence start
+                lib2_bausteine.a_sequence_click_grafik_start(xaml)
+
+                #Module variant 1, wnd tag and attribute name and role. role editable text
+                lib2_bausteine.a_click_browser_grafik (xaml, a_applicationname, trimmed_windowtitle, u_name, u_eventtype)
+
+                #Modul variant 2, html Tag, Attribut aaname 
+                lib2_bausteine.a_click_browser_grafik_var2(xaml, a_applicationname, url, u_name, u_eventtype)
+
+                #End of sequence
+                lib2_bausteine.a_sequence_end(xaml)
+
+            # i.e. it is a keystroke activity, resp. text input    
+            elif u_type == "Bearbeiten":  
                 
                 if u_eventtype == "BTN_LEFT" or u_eventtype=="BTN_RIGHT":
-                    #Start der Sequenz
+                    #Sequence start
                     lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
                     
-                    #Suche über Name und Tag=Input, Type=Text
+                    #Modul variant 1, attribute name
                     lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, input_variables)
                         
-                    #Variante 1, keine ID, Name, Tag=Input, type =text
+                    #Modul variant 2
                     lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, input_variables)
 
-                    #Ende der Sequenz, alles zwischendrin wird ausprobiert
+                    #End of sequence
                     lib2_bausteine.a_sequence_end (xaml)
 
 
                 #wenn in der Eingabe ein @Zeichen vorkommt, gibt der Logger folgenden Ausdruck zurück. Gleicher Type Into Baustein
                 elif u_eventtype=="CTRL + ALT + ALTGR + Q":
-                    #Start der Sequenz
+                    #Sequence start
                     lib2_bausteine.a_sequence_typeinto_start(xaml, u_name)
                     
-                    #Suche über Name und Tag=Input, Type=Text
+                    #Modul variant 1
                     lib2_bausteine.a_type_into_browser_no_id(xaml, a_applicationname,url, u_name, input_variables)
                         
-                    #Variante 1, keine ID, Name, Tag=Input, type =text
+                    #odul variant 2
                     lib2_bausteine.a_type_into_browser_no_id_var2(xaml, a_applicationname,url, u_name, input_variables)
 
-                    #Ende der Sequenz, alles zwischendrin wird ausprobiert
+                    #End of sequence
                     lib2_bausteine.a_sequence_end (xaml)
    
                     
-                #es wird etwas kopiert, d.h. Baustein Send Hotkey Strg+C
+                #something is copied, i.e. block Send Hotkey Ctrl+C
                     
                 elif u_eventtype == "CTRL + C":
-                    #Starten der Sequenz
+                    #Start of sequence
                     lib2_bausteine.a_sequence_send_hotkey_Strg_C_start(xaml, u_name)
                 
-                    #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
+                    #Module variant 1
                     lib2_bausteine.a_send_hotkey_strg_c_browser_no_id(xaml, a_applicationname,url, u_name)
 
-                    #Variante 2, keine ID, kein Name, nur Tag=Input, type =text
+                    #Module variante 2
                     lib2_bausteine.a_send_hotkey_strg_c_browser_no_id_var2(xaml, a_applicationname,url, u_name, elementclass)
-                
+
+                    #End of sequence
                     lib2_bausteine.a_sequence_end(xaml)
 
                     
-                #es wird etwas eingefügt, Send Hotkey Strg+V
+                #insert, Send Hotkey Ctrl+V
 
                 elif u_eventtype == "CTRL + V":
                 
-                    #Start der Sequenz
+                    #Start of sequence
                     lib2_bausteine.a_sequence_send_hotkey_Strg_V_start(xaml, u_name)
 
-                    #Variante 1,wenn keine ID, Suche über Name und Tag=Input, Type=Text
+                    #Module variant 1
                     lib2_bausteine.a_send_hotkey_strg_v_browser_no_id(xaml, a_applicationname,url, u_name)
 
-                    #Variante 2, keine ID, kein Name, nur Tag=Input
+                    #VModul variant 2
                     lib2_bausteine.a_send_hotkey_strg_v_browser_no_id_var2(xaml, a_applicationname,url, u_name)
 
+                    #Sequence end
                     lib2_bausteine.a_sequence_end(xaml) 
                            
-                #Baustein für Enter 
+                #Click Enter 
             elif u_eventtype == "ENTER":
                 lib2_bausteine.a_press_enter(xaml)
                
- 
+    #Application name explorer. Use of UIA selectors, no query for types necessary since role attribute matches log data an be integrated into the selector.
     elif a_applicationname=="explorer": 
 
 
-        #Test auf Datepicker, wenn ein Datepicker verwendet wird, wenn ein Hinweis zum entsprechenden Umgang gegeben
-        #Prüfung auf Spalte u_name
+        #Test datepicker
         if any (x in check_upper_lower for x in test_datepicker):
             lib_bausteine.a_comment_calendar_picker(xaml)
   
-        #Prüfung auf Spalte elementclass
-        if any (x in check_upper_lower2 for x in test_datepicker):
-            lib_bausteine.a_comment_calendar_picker(xaml)
-
-        #Im Explorer keine Unterscheidung ob ID oder ID notwendig, da Klickfelder über den name und die Rolle identifiziert, Keystrokefelder über die automationid name und role werden
-        #da hier die Rolle mit den Logdaten übereinstimmt, kann diese direkt in den Selektor integriert werden
         
         if u_type == "Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer": 
             
-            if u_eventtype == "BTN_LEFT" or u_eventtype=="BTN_RIGHT": #dann ist es eine Texteingabe
-                   
-                #Variante 1, Abfrage auf automationid, name und role   
+            if u_eventtype == "BTN_LEFT" or u_eventtype=="BTN_RIGHT": #then it is a text input
+                #using uia selctor 
                 lib2_bausteine.a_type_into_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type, input_variables)
 
-                #wenn in der Eingabe ein @Zeichen vorkommt, gibt der Logger folgenden Ausdruck zurück. Gleicher Type Into Baustein
+               
             elif u_eventtype=="CTRL + ALT + ALTGR + Q":
                 lib2_bausteine.a_type_into_explorer(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type, input_variables)
                 
             elif u_eventtype == "CTRL + C":
-                #über ID, name und role, uia Selektor
+                #ID, name und role, uia Selektor
                 lib2_bausteine.a_send_hotkey_strg_c_in_explorer(xaml, a_applicationname, a_windowtitle, u_name, automationid, u_type)
                   
             elif u_eventtype == "CTRL + V":
-                #über ID, name und role, uia Selektor
+                #ID, name und role, uia Selektor
                 lib2_bausteine.a_send_hotkey_strg_v_in_explorer(xaml, a_applicationname, a_windowtitle, u_name, automationid, u_type)
                  
             elif u_eventtype == "ENTER":
                 lib2_bausteine.a_press_enter(xaml)    
             
                 
-        else: #dann immer Klickaktivität, keine weitere Unterscheidung nach Typ notwendig, da dieser immer mitgeliefert wird und mit Logger übereinstimmt
+        else: #then always click activity
                     
             if u_eventtype=="BTN_LEFT":
-                #Linksklick, Name und Role
+                #Left click, attributes Name and Role
                 lib2_bausteine.a_click_left_in_explorer(xaml, a_applicationname, a_windowtitle,u_name, u_type)
                   
-            else: #Rechtsklick, Name und Role
+            else: #Right click, Name and Role
                 lib2_bausteine.a_click_right_in_explorer(xaml, a_applicationname, a_windowtitle, u_name, u_type)
                     
                  
-    else: #dann ist es eine Applikation, gesonderte Bausteine. Da hier die Rolle mit den Logdaten übereinstimmt, kann diese direkt in den Selektor integriert werden
+    else: #then it is an application, separate blocks. Since here the role corresponds with the log data, this can be integrated directly into the selector
  
-        #Test auf Datepicker, wenn ein Datepicker verwendet wird, wenn ein Hinweis zum entsprechenden Umgang gegeben
-        #Prüfung auf Spalte u_name
+        #Test Datepicker,
+        
         if any (x in check_upper_lower for x in test_datepicker):
             lib_bausteine.a_comment_calendar_picker(xaml)
 
-        #Prüfung auf Spalte elementclass
-        if any (x in check_upper_lower2 for x in test_datepicker):
-            lib_bausteine.a_comment_calendar_picker(xaml)
 
-        #wird ID mit aufgezeichnet?
+        #does the element have an id?
         if len(automationid)>0:
             if u_type == "Bearbeiten" or u_type=="Suchfeld" or u_type=="Telefonnummer":
 
                 if u_eventtype == "BTN_LEFT" or u_eventtype=="BTN_RIGHT":
-                    #Type Into mit automationid, name und role
+                    #Type Into automationid, name und role
                     lib2_bausteine.a_type_into_application(xaml, a_applicationname, a_windowtitle, automationid,  u_name, u_type, input_variables)
                                 
-                #wenn in der Eingabe ein @Zeichen vorkommt, gibt der Logger folgenden Ausdruck zurück. Gleicher Type Into Baustein
+               
                 elif u_eventtype=="CTRL + ALT + ALTGR + Q":
                     lib2_bausteine.a_type_into_application(xaml, a_applicationname, a_windowtitle, automationid,  u_name, u_type, input_variables)
 
                 elif u_eventtype == "CTRL + C":
-                    #Abfrage über automationid und role
+                    #automationid und role
                     lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, a_applicationname, a_windowtitle, automationid,u_name, u_type)
                         
                 elif u_eventtype == "CTRL + V":  
-                    #Abfrage über automationid und role
+                    #automationid und role
                     lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, a_applicationname, a_windowtitle, automationid,u_name, u_type) 
                        
                 elif u_eventtype == "ENTER":
                     lib2_bausteine.a_press_enter(xaml)  
 
-
+            #type=Element occurs in excel tables
             if u_type=="Element":
                     
                 if u_eventtype=="BTN_LEFT" or u_eventtype=="BTN_RIGHT":
-                    pass #dann wird zB nur eine Excel Zeile angeklickt, bekommen wir schon über die nachfolgende Aktion
+                    pass #if only one Excel line is clicked, we already get the following action by shortcut, pass
                                 
                 elif u_eventtype=="CTRL + C":
-                    #Abfrage über automationid und role
+                    #automationid und role
                     lib2_bausteine.a_send_hotkey_strg_c_in_application(xaml, a_applicationname, a_windowtitle, automationid,u_name, u_type)
                         
                 elif u_eventtype=="CTRL + V":
-                    #Abfrage über automationid und role
+                    #automationid und role
                     lib2_bausteine.a_send_hotkey_strg_v_in_application(xaml, a_applicationname, a_windowtitle, automationid,u_name, u_type)
                                        
                 elif u_eventtype == "ENTER":
@@ -478,7 +524,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                         
                                  
                 
-            #um alle Klickaktivitäten abzudecken
+            #to cover all click activities
             else:
                         
                 if u_eventtype == "BTN_LEFT":
@@ -489,12 +535,12 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 else: 
                     lib2_bausteine.a_click_right_in_application(xaml, a_applicationname, a_windowtitle, automationid, u_name, u_type)
             
-        #dann gibt es keine ID            
+        #then there is no ID, same queries as in the if block, but using different attributes for the selectors          
         else: 
             if u_type=="Element":
                     
                 if u_eventtype=="BTN_LEFT" or u_eventtype=="BTN_RIGHT":
-                    pass #dann wird zB nur eine Excel Zeile angeklickt, bekommen wir schon über die nachfolgende Aktion
+                    pass 
                                 
                 elif u_eventtype=="CTRL + C":
                     lib2_bausteine.a_send_hotkey_strg_c_in_application_no_id(xaml, a_applicationname, a_windowtitle, u_name, u_type)
@@ -521,7 +567,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 elif u_eventtype == "ENTER":
                     lib2_bausteine.a_press_enter(xaml) 
                     
-            #um Klickaktivitäten abzudecken
+            #to cover all click activities
             else: 
                 if u_eventtype == "BTN_LEFT":
                     lib2_bausteine.a_click_left_in_application_no_id(xaml,a_applicationname, a_windowtitle, u_name, u_type)
