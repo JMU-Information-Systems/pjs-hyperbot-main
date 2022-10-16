@@ -1,6 +1,5 @@
+# Library of created blocks, which are called from the main program in case of appropriate matching
 # coding=utf-8
-
-#Library of created blocks, which are called from the main program in case of appropriate matching
 
 #Many activity modules were not used in the later course because they could not be assigned and were already created before the initial data basis
 #There are blocks with several variants, which should increase the chance to generate a valid selector. Due to workarounds not all of them are used
