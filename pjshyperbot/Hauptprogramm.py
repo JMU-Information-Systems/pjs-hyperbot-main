@@ -275,6 +275,9 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 #Module variant 2, with html tag and attribute aaname
                 lib2_bausteine.a_click_browser_schaltfläche_no_id_var2(xaml,a_applicationname, url,u_name, u_eventtype)
                         
+                #Module variant 3, with html tag and attribute elementclass
+                lib2_bausteine.a_click_browser_schaltfläche_no_id_var3(xaml, a_applicationname, url, u_name, elementclass, u_eventtype)
+                
                 #End of sequence
                 lib2_bausteine.a_sequence_end(xaml)
 
@@ -510,7 +513,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
             if u_type=="Element":
                     
                 if u_eventtype=="BTN_LEFT" or u_eventtype=="BTN_RIGHT":
-                    pass #if only one Excel line is clicked, we already get the following action by shortcut, pass
+                   lib2_bausteine.a_write_cell(xaml, u_name, input_variables)
                                 
                 elif u_eventtype=="CTRL + C":
                     #automationid und role

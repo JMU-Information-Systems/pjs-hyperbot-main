@@ -108,10 +108,9 @@ def a_edge_browser_start(xaml, url):
     xaml.write("    <ui:OpenBrowser BrowserType=\"Edge\" DisplayName=\"Open Browser\" Url=\""+url+"\">\n")
     xaml.write("      <ui:OpenBrowser.Body>\n")
     xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")	
-    xaml.write("          <ActivityAction.Argument>")	
-    xaml.write("            <DelegateInArgument x:TypeArguments=\"x:Object\" Name=\"ContextTarget\" />")	
-    xaml.write("          </ActivityAction.Argument>")
-    xaml.write("        <ActivityAction x:TypeArguments=\"x:Object\">\n")
+    xaml.write("          <ActivityAction.Argument>\n")
+    xaml.write("            <DelegateInArgument x:TypeArguments=\"x:Object\" Name=\"ContextTarget\" />\n")	
+    xaml.write("          </ActivityAction.Argument>\n")
     xaml.write("          <Sequence DisplayName=\"Do\">\n")
     return("          </Sequence>\n        </ActivityAction>\n      </ui:OpenBrowser.Body>\n    </ui:OpenBrowser>\n")
 
@@ -250,12 +249,31 @@ def a_click_browser_schaltfläche_no_id_var2 (xaml, application_name, url, aanam
     xaml.write("              </ui:Click.Target>\n")
     xaml.write("            </ui:Click>\n")
 
-
+def a_click_browser_schaltfläche_no_id_var3 (xaml, application_name, url, aaname, elementclass, eventtype):
+    xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
+    xaml.write("              <ui:Click.CursorPosition>\n")
+    xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
+    xaml.write("                  <ui:CursorPosition.OffsetX>\n")
+    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
+    xaml.write("                  </ui:CursorPosition.OffsetX>\n")
+    xaml.write("                  <ui:CursorPosition.OffsetY>\n")
+    xaml.write("                    <InArgument x:TypeArguments=\"x:Int32\" />\n")
+    xaml.write("                  </ui:CursorPosition.OffsetY>\n")
+    xaml.write("                </ui:CursorPosition>\n")
+    xaml.write("              </ui:Click.CursorPosition>\n")
+    xaml.write("              <ui:Click.Target>\n")
+    xaml.write("                <ui:Target Selector=\"&lt;html app=\'"+application_name+".exe\' url=\'"+url+"\' /&gt;&lt;webctrl class=\'"+elementclass+"\'/&gt;\" TimeoutMS=\"1000\">\n")
+    xaml.write("                  <ui:Target.WaitForReady>\n")
+    xaml.write("                    <InArgument x:TypeArguments=\"ui:WaitForReady\" />\n")
+    xaml.write("                  </ui:Target.WaitForReady>\n")
+    xaml.write("                </ui:Target>\n")
+    xaml.write("              </ui:Click.Target>\n")
+    xaml.write("            </ui:Click>\n")
 
 
 #über name und elementclass
 
-def a_click_browser_schaltfläche_no_id_var3 (xaml, application_name, url, aaname, elementclass, eventtype):
+def a_click_browser_schaltfläche_no_id_var4 (xaml, application_name, url, aaname, elementclass, eventtype):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\'"+eventtype+"\' >\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -278,7 +296,7 @@ def a_click_browser_schaltfläche_no_id_var3 (xaml, application_name, url, aanam
 
 #keine Verwendung im späteren Verlauf
 
-def a_click_browser_schaltfläche_no_id_var3(xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var5(xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -302,7 +320,7 @@ def a_click_browser_schaltfläche_no_id_var3(xaml, application_name, url, aaname
 
 #keine Verwendung im späteren Verlauf
 
-def a_click_browser_schaltfläche_no_id_var4(xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var6(xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -327,7 +345,7 @@ def a_click_browser_schaltfläche_no_id_var4(xaml, application_name, url, aaname
 #keine Verwendung im späteren Verlauf
 # Variante 3 mit Tag=Button & Type=Submit + Name des Feldes
 
-def a_click_browser_schaltfläche_no_id_var5 (xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var7 (xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -352,7 +370,7 @@ def a_click_browser_schaltfläche_no_id_var5 (xaml, application_name, url, aanam
 #keine Verwendung im späteren Verlauf
 #Variante 5, aaname und tag=SPAN
 
-def a_click_browser_schaltfläche_no_id_var5 (xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var8 (xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -377,7 +395,7 @@ def a_click_browser_schaltfläche_no_id_var5 (xaml, application_name, url, aanam
 #keine Verwendung im späteren Verlauf
 #Variante 6, aaname und tag=Select
 
-def a_click_browser_schaltfläche_no_id_var6 (xaml, application_name, url, aaname):
+def a_click_browser_schaltfläche_no_id_var9 (xaml, application_name, url, aaname):
     xaml.write("            <ui:Click AlterIfDisabled=\"{x:Null}\" DelayBefore=\"{x:Null}\" DelayMS=\"{x:Null}\" SendWindowMessages=\"{x:Null}\" SimulateClick=\"{x:Null}\" ClickType=\"CLICK_SINGLE\" ContinueOnError=\"True\" DisplayName=\"Click auf "+aaname+"\" KeyModifiers=\"None\" MouseButton=\"BTN_LEFT\">\n")
     xaml.write("              <ui:Click.CursorPosition>\n")
     xaml.write("                <ui:CursorPosition Position=\"Center\">\n")
@@ -1361,8 +1379,9 @@ def a_attach_application (xaml, application_name, windowtitle):
     return("          </Sequence>\n        </ActivityAction>\n      </ui:WindowScope.Body>\n    </ui:WindowScope>\n")
 
 
-def a_write_cell(xaml, cell, sheet_name, text, workbook_path):
-    xaml.write("    <ui:WriteCell Cell=\""+cell+"\" DisplayName=\"Write Cell\" SheetName=\""+sheet_name+"\" Text=\""+text+"\" WorkbookPath=\""+workbook_path+"\" />\n")
+def a_write_cell(xaml,name, input_variables):
+    xaml.write("            <ui:ExcelWriteCell Cell=\""+name+"\" DisplayName=\"Write Cell\" SheetName=\"Tabelle1\" Text=\"["+input_variables+"]\" />")
+  
 
 
 # Excel Aktivitäten, müssen im Body der Excel Application Scope sein
