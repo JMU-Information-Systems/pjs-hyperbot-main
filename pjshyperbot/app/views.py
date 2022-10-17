@@ -88,14 +88,15 @@ def input(request):
         fs = FileSystemStorage()
 
         #If a file with the same name already exists, it will be deleted. 
-        if fs.exists(uploaded_file.name):
-            fs.delete(uploaded_file.name)
+        filename=os.getcwd()+"\\data\\"+uploaded_file.name
+        if fs.exists(filename):
+            fs.delete(filename)
 
         #Saving the uploaded database in the same folder as the programme
-        fs.save(uploaded_file.name, uploaded_file)
+        fs.save(filename, uploaded_file)
 
 
-    filename = uploaded_file.name
+    #filename = uploaded_file.name
 
     db = databaseContact()
     task = request.POST.get("useCase")
