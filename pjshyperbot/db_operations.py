@@ -17,7 +17,7 @@ class databaseContact():
 
         try:
             #connect to sqlite3
-            cons=sqlite3.connect(dfile,check_same_thread=False)
+            cons=sqlite3.connect(filename,check_same_thread=False)
             curs=cons.cursor()
         except sqlite3.Error as e:
             print(e)
@@ -42,7 +42,7 @@ class databaseContact():
 
         try:
             #connect to sqlite3
-            cons=sqlite3.connect(dfile,check_same_thread=False)
+            cons=sqlite3.connect(filename,check_same_thread=False)
             curs=cons.cursor()
         except sqlite3.Error as e:
             print(e)
@@ -69,7 +69,7 @@ class databaseContact():
 
         try:
             #connect to sqlite3
-            cons=sqlite3.connect(dfile,check_same_thread=False)
+            cons=sqlite3.connect(filename,check_same_thread=False)
             curs=cons.cursor()
         except sqlite3.Error as e:
             print(e)
@@ -90,7 +90,7 @@ class databaseContact():
 
         try:
             #connect to sqlite3
-            cons=sqlite3.connect(dfile,check_same_thread=False)
+            cons=sqlite3.connect(filename,check_same_thread=False)
             curs=cons.cursor()
         except sqlite3.Error as e:
             print(e)
@@ -126,7 +126,7 @@ class databaseContact():
 
         try:
             #connect to sqlite3
-            cons=sqlite3.connect(dfile,check_same_thread=False)
+            cons=sqlite3.connect(filename,check_same_thread=False)
             curs=cons.cursor()
         except sqlite3.Error as e:
             print(e)
