@@ -227,7 +227,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 #Using the ID of the UI element
                 lib2_bausteine.a_click_browser_optionsfeld(xaml,a_applicationname, url, u_name,automationid, u_eventtype)
 
-            #like combo box, only consider if ID is present
+            #like a combo box
             elif u_type=="Gruppe":
                 lib2_bausteine.a_click_gruppe(xaml,a_applicationname, url, u_name, automationid, u_eventtype)  
 
@@ -353,6 +353,9 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
                 #End of sequence
                 lib2_bausteine.a_sequence_end(xaml)
 
+            elif u_type=="Gruppe":
+                #Type Group
+                lib2_bausteine.a_click_gruppe_no_id(xaml, a_applicationname, trimmed_windowtitle, u_name, u_eventtype)
 
               
             elif u_type=="Grafik":
@@ -513,6 +516,7 @@ def aktionen(url, a_url,url_before, xaml, automationid, u_name, u_type, u_eventt
             if u_type=="Element":
                     
                 if u_eventtype=="BTN_LEFT" or u_eventtype=="BTN_RIGHT":
+                    #Write in Excel Cell
                    lib2_bausteine.a_write_cell(xaml, u_name, input_variables)
                                 
                 elif u_eventtype=="CTRL + C":
