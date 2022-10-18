@@ -85,15 +85,18 @@ def input(request):
     if request.method == 'POST':
         #Access the uploaded file 
         uploaded_file = request.FILES['file']
-        fs = FileSystemStorage()
+        fs = FileSystemStorage(location=os.getcwd()+"\\data\\")
 
         #If a file with the same name already exists, it will be deleted. 
-        filename=os.getcwd()+"\\data\\"+uploaded_file.name
-        if fs.exists(filename):
-            fs.delete(filename)
+        filename=os.getcwd()+"\\data\\" + uploaded_file.name
+        #fs.path=os.path.dirname(filename)
+        #fs.path=os.getcwd()+"\\data\\"
 
-        #Saving the uploaded database in the same folder as the programme
-        fs.save(filename, uploaded_file)
+        if os.path.exists(filename):
+            os.remove(filename)
+
+        #Saving the uploaded database in the data folder
+        fs.save(uploaded_file.name, uploaded_file)
 
 
     #filename = uploaded_file.name
