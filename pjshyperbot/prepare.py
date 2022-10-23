@@ -42,6 +42,7 @@ def main():
     fpath=os.path.dirname(__file__)
     sfile=Path(fpath + '\\' + 'rpatemplate.sqlite3') #templatedb in sqlite (source)
     dfile=Path(fpath + '\\' + filename + '.sqlite3') #Recordingdb in sqlite (target)
+    dfile=Path(os.environ['USERPROFILE'] + '\\downloads\\' + filename + '.sqlite3') #Recordingdb in sqlite (target)
     shutil.copy(sfile,dfile)
 
     try:
